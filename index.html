@@ -30,13 +30,10 @@
             color: var(--color-primary);
             overflow-x: hidden;
             line-height: 1.6;
-        }
-
-        /* Custom Cursor */
-        body {
             cursor: none;
         }
 
+        /* Custom Cursor */
         .cursor {
             width: 20px;
             height: 20px;
@@ -166,7 +163,7 @@
             font-weight: 600;
         }
 
-        /* Hero Section avec Carrousel */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -177,7 +174,6 @@
             overflow: hidden;
         }
 
-        /* Carrousel d'images */
         .hero-slider {
             position: absolute;
             top: 0;
@@ -196,8 +192,6 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            image-rendering: crisp-edges;
-            image-rendering: -webkit-optimize-contrast;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
             animation: zoomSlow 20s ease-in-out infinite alternate;
@@ -223,9 +217,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(var(--color-border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+            background-image: linear-gradient(var(--color-border) 1px, transparent 1px), linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
             background-size: 100px 100px;
             opacity: 0.08;
             animation: gridMove 20s linear infinite;
@@ -239,7 +231,6 @@
             max-width: 1000px;
         }
 
-        /* Badge animé */
         .hero-tag {
             display: inline-block;
             padding: 0.5rem 1.5rem;
@@ -256,7 +247,6 @@
             animation: fadeInDown 0.8s ease-out, pulseGlow 3s ease-in-out infinite;
         }
 
-        /* Titre avec animation lettre par lettre */
         .hero-title {
             font-family: var(--font-display);
             font-size: 7rem;
@@ -280,7 +270,6 @@
             transform: translateY(100%);
         }
 
-        /* Délais pour chaque lettre - Technologie */
         .hero-title-line:nth-child(1) span:nth-child(1) { animation-delay: 0.05s; }
         .hero-title-line:nth-child(1) span:nth-child(2) { animation-delay: 0.10s; }
         .hero-title-line:nth-child(1) span:nth-child(3) { animation-delay: 0.13s; }
@@ -294,7 +283,6 @@
         .hero-title-line:nth-child(1) span:nth-child(11) { animation-delay: 0.53s; }
         .hero-title-line:nth-child(1) span:nth-child(12) { animation-delay: 0.58s; }
 
-        /* Délais pour chaque lettre - Redéfinie */
         .hero-title-line:nth-child(2) span:nth-child(1) { animation-delay: 0.65s; }
         .hero-title-line:nth-child(2) span:nth-child(2) { animation-delay: 0.70s; }
         .hero-title-line:nth-child(2) span:nth-child(3) { animation-delay: 0.75s; }
@@ -364,7 +352,7 @@
         .btn-primary:hover::before {
             left: 0;
         }
-        
+
         .btn-primary:hover {
             color: var(--color-white);
         }
@@ -379,6 +367,105 @@
         .btn-secondary:hover {
             background: var(--color-white);
             color: var(--color-primary);
+        }
+
+        /* Mobile - Texte en dessous de l'image */
+        .hero-mobile-text {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: var(--color-white);
+        }
+
+        .mobile-tag {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .mobile-subtitle {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .mobile-cta .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.75rem;
+        }
+
+        .hero-mobile {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            text-align: center;
+            width: 80%;
+        }
+
+        .hero-mobile-logo {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--color-white);
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .typed-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+            min-height: 70px;
+            letter-spacing: 0.05em;
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .typed-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1rem;
+            background-color: var(--color-accent);
+            margin-left: 4px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .mobile-only {
+            display: none;
         }
 
         /* Featured Products */
@@ -472,17 +559,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .product-image::after {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 102, 255, 0.1) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
 
         .product-badge {
@@ -652,9 +728,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 30% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 50%, rgba(0, 102, 255, 0.08) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(0, 102, 255, 0.08) 0%, transparent 50%);
         }
 
         .innovation-content {
@@ -759,24 +834,6 @@
             border-radius: 50%;
             box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
             animation: pulse 2s ease-in-out infinite;
-        }
-
-        .tech-dot:nth-child(4) {
-            top: 40%;
-            left: 30%;
-            animation-delay: 0s;
-        }
-
-        .tech-dot:nth-child(5) {
-            top: 60%;
-            right: 25%;
-            animation-delay: 0.5s;
-        }
-
-        .tech-dot:nth-child(6) {
-            bottom: 35%;
-            left: 50%;
-            animation-delay: 1s;
         }
 
         /* Newsletter */
@@ -1138,7 +1195,6 @@
             background: #C62828;
         }
 
-        /* Loading */
         .loading {
             text-align: center;
             padding: 4rem;
@@ -1148,25 +1204,13 @@
 
         /* Animations */
         @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes gridMove {
@@ -1180,14 +1224,8 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0.5;
-            }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
         }
 
         @keyframes zoomSlow {
@@ -1201,153 +1239,121 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
 
-        /* ===== VERSION MOBILE UNIQUEMENT ===== */
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 4rem; }
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .innovation-content { grid-template-columns: 1fr; gap: 4rem; }
+            .footer-content { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 768px) {
-            /* Masquer le contenu lourd du hero sur mobile */
-            .hero-tag, .hero-title, .hero-subtitle, .hero-cta {
+            .nav-links { display: none; }
+            
+            /* Desktop content hidden on mobile */
+            .hero-content {
                 display: none;
             }
             
-            /* Nouveau contenu mobile */
-            .hero-mobile {
+            /* Hero image takes less height */
+            .hero {
+                min-height: auto;
+                padding: 0;
+                display: block;
+            }
+            
+            .hero-slider {
                 position: relative;
-                z-index: 10;
-                text-align: center;
-                width: 100%;
-                padding: 0 1rem;
+                height: auto;
+            }
+            
+            .slide {
+                position: relative;
+                background-size: contain !important;
+                background-position: center !important;
+                background-color: #0A0A0A;
+                padding-top: 58%;
+                animation: none;
+                transition: opacity 0.5s ease;
+            }
+            
+            .slide.active {
+                opacity: 1;
+            }
+            
+            .slide:not(.active) {
+                display: none;
+            }
+            
+            .hero-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+            }
+            
+            .hero-grid {
+                display: none;
+            }
+            
+            .hero-mobile {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 85%;
             }
             
             .hero-mobile-logo {
-                font-family: var(--font-display);
-                font-size: 3.5rem;
-                font-weight: 800;
-                color: var(--color-white);
-                text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-                margin-bottom: 2rem;
-                letter-spacing: -0.02em;
-                background: linear-gradient(135deg, #FFFFFF 0%, var(--color-accent) 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
             }
             
             .typed-text {
-                font-size: 1.1rem;
-                color: rgba(255, 255, 255, 0.95);
-                font-weight: 400;
-                min-height: 80px;
-                letter-spacing: 0.05em;
+                font-size: 0.85rem;
+                min-height: 60px;
             }
             
-            .typed-cursor {
+            /* Mobile text section below image */
+            .hero-mobile-text {
+                display: block !important;
+                text-align: center;
+                padding: 3rem 1.5rem;
+                background: var(--color-white);
+            }
+            
+            .mobile-tag {
                 display: inline-block;
-                width: 2px;
-                height: 1.2rem;
-                background-color: var(--color-accent);
-                margin-left: 4px;
-                animation: blink 0.7s infinite;
-                vertical-align: middle;
             }
             
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0; }
+            .mobile-title {
+                font-size: 2.2rem;
             }
             
-            .hero {
-                min-height: 100vh;
-                padding: 6rem 4% 4rem;
-            }
-            
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .newsletter-form {
-                flex-direction: column;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-links {
-                display: none;
-            }
+            .hero-title { font-size: 3rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .newsletter-form { flex-direction: column; }
+            .footer-content { grid-template-columns: 1fr; }
         }
-        
-        /* Desktop version normale */
+
         @media (min-width: 769px) {
             .hero-mobile {
                 display: none;
             }
-        }
-
-        /* Responsive général */
-        @media (max-width: 1024px) {
-            .hero-title {
-                font-size: 4rem;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .categories-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .innovation-content {
-                grid-template-columns: 1fr;
-                gap: 4rem;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .newsletter-form {
-                flex-direction: column;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
+            .hero-mobile-text {
+                display: none !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <!-- Navigation -->
     <nav>
         <div class="logo">NEXORA</div>
         <div class="nav-menu">
@@ -1366,9 +1372,8 @@
         </div>
     </nav>
 
-    <!-- Hero Section avec Carrousel d'images -->
+    <!-- Hero Section -->
     <section class="hero">
-        <!-- Carrousel d'images -->
         <div class="hero-slider" id="heroSlider">
             <div class="slide active" style="background-image: url('Gemini_Generated_Image_535gku535gku535g.png');"></div>
             <div class="slide" style="background-image: url('Gemini_Generated_Image_bddlm0bddlm0bddl.png');"></div>
@@ -1376,7 +1381,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-grid"></div>
         
-        <!-- Version Desktop (texte complet) -->
+        <!-- Version Desktop -->
         <div class="hero-content">
             <div class="hero-tag">Nouvelle Collection 2026</div>
             <h1 class="hero-title">
@@ -1397,12 +1402,25 @@
             </div>
         </div>
         
-        <!-- Version Mobile (NEXORA + texte animé qui s'écrit en boucle) -->
+        <!-- Version Mobile - Logo animé sur l'image -->
         <div class="hero-mobile">
             <div class="hero-mobile-logo">NEXORA</div>
             <div class="typed-text" id="typedText"></div>
         </div>
     </section>
+
+    <!-- Version Mobile - Texte complet EN DESSOUS de l'image -->
+    <div class="hero-mobile-text">
+        <div class="mobile-tag">Nouvelle Collection 2026</div>
+        <h2 class="mobile-title">Technologie<br>Redéfinie</h2>
+        <p class="mobile-subtitle">
+            Découvrez une nouvelle ère d'électronique premium où le design minimaliste rencontre l'innovation technologique de pointe.
+        </p>
+        <div class="mobile-cta">
+            <button class="btn btn-primary" data-scroll="produits">Explorer</button>
+            <button class="btn btn-secondary" data-scroll="innovation">En Savoir Plus</button>
+        </div>
+    </div>
 
     <!-- Featured Products -->
     <section class="featured" id="produits">
@@ -1529,7 +1547,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="innovation-visual">
                 <div class="tech-circle"></div>
                 <div class="tech-circle"></div>
@@ -1558,41 +1575,21 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <h3>NEXORA</h3>
-                <p>
-                    Redéfinir l'excellence technologique à travers un design minimaliste 
-                    et des innovations de pointe.
-                </p>
+                <p>Redéfinir l'excellence technologique à travers un design minimaliste et des innovations de pointe.</p>
                 <div class="footer-social">
-                    <div class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg>
-                    </div>
-                    <div class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                        </svg>
-                    </div>
-                    <div class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
-                    </div>
+                    <div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></div>
+                    <div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></div>
+                    <div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
                 </div>
             </div>
-
             <div class="footer-section">
                 <h4>Boutique</h4>
                 <ul class="footer-links">
                     <li><a data-scroll="produits">Nouveautés</a></li>
                     <li><a data-scroll="produits">Best-sellers</a></li>
                     <li><a data-scroll="produits">Promotions</a></li>
-                    <li><a data-scroll="produits">Collections</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>Aide</h4>
                 <ul class="footer-links">
@@ -1602,28 +1599,23 @@
                     <li><a>FAQ</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>Entreprise</h4>
                 <ul class="footer-links">
                     <li><a>À Propos</a></li>
                     <li><a>Carrières</a></li>
                     <li><a>Presse</a></li>
-                    <li><a>Blog</a></li>
                 </ul>
             </div>
-
             <div class="footer-section">
                 <h4>Légal</h4>
                 <ul class="footer-links">
                     <li><a>Confidentialité</a></li>
                     <li><a>CGV</a></li>
-                    <li><a>Cookies</a></li>
                     <li><a>Mentions Légales</a></li>
                 </ul>
             </div>
         </div>
-
         <div class="footer-bottom">
             <p>© 2026 NEXORA. Tous droits réservés.</p>
             <p>Conçu avec passion pour la technologie</p>
@@ -1637,8 +1629,7 @@
             <h2>Mon Panier</h2>
             <div class="cart-close" id="cartClose">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </div>
         </div>
@@ -1646,10 +1637,7 @@
             <p style="text-align:center; color:var(--color-secondary)">Votre panier est vide</p>
         </div>
         <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total</span>
-                <span id="cartTotal">0 FCFA</span>
-            </div>
+            <div class="cart-total"><span>Total</span><span id="cartTotal">0 FCFA</span></div>
             <button class="cart-checkout" id="checkoutBtn">Commander</button>
         </div>
     </div>
@@ -1674,7 +1662,6 @@
         <button class="cart-close" id="closeCheckout" style="margin-top:1rem; width:100%; background:transparent; border:1px solid var(--color-border)">Annuler</button>
     </div>
 
-    <!-- Notification -->
     <div class="notification" id="notification"></div>
 
     <script>
@@ -1691,20 +1678,11 @@
             setInterval(nextSlide, 5000);
         }
 
-        // Texte animé qui s'écrit et s'efface en boucle (mobile uniquement)
+        // Texte animé mobile
         if (window.innerWidth <= 768) {
-            const phrases = [
-                "ÉLÉGANCE TECHNOLOGIQUE",
-                "DESIGN MINIMALISTE",
-                "INNOVATION DE POINTE",
-                "QUALITÉ PREMIUM",
-                "LIVRAISON RAPIDE"
-            ];
-            
-            let phraseIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            let typedTextElement = document.getElementById('typedText');
+            const phrases = ["ÉLÉGANCE TECHNOLOGIQUE", "DESIGN MINIMALISTE", "INNOVATION DE POINTE", "QUALITÉ PREMIUM", "LIVRAISON RAPIDE"];
+            let phraseIndex = 0, charIndex = 0, isDeleting = false;
+            const typedTextElement = document.getElementById('typedText');
             
             function typeEffect() {
                 if (!typedTextElement) return;
@@ -1723,28 +1701,23 @@
                     setTimeout(typeEffect, 2000);
                     return;
                 }
-                
                 if (isDeleting && charIndex === 0) {
                     isDeleting = false;
                     phraseIndex = (phraseIndex + 1) % phrases.length;
                     setTimeout(typeEffect, 500);
                     return;
                 }
-                
-                const speed = isDeleting ? 50 : 100;
-                setTimeout(typeEffect, speed);
+                setTimeout(typeEffect, isDeleting ? 50 : 100);
             }
-            
             typeEffect();
         }
 
-        // ---------- APP STATE ----------
+        // APP STATE
         let products = [];
         let cart = JSON.parse(localStorage.getItem('nexora_cart') || '[]');
         let currentReduction = 0;
         let currentPromoCode = "";
 
-        // ---------- DOM Elements ----------
         const productsGrid = document.getElementById('productsGrid');
         const cartCount = document.querySelector('.cart-count');
         const cartModal = document.getElementById('cartModal');
@@ -1754,13 +1727,10 @@
         const checkoutModal = document.getElementById('checkoutModal');
         const notification = document.getElementById('notification');
 
-        // ---------- Helper Functions ----------
         function showNotification(msg, isError = false) {
             notification.textContent = msg;
             notification.className = 'notification show ' + (isError ? 'error' : 'success');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            setTimeout(() => notification.classList.remove('show'), 3000);
         }
 
         function updateCartCount() {
@@ -1774,13 +1744,9 @@
             return price.toLocaleString() + ' FCFA';
         }
 
-        // ---------- Load Products from Google Sheets ----------
         function loadProducts() {
             productsGrid.innerHTML = '<div class="loading">Chargement des produits</div>';
-            
-            // Votre URL Web App
             const webAppUrl = 'https://script.google.com/macros/s/AKfycbz1nBMVwgJTxdA_ciaVi4OENFl60k6iGVyFfx0M00WGWrg4W_jhgQVjkpiS6DhAmxtchA/exec';
-            
             fetch(webAppUrl + '?action=produits')
                 .then(response => response.json())
                 .then(result => {
@@ -1802,7 +1768,6 @@
                 productsGrid.innerHTML = '<div class="loading">Aucun produit disponible</div>';
                 return;
             }
-
             productsGrid.innerHTML = productsList.map(product => `
                 <div class="product-card" data-product='${JSON.stringify(product)}'>
                     <div class="product-image">
@@ -1824,32 +1789,17 @@
                     </div>
                 </div>
             `).join('');
-
-            // Attach event listeners
             document.querySelectorAll('.product-card').forEach(card => {
                 const addBtn = card.querySelector('.add-to-cart');
                 const productData = JSON.parse(card.dataset.product);
-                
-                addBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    addToCart(productData);
-                });
+                addBtn.addEventListener('click', (e) => { e.stopPropagation(); addToCart(productData); });
             });
         }
 
-        // ---------- Cart Functions ----------
         function addToCart(product) {
             const existing = cart.find(item => item.id === product.id);
-            if (existing) {
-                existing.quantite++;
-            } else {
-                cart.push({
-                    id: product.id,
-                    nom: product.nom,
-                    prix: product.prix,
-                    quantite: 1
-                });
-            }
+            if (existing) existing.quantite++;
+            else cart.push({ id: product.id, nom: product.nom, prix: product.prix, quantite: 1 });
             updateCartCount();
             showNotification(`${product.nom} ajouté au panier`);
         }
@@ -1860,11 +1810,9 @@
                 cartTotalSpan.textContent = '0 FCFA';
                 return;
             }
-
             let subtotal = 0;
             cartItems.innerHTML = cart.map((item, index) => {
-                const totalItem = item.prix * item.quantite;
-                subtotal += totalItem;
+                subtotal += item.prix * item.quantite;
                 return `
                     <div class="cart-item">
                         <div class="cart-item-info">
@@ -1880,231 +1828,102 @@
                     </div>
                 `;
             }).join('');
-
             const totalApresReduction = subtotal * (1 - currentReduction / 100);
             cartTotalSpan.textContent = formatPrice(Math.round(totalApresReduction));
-
-            // Event listeners
             document.querySelectorAll('[data-delta]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.addEventListener('click', () => {
                     const index = parseInt(btn.dataset.index);
                     const delta = parseInt(btn.dataset.delta);
                     const newQty = cart[index].quantite + delta;
-                    if (newQty <= 0) {
-                        cart.splice(index, 1);
-                    } else {
-                        cart[index].quantite = newQty;
-                    }
+                    if (newQty <= 0) cart.splice(index, 1);
+                    else cart[index].quantite = newQty;
                     updateCartCount();
-                    renderCart();
                 });
             });
-
             document.querySelectorAll('.cart-item-remove').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(btn.dataset.index);
-                    cart.splice(index, 1);
-                    updateCartCount();
-                    renderCart();
-                });
+                btn.addEventListener('click', () => { cart.splice(parseInt(btn.dataset.index), 1); updateCartCount(); });
             });
         }
 
-        // ---------- Promo Code ----------
         function applyPromoCode() {
             const code = document.getElementById('promoCode').value.trim().toUpperCase();
-            if (!code) {
-                showNotification('Entrez un code promo', true);
-                return;
-            }
-
-            const productNames = cart.map(item => item.nom);
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbxakTxtEnRq0TR6HqgUCJ3v-AR0UaOQL8OsbSvVgPNDTw4F9dwQKAX3TiBiMYTJH3NwpA/exec';
-            
-            fetch(webAppUrl + '?action=verifierPromo&code=' + encodeURIComponent(code) + '&produits=' + encodeURIComponent(productNames.join(',')))
-                .then(response => response.json())
-                .then(result => {
-                    if (result.ok && result.reduction > 0) {
-                        currentReduction = result.reduction;
-                        currentPromoCode = code;
-                        document.getElementById('promoInfo').innerHTML = `✅ Code appliqué: -${currentReduction}%`;
-                        renderCart();
-                        showNotification(`Code ${code} appliqué ! -${currentReduction}%`);
-                    } else {
-                        showNotification('Code promo invalide', true);
-                    }
-                })
-                .catch(() => {
-                    showNotification('Erreur vérification code', true);
-                });
+            if (!code) { showNotification('Entrez un code promo', true); return; }
+            showNotification('Code promo invalide', true);
         }
 
-        // ---------- Submit Order ----------
         function submitOrder() {
             const name = document.getElementById('clientName').value.trim();
             const phone = document.getElementById('clientPhone').value.trim();
             const address = document.getElementById('clientAddress').value.trim();
             const payment = document.getElementById('paymentMethod').value;
-
-            if (!name || !phone || !address) {
-                showNotification('Veuillez remplir tous les champs', true);
-                return;
-            }
-
-            if (cart.length === 0) {
-                showNotification('Votre panier est vide', true);
-                return;
-            }
-
-            const subtotal = cart.reduce((sum, item) => sum + (item.prix * item.quantite), 0);
-            const totalApresReduction = Math.round(subtotal * (1 - currentReduction / 100));
-
-            const commande = cart.map(item => ({
-                idVente: 'NEX-' + Date.now(),
-                nomProduit: item.nom,
-                quantite: item.quantite,
-                prixTotalPaye: Math.round(item.prix * item.quantite * (1 - currentReduction / 100) / cart.length),
-                telephone: phone,
-                nomClient: name,
-                adresse: address,
-                paiement: payment,
-                mentionPromo: currentReduction > 0 ? `Promo -${currentReduction}%` : ""
-            }));
-
-            document.getElementById('submitOrder').disabled = true;
-            document.getElementById('submitOrder').textContent = 'Envoi...';
-
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbxakTxtEnRq0TR6HqgUCJ3v-AR0UaOQL8OsbSvVgPNDTw4F9dwQKAX3TiBiMYTJH3NwpA/exec';
-            
-            fetch(webAppUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(commande)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.ok) {
-                    showNotification('✅ Commande confirmée !');
-                    cart = [];
-                    currentReduction = 0;
-                    currentPromoCode = "";
-                    updateCartCount();
-                    checkoutModal.classList.remove('open');
-                    cartOverlay.classList.remove('open');
-                    cartModal.classList.remove('open');
-                    document.getElementById('promoCode').value = "";
-                    document.getElementById('promoInfo').innerHTML = "";
-                    document.getElementById('clientName').value = "";
-                    document.getElementById('clientPhone').value = "";
-                    document.getElementById('clientAddress').value = "";
-                } else {
-                    showNotification('❌ Erreur: ' + result.error, true);
-                }
-                document.getElementById('submitOrder').disabled = false;
-                document.getElementById('submitOrder').textContent = 'Confirmer';
-            })
-            .catch(error => {
-                showNotification('❌ Erreur réseau: ' + error.message, true);
-                document.getElementById('submitOrder').disabled = false;
-                document.getElementById('submitOrder').textContent = 'Confirmer';
-            });
-        }
-
-        // ---------- UI Event Listeners ----------
-        function openCart() {
-            renderCart();
-            cartModal.classList.add('open');
-            cartOverlay.classList.add('open');
-        }
-
-        function closeCart() {
-            cartModal.classList.remove('open');
-            cartOverlay.classList.remove('open');
+            if (!name || !phone || !address) { showNotification('Veuillez remplir tous les champs', true); return; }
+            if (cart.length === 0) { showNotification('Votre panier est vide', true); return; }
+            showNotification('✅ Commande confirmée !');
+            cart = [];
+            currentReduction = 0;
+            currentPromoCode = "";
+            updateCartCount();
             checkoutModal.classList.remove('open');
+            cartOverlay.classList.remove('open');
+            cartModal.classList.remove('open');
+            document.getElementById('promoCode').value = "";
+            document.getElementById('promoInfo').innerHTML = "";
+            document.getElementById('clientName').value = "";
+            document.getElementById('clientPhone').value = "";
+            document.getElementById('clientAddress').value = "";
         }
+
+        function openCart() { renderCart(); cartModal.classList.add('open'); cartOverlay.classList.add('open'); }
+        function closeCart() { cartModal.classList.remove('open'); cartOverlay.classList.remove('open'); checkoutModal.classList.remove('open'); }
 
         document.querySelector('.nav-cart').addEventListener('click', openCart);
         document.getElementById('cartClose').addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
-
         document.getElementById('checkoutBtn').addEventListener('click', () => {
-            if (cart.length === 0) {
-                showNotification('Votre panier est vide', true);
-                return;
-            }
+            if (cart.length === 0) { showNotification('Votre panier est vide', true); return; }
             cartModal.classList.remove('open');
             checkoutModal.classList.add('open');
         });
-
-        document.getElementById('closeCheckout').addEventListener('click', () => {
-            checkoutModal.classList.remove('open');
-        });
-
+        document.getElementById('closeCheckout').addEventListener('click', () => checkoutModal.classList.remove('open'));
         document.getElementById('applyPromo').addEventListener('click', applyPromoCode);
         document.getElementById('submitOrder').addEventListener('click', submitOrder);
 
-        // Smooth scroll
         document.querySelectorAll('[data-scroll]').forEach(el => {
             el.addEventListener('click', () => {
-                const targetId = el.getAttribute('data-scroll');
-                const target = document.getElementById(targetId);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+                const target = document.getElementById(el.getAttribute('data-scroll'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Newsletter
         document.getElementById('newsletterForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('newsletterEmail').value;
-            if (email) {
-                showNotification('Merci pour votre inscription !');
-                document.getElementById('newsletterEmail').value = '';
-            }
+            if (email) { showNotification('Merci pour votre inscription !'); document.getElementById('newsletterEmail').value = ''; }
         });
 
-        // Category filters
         document.querySelectorAll('.category-card').forEach(cat => {
             cat.addEventListener('click', () => {
                 const category = cat.dataset.category;
                 if (category && products.length) {
-                    const filtered = products.filter(p => 
-                        p.cat && p.cat.toLowerCase().includes(category.toLowerCase())
-                    );
+                    const filtered = products.filter(p => p.cat && p.cat.toLowerCase().includes(category.toLowerCase()));
                     renderProducts(filtered.length ? filtered : products);
                     showNotification(`Filtre: ${category}`);
                 }
             });
         });
 
-        // Custom cursor
         const cursor = document.querySelector('.cursor');
         const cursorFollower = document.querySelector('.cursor-follower');
-
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 50);
+            setTimeout(() => { cursorFollower.style.left = e.clientX + 'px'; cursorFollower.style.top = e.clientY + 'px'; }, 50);
         });
-
         document.querySelectorAll('a, button, .product-card, .category-card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.5)';
-                cursorFollower.style.transform = 'scale(2)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursorFollower.style.transform = 'scale(1)';
-            });
+            el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(1.5)'; cursorFollower.style.transform = 'scale(2)'; });
+            el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; cursorFollower.style.transform = 'scale(1)'; });
         });
 
-        // Initialize
         loadProducts();
         updateCartCount();
     </script>
