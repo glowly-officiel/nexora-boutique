@@ -63,12 +63,12 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 2rem 4%;
+            padding: 1.5rem 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(250, 250, 250, 0.8);
+            background: rgba(250, 250, 250, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--color-border);
         }
@@ -207,7 +207,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 100%);
             z-index: 1;
         }
 
@@ -217,11 +217,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: linear-gradient(var(--color-border) 1px, transparent 1px), linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
-            background-size: 100px 100px;
-            opacity: 0.08;
-            animation: gridMove 20s linear infinite;
+            background-image: linear-gradient(rgba(224, 224, 224, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(224, 224, 224, 0.15) 1px, transparent 1px);
+            background-size: 60px 60px;
             z-index: 2;
+            animation: gridMove 20s linear infinite;
         }
 
         .hero-content {
@@ -317,7 +316,7 @@
         }
 
         .btn {
-            padding: 1.2rem 3rem;
+            padding: 1rem 2.5rem;
             font-family: var(--font-body);
             font-size: 0.875rem;
             font-weight: 600;
@@ -376,6 +375,60 @@
             background: var(--color-white);
         }
 
+        .hero-mobile {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            text-align: center;
+            width: 80%;
+        }
+
+        .hero-mobile-logo {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--color-white);
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { opacity: 1; transform: scale(1); text-shadow: 0 0 20px rgba(0,102,255,0.3); }
+            50% { opacity: 0.95; transform: scale(1.02); text-shadow: 0 0 40px rgba(0,102,255,0.6); }
+        }
+
+        .typed-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+            min-height: 70px;
+            letter-spacing: 0.05em;
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .typed-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1rem;
+            background-color: var(--color-accent);
+            margin-left: 4px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         .mobile-tag {
             display: inline-block;
             padding: 0.5rem 1.2rem;
@@ -414,58 +467,6 @@
         .mobile-cta .btn {
             padding: 0.8rem 1.5rem;
             font-size: 0.75rem;
-        }
-
-        .hero-mobile {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 20;
-            text-align: center;
-            width: 80%;
-        }
-
-        .hero-mobile-logo {
-            font-family: var(--font-display);
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--color-white);
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #FFFFFF 0%, var(--color-accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .typed-text {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: 500;
-            min-height: 70px;
-            letter-spacing: 0.05em;
-            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .typed-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1rem;
-            background-color: var(--color-accent);
-            margin-left: 4px;
-            animation: blink 0.7s infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .mobile-only {
-            display: none;
         }
 
         /* Featured Products */
@@ -871,13 +872,11 @@
 
         .newsletter-input {
             flex: 1;
-            padding: 1.2rem 1.5rem;
+            padding: 1rem 1.5rem;
             border: 2px solid var(--color-border);
             background: var(--color-white);
             font-family: var(--font-body);
             font-size: 0.875rem;
-            border-radius: 0;
-            transition: all 0.3s ease;
         }
 
         .newsletter-input:focus {
@@ -1215,7 +1214,7 @@
 
         @keyframes gridMove {
             0% { transform: translateY(0); }
-            100% { transform: translateY(100px); }
+            100% { transform: translateY(50px); }
         }
 
         @keyframes rotate {
@@ -1273,7 +1272,7 @@
                 background-size: contain !important;
                 background-position: center !important;
                 background-color: #0A0A0A;
-                padding-top: 58%;
+                aspect-ratio: 1323 / 768;
                 animation: none;
                 transition: opacity 0.5s ease;
             }
@@ -1292,11 +1291,13 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 100%);
             }
             
             .hero-grid {
-                display: none;
+                display: block;
+                background-image: linear-gradient(rgba(224, 224, 224, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(224, 224, 224, 0.1) 1px, transparent 1px);
+                background-size: 40px 40px;
             }
             
             .hero-mobile {
@@ -1305,6 +1306,7 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 width: 85%;
+                z-index: 20;
             }
             
             .hero-mobile-logo {
@@ -1330,7 +1332,7 @@
             }
             
             .mobile-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .hero-title { font-size: 3rem; }
@@ -1402,7 +1404,7 @@
             </div>
         </div>
         
-        <!-- Version Mobile - Logo animé sur l'image -->
+        <!-- Version Mobile - Uniquement NEXORA animé sur l'image -->
         <div class="hero-mobile">
             <div class="hero-mobile-logo">NEXORA</div>
             <div class="typed-text" id="typedText"></div>
@@ -1449,71 +1451,63 @@
             <div class="category-card" data-category="audio">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                        <path d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Audio</h3>
             </div>
-
             <div class="category-card" data-category="montres">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Montres</h3>
             </div>
-
             <div class="category-card" data-category="smartphones">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                        <path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Smartphones</h3>
             </div>
-
             <div class="category-card" data-category="ordinateurs">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                        <path d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Ordinateurs</h3>
             </div>
-
             <div class="category-card" data-category="photo">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                        <path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Photo</h3>
             </div>
-
             <div class="category-card" data-category="accessoires">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                        <path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Accessoires</h3>
             </div>
-
             <div class="category-card" data-category="gaming">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" />
+                        <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Gaming</h3>
             </div>
-
             <div class="category-card" data-category="maison">
                 <div class="category-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        <path d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
                     </svg>
                 </div>
                 <h3 class="category-name">Maison</h3>
@@ -1527,24 +1521,11 @@
         <div class="innovation-content">
             <div class="innovation-text">
                 <h2>Innovation<br>& Technologie</h2>
-                <p>
-                    Chez NEXORA, nous repoussons constamment les limites de la technologie. 
-                    Chaque produit est conçu avec une attention méticuleuse aux détails, 
-                    combinant design minimaliste et performances exceptionnelles.
-                </p>
+                <p>Chez NEXORA, nous repoussons constamment les limites de la technologie. Chaque produit est conçu avec une attention méticuleuse aux détails, combinant design minimaliste et performances exceptionnelles.</p>
                 <div class="innovation-stats">
-                    <div class="stat">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Produits</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Clients</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">98%</div>
-                        <div class="stat-label">Satisfaction</div>
-                    </div>
+                    <div class="stat"><div class="stat-number">500+</div><div class="stat-label">Produits</div></div>
+                    <div class="stat"><div class="stat-number">50K+</div><div class="stat-label">Clients</div></div>
+                    <div class="stat"><div class="stat-number">98%</div><div class="stat-label">Satisfaction</div></div>
                 </div>
             </div>
             <div class="innovation-visual">
@@ -1584,36 +1565,19 @@
             </div>
             <div class="footer-section">
                 <h4>Boutique</h4>
-                <ul class="footer-links">
-                    <li><a data-scroll="produits">Nouveautés</a></li>
-                    <li><a data-scroll="produits">Best-sellers</a></li>
-                    <li><a data-scroll="produits">Promotions</a></li>
-                </ul>
+                <ul class="footer-links"><li><a data-scroll="produits">Nouveautés</a></li><li><a data-scroll="produits">Best-sellers</a></li><li><a data-scroll="produits">Promotions</a></li></ul>
             </div>
             <div class="footer-section">
                 <h4>Aide</h4>
-                <ul class="footer-links">
-                    <li><a>Support Client</a></li>
-                    <li><a>Livraison</a></li>
-                    <li><a>Retours</a></li>
-                    <li><a>FAQ</a></li>
-                </ul>
+                <ul class="footer-links"><li><a>Support Client</a></li><li><a>Livraison</a></li><li><a>Retours</a></li><li><a>FAQ</a></li></ul>
             </div>
             <div class="footer-section">
                 <h4>Entreprise</h4>
-                <ul class="footer-links">
-                    <li><a>À Propos</a></li>
-                    <li><a>Carrières</a></li>
-                    <li><a>Presse</a></li>
-                </ul>
+                <ul class="footer-links"><li><a>À Propos</a></li><li><a>Carrières</a></li><li><a>Presse</a></li></ul>
             </div>
             <div class="footer-section">
                 <h4>Légal</h4>
-                <ul class="footer-links">
-                    <li><a>Confidentialité</a></li>
-                    <li><a>CGV</a></li>
-                    <li><a>Mentions Légales</a></li>
-                </ul>
+                <ul class="footer-links"><li><a>Confidentialité</a></li><li><a>CGV</a></li><li><a>Mentions Légales</a></li></ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1627,15 +1591,9 @@
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
             <h2>Mon Panier</h2>
-            <div class="cart-close" id="cartClose">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </div>
+            <div class="cart-close" id="cartClose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
         </div>
-        <div class="cart-items" id="cartItems">
-            <p style="text-align:center; color:var(--color-secondary)">Votre panier est vide</p>
-        </div>
+        <div class="cart-items" id="cartItems"><p style="text-align:center; color:var(--color-secondary)">Votre panier est vide</p></div>
         <div class="cart-footer">
             <div class="cart-total"><span>Total</span><span id="cartTotal">0 FCFA</span></div>
             <button class="cart-checkout" id="checkoutBtn">Commander</button>
@@ -1648,15 +1606,8 @@
         <input type="text" id="clientName" placeholder="Nom complet" required>
         <input type="tel" id="clientPhone" placeholder="Téléphone (ex: 771234567)" required>
         <input type="text" id="clientAddress" placeholder="Adresse de livraison" required>
-        <select id="paymentMethod">
-            <option value="wave">🐧 Wave</option>
-            <option value="orange">🟠 Orange Money</option>
-            <option value="cash">💵 Espèces à la livraison</option>
-        </select>
-        <div class="checkout-promo">
-            <input type="text" id="promoCode" placeholder="Code promo">
-            <button id="applyPromo">Appliquer</button>
-        </div>
+        <select id="paymentMethod"><option value="wave">🐧 Wave</option><option value="orange">🟠 Orange Money</option><option value="cash">💵 Espèces à la livraison</option></select>
+        <div class="checkout-promo"><input type="text" id="promoCode" placeholder="Code promo"><button id="applyPromo">Appliquer</button></div>
         <div id="promoInfo" style="font-size:0.8rem; margin-bottom:1rem; color:var(--color-accent)"></div>
         <button class="btn btn-primary" id="submitOrder" style="width:100%">Confirmer la commande</button>
         <button class="cart-close" id="closeCheckout" style="margin-top:1rem; width:100%; background:transparent; border:1px solid var(--color-border)">Annuler</button>
@@ -1678,7 +1629,7 @@
             setInterval(nextSlide, 5000);
         }
 
-        // Texte animé mobile
+        // Animation texte mobile - mots qui s'écrivent et s'effacent en boucle
         if (window.innerWidth <= 768) {
             const phrases = ["ÉLÉGANCE TECHNOLOGIQUE", "DESIGN MINIMALISTE", "INNOVATION DE POINTE", "QUALITÉ PREMIUM", "LIVRAISON RAPIDE"];
             let phraseIndex = 0, charIndex = 0, isDeleting = false;
@@ -1770,25 +1721,10 @@
             }
             productsGrid.innerHTML = productsList.map(product => `
                 <div class="product-card" data-product='${JSON.stringify(product)}'>
-                    <div class="product-image">
-                        ${product.img ? `<img src="${product.img}" alt="${product.nom}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;">Image</div>'}
-                        <div class="product-badge">${product.cat || 'Nouveau'}</div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">${product.cat || 'Électronique'}</div>
-                        <h3 class="product-name">${product.nom}</h3>
-                        <p class="product-description">${product.desc || 'Produit high-tech de qualité premium'}</p>
-                        <div class="product-footer">
-                            <span class="product-price">${formatPrice(product.prix)}</span>
-                            <div class="product-cta add-to-cart">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+                    <div class="product-image">${product.img ? `<img src="${product.img}" alt="${product.nom}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;">Image</div>'}<div class="product-badge">${product.cat || 'Nouveau'}</div></div>
+                    <div class="product-info"><div class="product-category">${product.cat || 'Électronique'}</div><h3 class="product-name">${product.nom}</h3><p class="product-description">${product.desc || 'Produit high-tech de qualité premium'}</p>
+                    <div class="product-footer"><span class="product-price">${formatPrice(product.prix)}</span><div class="product-cta add-to-cart"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M12 4.5v15m7.5-7.5h-15"/></svg></div></div></div>
+                </div>`).join('');
             document.querySelectorAll('.product-card').forEach(card => {
                 const addBtn = card.querySelector('.add-to-cart');
                 const productData = JSON.parse(card.dataset.product);
@@ -1813,20 +1749,7 @@
             let subtotal = 0;
             cartItems.innerHTML = cart.map((item, index) => {
                 subtotal += item.prix * item.quantite;
-                return `
-                    <div class="cart-item">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.nom}</div>
-                            <div class="cart-item-price">${formatPrice(item.prix)}</div>
-                            <div class="cart-item-quantity">
-                                <button data-index="${index}" data-delta="-1">-</button>
-                                <span>${item.quantite}</span>
-                                <button data-index="${index}" data-delta="1">+</button>
-                                <span class="cart-item-remove" data-index="${index}">Supprimer</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                return `<div class="cart-item"><div class="cart-item-info"><div class="cart-item-name">${item.nom}</div><div class="cart-item-price">${formatPrice(item.prix)}</div><div class="cart-item-quantity"><button data-index="${index}" data-delta="-1">-</button><span>${item.quantite}</span><button data-index="${index}" data-delta="1">+</button><span class="cart-item-remove" data-index="${index}">Supprimer</span></div></div></div>`;
             }).join('');
             const totalApresReduction = subtotal * (1 - currentReduction / 100);
             cartTotalSpan.textContent = formatPrice(Math.round(totalApresReduction));
