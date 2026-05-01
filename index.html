@@ -1629,12 +1629,16 @@
             return price.toLocaleString() + ' FCFA';
         }
 
-        // ---------- Load Products from Google Sheets ----------
+                // ---------- Load Products from Google Sheets ----------
         function loadProducts() {
             productsGrid.innerHTML = '<div class="loading">Chargement des produits</div>';
             
-            google.script.run
-                .withSuccessHandler(function(result) {
+            // Votre URL Web App
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbxakTxtEnRq0TR6HqgUCJ3v-AR0UaOQL8OsbSvVgPNDTw4F9dwQKAX3TiBiMYTJH3NwpA/exec';
+            
+            fetch(webAppUrl + '?action=produits')
+                .then(response => response.json())
+                .then(result => {
                     if (result.ok && result.produits) {
                         products = result.produits;
                         renderProducts(products);
@@ -1642,10 +1646,10 @@
                         productsGrid.innerHTML = '<div class="loading">⚠️ Aucun produit trouvé</div>';
                     }
                 })
-                .withFailureHandler(function(error) {
+                .catch(error => {
+                    console.error('Erreur:', error);
                     productsGrid.innerHTML = '<div class="loading">❌ Erreur de chargement</div>';
-                })
-                .obtenirProduitsNexora();
+                });
         }
 
         function renderProducts(productsList) {
@@ -1761,7 +1765,7 @@
             });
         }
 
-        // ---------- Promo Code ----------
+                // ---------- Promo Code ----------
         function applyPromoCode() {
             const code = document.getElementById('promoCode').value.trim().toUpperCase();
             if (!code) {
@@ -1770,9 +1774,11 @@
             }
 
             const productNames = cart.map(item => item.nom);
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbxakTxtEnRq0TR6HqgUCJ3v-AR0UaOQL8OsbSvVgPNDTw4F9dwQKAX3TiBiMYTJH3NwpA/exec';
             
-            google.script.run
-                .withSuccessHandler(function(result) {
+            fetch(webAppUrl + '?action=verifierPromo&code=' + encodeURIComponent(code) + '&produits=' + encodeURIComponent(productNames.join(',')))
+                .then(response => response.json())
+                .then(result => {
                     if (result.ok && result.reduction > 0) {
                         currentReduction = result.reduction;
                         currentPromoCode = code;
@@ -1783,13 +1789,12 @@
                         showNotification('Code promo invalide', true);
                     }
                 })
-                .withFailureHandler(function() {
+                .catch(() => {
                     showNotification('Erreur vérification code', true);
-                })
-                .verifierCodePromo(code, productNames);
+                });
         }
 
-        // ---------- Submit Order ----------
+                // ---------- Submit Order ----------
         function submitOrder() {
             const name = document.getElementById('clientName').value.trim();
             const phone = document.getElementById('clientPhone').value.trim();
@@ -1824,36 +1829,43 @@
             document.getElementById('submitOrder').disabled = true;
             document.getElementById('submitOrder').textContent = 'Envoi...';
 
-            google.script.run
-                .withSuccessHandler(function(result) {
-                    if (result.ok) {
-                        showNotification('✅ Commande confirmée !');
-                        cart = [];
-                        currentReduction = 0;
-                        currentPromoCode = "";
-                        updateCartCount();
-                        checkoutModal.classList.remove('open');
-                        cartOverlay.classList.remove('open');
-                        cartModal.classList.remove('open');
-                        document.getElementById('promoCode').value = "";
-                        document.getElementById('promoInfo').innerHTML = "";
-                        document.getElementById('clientName').value = "";
-                        document.getElementById('clientPhone').value = "";
-                        document.getElementById('clientAddress').value = "";
-                    } else {
-                        showNotification('❌ Erreur: ' + result.error, true);
-                    }
-                    document.getElementById('submitOrder').disabled = false;
-                    document.getElementById('submitOrder').textContent = 'Confirmer';
-                })
-                .withFailureHandler(function(error) {
-                    showNotification('❌ Erreur réseau', true);
-                    document.getElementById('submitOrder').disabled = false;
-                    document.getElementById('submitOrder').textContent = 'Confirmer';
-                })
-                .enregistrerCommandeNexora(commande);
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbxakTxtEnRq0TR6HqgUCJ3v-AR0UaOQL8OsbSvVgPNDTw4F9dwQKAX3TiBiMYTJH3NwpA/exec';
+            
+            fetch(webAppUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(commande)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.ok) {
+                    showNotification('✅ Commande confirmée !');
+                    cart = [];
+                    currentReduction = 0;
+                    currentPromoCode = "";
+                    updateCartCount();
+                    checkoutModal.classList.remove('open');
+                    cartOverlay.classList.remove('open');
+                    cartModal.classList.remove('open');
+                    document.getElementById('promoCode').value = "";
+                    document.getElementById('promoInfo').innerHTML = "";
+                    document.getElementById('clientName').value = "";
+                    document.getElementById('clientPhone').value = "";
+                    document.getElementById('clientAddress').value = "";
+                } else {
+                    showNotification('❌ Erreur: ' + result.error, true);
+                }
+                document.getElementById('submitOrder').disabled = false;
+                document.getElementById('submitOrder').textContent = 'Confirmer';
+            })
+            .catch(error => {
+                showNotification('❌ Erreur réseau: ' + error.message, true);
+                document.getElementById('submitOrder').disabled = false;
+                document.getElementById('submitOrder').textContent = 'Confirmer';
+            });
         }
-
         // ---------- UI Event Listeners ----------
         function openCart() {
             renderCart();
