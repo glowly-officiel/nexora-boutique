@@ -188,106 +188,20 @@
             border: 2px solid var(--color-bg);
         }
 
-        /* ========== HERO SECTION AVEC CARROUSEL D'IMAGES ========== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-        }
-
-        /* Carrousel d'images */
-        .hero-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            animation: kenBurns 20s ease-in-out infinite alternate;
-        }
-
-        @keyframes kenBurns {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        /* Overlay gradient */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, 
-                rgba(0, 0, 0, 0.5) 0%, 
-                rgba(0, 0, 0, 0.3) 50%, 
-                rgba(0, 0, 0, 0.5) 100%);
-            z-index: 1;
-        }
-
-        /* Grid effect */
-        .hero-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridSlide 20s linear infinite;
-            opacity: 0.5;
-            z-index: 2;
-        }
-
-        @keyframes gridSlide {
-            0% { transform: translateY(0) translateX(0); }
-            100% { transform: translateY(60px) translateX(60px); }
-        }
-
-        /* Hero content */
-        .hero-content {
-            position: relative;
-            z-index: 10;
+        /* ========== BANDE NOIRE AVEC LOGO LUMINEUX ========== */
+        .hero-black-band {
+            margin-top: 70px;
+            background: #0A0A0A;
+            padding: 1.5rem 2rem;
             text-align: center;
-            max-width: 1200px;
-            padding: 0 2rem;
+            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
         }
 
-        /* Logo NEXORA spectaculaire */
         .hero-logo {
             font-family: var(--font-display);
-            font-size: clamp(4rem, 15vw, 12rem);
+            font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 2rem;
-            position: relative;
+            letter-spacing: -0.02em;
             display: inline-block;
         }
 
@@ -305,7 +219,6 @@
             animation: gradientShift 8s ease-in-out infinite,
                        textGlow 2s ease-in-out infinite;
             filter: drop-shadow(0 0 40px rgba(0, 102, 255, 0.6));
-            text-shadow: 0 0 80px rgba(0, 102, 255, 0.8);
         }
 
         @keyframes gradientShift {
@@ -314,49 +227,24 @@
         }
 
         @keyframes textGlow {
-            0%, 100% { 
-                filter: drop-shadow(0 0 30px rgba(0, 102, 255, 0.4));
-            }
-            50% { 
-                filter: drop-shadow(0 0 60px rgba(0, 102, 255, 0.8));
-            }
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(0, 102, 255, 0.4)); }
+            50% { filter: drop-shadow(0 0 60px rgba(0, 102, 255, 0.8)); }
         }
 
-        /* Effet 3D sur les lettres */
-        .hero-logo-text span {
-            display: inline-block;
-            animation: letterFloat 3s ease-in-out infinite;
-        }
-
-        .hero-logo-text span:nth-child(1) { animation-delay: 0s; }
-        .hero-logo-text span:nth-child(2) { animation-delay: 0.1s; }
-        .hero-logo-text span:nth-child(3) { animation-delay: 0.2s; }
-        .hero-logo-text span:nth-child(4) { animation-delay: 0.3s; }
-        .hero-logo-text span:nth-child(5) { animation-delay: 0.4s; }
-        .hero-logo-text span:nth-child(6) { animation-delay: 0.5s; }
-
-        @keyframes letterFloat {
-            0%, 100% { transform: translateY(0) rotateX(0deg); }
-            50% { transform: translateY(-12px) rotateX(10deg); }
-        }
-
-        /* Tagline avec typing effect */
         .hero-tagline {
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            margin-bottom: 3rem;
-            min-height: 2.5rem;
-            letter-spacing: 0.15em;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            margin-top: 0.5rem;
+            letter-spacing: 0.1em;
         }
 
         .typing-cursor {
             display: inline-block;
-            width: 3px;
-            height: 1.2em;
+            width: 2px;
+            height: 1em;
             background: var(--color-accent);
-            margin-left: 5px;
+            margin-left: 4px;
             animation: blink 0.7s infinite;
             vertical-align: middle;
         }
@@ -366,107 +254,58 @@
             50% { opacity: 0; }
         }
 
-        /* CTA buttons */
         .hero-cta {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             justify-content: center;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
-        .btn {
-            padding: 1.2rem 3rem;
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            border: none;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            display: inline-block;
+        .hero-cta .btn {
+            padding: 0.8rem 2rem;
+            font-size: 0.8rem;
+        }
+
+        /* ========== CARROUSEL D'IMAGES ========== */
+        .hero-carousel {
+            background: #000;
+            padding: 2rem 0;
+        }
+
+        .hero-slider {
+            max-width: 1400px;
+            margin: 0 auto;
             position: relative;
-            overflow: hidden;
-            text-transform: uppercase;
         }
 
-        .btn-primary {
-            background: var(--color-white);
-            color: var(--color-primary);
-            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+        .slide {
+            display: none;
+            text-align: center;
         }
 
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--color-accent);
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: -1;
+        .slide.active {
+            display: block;
         }
 
-        .btn-primary:hover::before {
-            left: 0;
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
         }
 
-        .btn-primary:hover {
-            color: var(--color-white);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 50px rgba(0, 102, 255, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--color-white);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: var(--color-white);
-            transform: translateY(-3px);
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-        }
-
-        .scroll-indicator svg {
-            width: 30px;
-            height: 30px;
-            stroke: rgba(255, 255, 255, 0.7);
-            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
-
-        /* Slide indicators */
         .slide-indicators {
-            position: absolute;
-            bottom: 5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
             display: flex;
+            justify-content: center;
             gap: 0.8rem;
+            margin-top: 1.5rem;
         }
 
         .slide-indicator {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
@@ -474,7 +313,7 @@
         }
 
         .slide-indicator.active {
-            background: var(--color-white);
+            background: var(--color-accent);
             transform: scale(1.2);
         }
 
@@ -484,7 +323,7 @@
 
         /* ========== FEATURED PRODUCTS ========== */
         .featured {
-            padding: 6rem 4% 4rem;
+            padding: 6rem 4%;
             background: var(--color-white);
         }
 
@@ -1301,17 +1140,15 @@
             color: var(--color-secondary);
         }
 
-        /* ========== RESPONSIVE DESIGN ========== */
+        /* Responsive */
         @media (max-width: 1200px) {
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
-            
             .innovation-content {
                 grid-template-columns: 1fr;
                 gap: 4rem;
             }
-            
             .innovation-visual {
                 height: 400px;
             }
@@ -1321,13 +1158,11 @@
             .footer-content {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
             .categories-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
         }
 
-        /* ========== VERSION MOBILE (IMAGE TAILLE RÉELLE) ========== */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -1337,118 +1172,26 @@
                 font-size: 1.3rem;
             }
             
-            /* Hero - l'image à sa taille réelle, non coupée */
-            .hero {
-                min-height: auto;
-                display: block;
-                padding: 0;
-                background: #000;
-            }
-            
-            .hero-slider {
-                position: relative;
-                height: auto;
-            }
-            
-            .slide {
-                position: relative;
-                height: auto;
-                min-height: auto;
-            }
-            
-            .slide img {
-                position: relative;
-                width: 100%;
-                height: auto !important;
-                object-fit: contain !important;
-                object-position: center;
-                animation: none;
-            }
-            
-            /* Overlay et grid s'adaptent */
-            .hero-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(135deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.2) 100%);
-            }
-            
-            .hero-grid {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: 
-                    linear-gradient(rgba(0, 102, 255, 0.08) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0, 102, 255, 0.08) 1px, transparent 1px);
-                background-size: 40px 40px;
-            }
-            
-            /* Contenu positionné par-dessus l'image */
-            .hero-content {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 90%;
-                padding: 0;
-                z-index: 10;
-            }
-            
-            .hero-logo {
-                font-size: clamp(3rem, 10vw, 4rem);
-                margin-bottom: 1rem;
-            }
-            
-            /* Animation des lettres désactivée sur mobile */
-            .hero-logo-text span {
-                animation: none;
-            }
-            
-            .hero-tagline {
-                font-size: 0.85rem;
-                margin-bottom: 1.5rem;
-                min-height: 2rem;
+            .hero-black-band {
+                margin-top: 60px;
+                padding: 1rem 1rem;
             }
             
             .hero-cta {
                 flex-direction: column;
-                gap: 0.8rem;
+                align-items: center;
+            }
+            
+            .hero-cta .btn {
+                width: 80%;
+                max-width: 200px;
+            }
+            
+            .slide img {
                 width: 100%;
-                max-width: 250px;
-                margin: 0 auto;
+                height: auto;
             }
             
-            .btn {
-                width: 100%;
-                padding: 0.9rem 1.5rem;
-                font-size: 0.8rem;
-            }
-            
-            /* Indicateurs repositionnés */
-            .slide-indicators {
-                bottom: 2rem;
-                gap: 0.5rem;
-            }
-            
-            .slide-indicator {
-                width: 8px;
-                height: 8px;
-            }
-            
-            .scroll-indicator {
-                bottom: 1.5rem;
-            }
-            
-            .scroll-indicator svg {
-                width: 24px;
-                height: 24px;
-            }
-            
-            /* Sections */
             .featured, .categories, .innovation, .newsletter {
                 padding: 3rem 5%;
             }
@@ -1505,20 +1248,9 @@
                 height: 250px;
             }
             
-            .tech-circle:nth-child(1) {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .tech-circle:nth-child(2) {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .tech-circle:nth-child(3) {
-                width: 250px;
-                height: 250px;
-            }
+            .tech-circle:nth-child(1) { width: 150px; height: 150px; }
+            .tech-circle:nth-child(2) { width: 200px; height: 200px; }
+            .tech-circle:nth-child(3) { width: 250px; height: 250px; }
             
             .newsletter h2 {
                 font-size: 1.8rem;
@@ -1563,18 +1295,12 @@
         }
 
         @media (max-width: 480px) {
-            .hero-logo {
-                font-size: 2.5rem;
-            }
-            
             .categories-grid {
                 grid-template-columns: 1fr;
             }
-            
             .innovation-stats {
                 grid-template-columns: 1fr;
             }
-            
             .product-info {
                 padding: 1.5rem;
             }
@@ -1603,8 +1329,20 @@
         </div>
     </nav>
 
-    <!-- ========== HERO SECTION AVEC CARROUSEL D'IMAGES ========== -->
-    <section class="hero">
+    <!-- BANDE NOIRE AVEC LOGO LUMINEUX -->
+    <div class="hero-black-band">
+        <div class="hero-logo">
+            <div class="hero-logo-text">NEXORA</div>
+        </div>
+        <div class="hero-tagline" id="tagline"></div>
+        <div class="hero-cta">
+            <button class="btn btn-primary" data-scroll="produits">Explorer la Collection</button>
+            <button class="btn btn-secondary" data-scroll="innovation">En Savoir Plus</button>
+        </div>
+    </div>
+
+    <!-- CARROUSEL D'IMAGES TAILLE RÉELLE -->
+    <div class="hero-carousel">
         <div class="hero-slider">
             <div class="slide active">
                 <img src="Gemini_Generated_Image_535gku535gku535g.png" alt="NEXORA Tech Setup">
@@ -1613,34 +1351,11 @@
                 <img src="Gemini_Generated_Image_bddlm0bddlm0bddl.png" alt="NEXORA Products">
             </div>
         </div>
-        
-        <div class="hero-overlay"></div>
-        <div class="hero-grid"></div>
-        
-        <div class="hero-content">
-            <div class="hero-logo">
-                <div class="hero-logo-text">
-                    <span>N</span><span>E</span><span>X</span><span>O</span><span>R</span><span>A</span>
-                </div>
-            </div>
-            <div class="hero-tagline" id="tagline"></div>
-            <div class="hero-cta">
-                <button class="btn btn-primary" data-scroll="produits">Explorer la Collection</button>
-                <button class="btn btn-secondary" data-scroll="innovation">En Savoir Plus</button>
-            </div>
-        </div>
-        
         <div class="slide-indicators">
             <div class="slide-indicator active" data-slide="0"></div>
             <div class="slide-indicator" data-slide="1"></div>
         </div>
-        
-        <div class="scroll-indicator">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-            </svg>
-        </div>
-    </section>
+    </div>
 
     <!-- Featured Products -->
     <section class="featured" id="produits">
@@ -1737,18 +1452,9 @@
                 <h2>Innovation & Technologie</h2>
                 <p>Chez NEXORA, nous repoussons constamment les limites de la technologie. Chaque produit est conçu avec une attention méticuleuse aux détails, combinant design minimaliste et performances exceptionnelles.</p>
                 <div class="innovation-stats">
-                    <div class="stat">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Produits</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Clients</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">98%</div>
-                        <div class="stat-label">Satisfaction</div>
-                    </div>
+                    <div class="stat"><div class="stat-number">500+</div><div class="stat-label">Produits</div></div>
+                    <div class="stat"><div class="stat-number">50K+</div><div class="stat-label">Clients</div></div>
+                    <div class="stat"><div class="stat-number">98%</div><div class="stat-label">Satisfaction</div></div>
                 </div>
             </div>
             <div class="innovation-visual">
@@ -1781,87 +1487,25 @@
                 <h3>NEXORA</h3>
                 <p>Redéfinir l'excellence technologique à travers un design minimaliste et des innovations de pointe.</p>
                 <div class="footer-social">
-                    <div class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg>
-                    </div>
-                    <div class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                        </svg>
-                    </div>
-                    <div class="social-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
-                    </div>
+                    <div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></div>
+                    <div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></div>
+                    <div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
                 </div>
             </div>
-            <div class="footer-section">
-                <h4>Boutique</h4>
-                <ul class="footer-links">
-                    <li><a data-scroll="produits">Nouveautés</a></li>
-                    <li><a data-scroll="produits">Best-sellers</a></li>
-                    <li><a data-scroll="produits">Promotions</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Aide</h4>
-                <ul class="footer-links">
-                    <li><a>Support Client</a></li>
-                    <li><a>Livraison</a></li>
-                    <li><a>Retours</a></li>
-                    <li><a>FAQ</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Entreprise</h4>
-                <ul class="footer-links">
-                    <li><a>À Propos</a></li>
-                    <li><a>Carrières</a></li>
-                    <li><a>Presse</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Légal</h4>
-                <ul class="footer-links">
-                    <li><a>Confidentialité</a></li>
-                    <li><a>CGV</a></li>
-                    <li><a>Mentions Légales</a></li>
-                </ul>
-            </div>
+            <div class="footer-section"><h4>Boutique</h4><ul class="footer-links"><li><a data-scroll="produits">Nouveautés</a></li><li><a data-scroll="produits">Best-sellers</a></li><li><a data-scroll="produits">Promotions</a></li></ul></div>
+            <div class="footer-section"><h4>Aide</h4><ul class="footer-links"><li><a>Support Client</a></li><li><a>Livraison</a></li><li><a>Retours</a></li><li><a>FAQ</a></li></ul></div>
+            <div class="footer-section"><h4>Entreprise</h4><ul class="footer-links"><li><a>À Propos</a></li><li><a>Carrières</a></li><li><a>Presse</a></li></ul></div>
+            <div class="footer-section"><h4>Légal</h4><ul class="footer-links"><li><a>Confidentialité</a></li><li><a>CGV</a></li><li><a>Mentions Légales</a></li></ul></div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 NEXORA. Tous droits réservés.</p>
-            <p>Conçu avec passion pour la technologie</p>
-        </div>
+        <div class="footer-bottom"><p>© 2026 NEXORA. Tous droits réservés.</p><p>Conçu avec passion pour la technologie</p></div>
     </footer>
 
     <!-- Cart Modal -->
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-modal" id="cartModal">
-        <div class="cart-header">
-            <h2>Mon Panier</h2>
-            <div class="cart-close" id="cartClose">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </div>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <p style="text-align:center; color:var(--color-secondary); padding: 3rem 1rem;">Votre panier est vide</p>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total</span>
-                <span id="cartTotal">0 FCFA</span>
-            </div>
-            <button class="cart-checkout" id="checkoutBtn">Commander</button>
-        </div>
+        <div class="cart-header"><h2>Mon Panier</h2><div class="cart-close" id="cartClose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div></div>
+        <div class="cart-items" id="cartItems"><p style="text-align:center; color:var(--color-secondary); padding: 3rem 1rem;">Votre panier est vide</p></div>
+        <div class="cart-footer"><div class="cart-total"><span>Total</span><span id="cartTotal">0 FCFA</span></div><button class="cart-checkout" id="checkoutBtn">Commander</button></div>
     </div>
 
     <!-- Checkout Modal -->
@@ -1870,15 +1514,8 @@
         <input type="text" id="clientName" placeholder="Nom complet" required>
         <input type="tel" id="clientPhone" placeholder="Téléphone (ex: 771234567)" required>
         <input type="text" id="clientAddress" placeholder="Adresse de livraison" required>
-        <select id="paymentMethod">
-            <option value="wave">🐧 Wave</option>
-            <option value="orange">🟠 Orange Money</option>
-            <option value="cash">💵 Espèces à la livraison</option>
-        </select>
-        <div class="checkout-promo">
-            <input type="text" id="promoCode" placeholder="Code promo">
-            <button id="applyPromo">Appliquer</button>
-        </div>
+        <select id="paymentMethod"><option value="wave">🐧 Wave</option><option value="orange">🟠 Orange Money</option><option value="cash">💵 Espèces à la livraison</option></select>
+        <div class="checkout-promo"><input type="text" id="promoCode" placeholder="Code promo"><button id="applyPromo">Appliquer</button></div>
         <div id="promoInfo" style="font-size:0.85rem; margin-bottom:1rem; color:var(--color-accent)"></div>
         <button class="btn btn-primary" id="submitOrder" style="width:100%; margin-bottom: 0.8rem;">Confirmer la commande</button>
         <button class="cart-close" id="closeCheckout" style="margin-top:0; width:100%; background:transparent; border:1px solid var(--color-border); padding: 1rem;">Annuler</button>
@@ -1896,9 +1533,7 @@
             if (slides.length === 0) return;
             slides[currentSlide]?.classList.remove('active');
             slideIndicators[currentSlide]?.classList.remove('active');
-            
             currentSlide = index;
-            
             slides[currentSlide]?.classList.add('active');
             slideIndicators[currentSlide]?.classList.add('active');
         }
@@ -1909,32 +1544,20 @@
             changeSlide(nextIndex);
         }
         
-        if (slides.length > 0) {
-            setInterval(nextSlide, 5000);
-        }
+        if (slides.length > 0) setInterval(nextSlide, 5000);
         
         slideIndicators.forEach((indicator, index) => {
             indicator.addEventListener('click', () => changeSlide(index));
         });
 
         // ========== TYPING EFFECT ==========
-        const taglines = [
-            "EXCELLENCE TECHNOLOGIQUE",
-            "DESIGN MINIMALISTE",
-            "INNOVATION DE POINTE",
-            "QUALITÉ PREMIUM",
-            "LIVRAISON RAPIDE"
-        ];
-        
-        let taglineIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+        const taglines = ["EXCELLENCE TECHNOLOGIQUE", "DESIGN MINIMALISTE", "INNOVATION DE POINTE", "QUALITÉ PREMIUM", "LIVRAISON RAPIDE"];
+        let taglineIndex = 0, charIndex = 0, isDeleting = false;
         const taglineElement = document.getElementById('tagline');
         
         if (taglineElement) {
             function typeEffect() {
                 const currentTagline = taglines[taglineIndex];
-                
                 if (isDeleting) {
                     taglineElement.textContent = currentTagline.substring(0, charIndex - 1);
                     charIndex--;
@@ -1942,53 +1565,43 @@
                     taglineElement.textContent = currentTagline.substring(0, charIndex + 1);
                     charIndex++;
                 }
-                
                 taglineElement.innerHTML += '<span class="typing-cursor"></span>';
-                
                 if (!isDeleting && charIndex === currentTagline.length) {
                     isDeleting = true;
                     setTimeout(typeEffect, 2000);
                     return;
                 }
-                
                 if (isDeleting && charIndex === 0) {
                     isDeleting = false;
                     taglineIndex = (taglineIndex + 1) % taglines.length;
                     setTimeout(typeEffect, 500);
                     return;
                 }
-                
                 setTimeout(typeEffect, isDeleting ? 50 : 100);
             }
             typeEffect();
         }
 
-        // ========== NAVBAR SCROLL EFFECT ==========
+        // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 100) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         });
 
-        // ========== CUSTOM CURSOR ==========
+        // Custom cursor
         if (window.innerWidth > 768) {
             const cursor = document.querySelector('.cursor');
             const cursorFollower = document.querySelector('.cursor-follower');
-            
             if (cursor && cursorFollower) {
                 document.addEventListener('mousemove', (e) => {
                     cursor.style.left = e.clientX + 'px';
                     cursor.style.top = e.clientY + 'px';
-                    
                     setTimeout(() => {
                         cursorFollower.style.left = e.clientX + 'px';
                         cursorFollower.style.top = e.clientY + 'px';
                     }, 50);
                 });
-                
                 document.querySelectorAll('a, button, .product-card, .category-card, .nav-cart').forEach(el => {
                     el.addEventListener('mouseenter', () => {
                         cursor.style.transform = 'scale(1.5)';
@@ -2002,15 +1615,7 @@
             }
         }
 
-        // ========== SCROLL INDICATOR ==========
-        const scrollIndicator = document.querySelector('.scroll-indicator');
-        if (scrollIndicator) {
-            scrollIndicator.addEventListener('click', () => {
-                document.getElementById('produits')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        }
-
-        // ========== APP STATE ==========
+        // APP STATE
         let products = [];
         let cart = JSON.parse(localStorage.getItem('nexora_cart') || '[]');
         let currentReduction = 0;
@@ -2046,7 +1651,6 @@
             if (!productsGrid) return;
             productsGrid.innerHTML = '<div class="loading">Chargement des produits...</div>';
             const webAppUrl = 'https://script.google.com/macros/s/AKfycbz1nBMVwgJTxdA_ciaVi4OENFl60k6iGVyFfx0M00WGWrg4W_jhgQVjkpiS6DhAmxtchA/exec';
-            
             fetch(webAppUrl + '?action=produits')
                 .then(response => response.json())
                 .then(result => {
@@ -2069,12 +1673,10 @@
                 productsGrid.innerHTML = '<div class="loading">Aucun produit disponible</div>';
                 return;
             }
-            
             productsGrid.innerHTML = productsList.map(product => `
                 <div class="product-card" data-product='${JSON.stringify(product)}'>
                     <div class="product-image">
-                        ${product.img ? `<img src="${product.img}" alt="${product.nom}">` : 
-                          '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:3rem;">📦</div>'}
+                        ${product.img ? `<img src="${product.img}" alt="${product.nom}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:3rem;">📦</div>'}
                         <div class="product-badge">${product.cat || 'Nouveau'}</div>
                     </div>
                     <div class="product-info">
@@ -2092,7 +1694,6 @@
                     </div>
                 </div>
             `).join('');
-            
             document.querySelectorAll('.product-card').forEach(card => {
                 const addBtn = card.querySelector('.add-to-cart');
                 const productData = JSON.parse(card.dataset.product);
@@ -2108,16 +1709,8 @@
         function addToCart(product) {
             if (!product) return;
             const existing = cart.find(item => item.id === product.id);
-            if (existing) {
-                existing.quantite++;
-            } else {
-                cart.push({
-                    id: product.id,
-                    nom: product.nom,
-                    prix: product.prix,
-                    quantite: 1
-                });
-            }
+            if (existing) existing.quantite++;
+            else cart.push({ id: product.id, nom: product.nom, prix: product.prix, quantite: 1 });
             updateCartCount();
             showNotification(`✅ ${product.nom} ajouté au panier`);
         }
@@ -2129,43 +1722,23 @@
                 cartTotalSpan.textContent = '0 FCFA';
                 return;
             }
-            
             let subtotal = 0;
             cartItems.innerHTML = cart.map((item, index) => {
                 subtotal += item.prix * item.quantite;
-                return `
-                    <div class="cart-item">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.nom}</div>
-                            <div class="cart-item-price">${formatPrice(item.prix)}</div>
-                            <div class="cart-item-quantity">
-                                <button data-index="${index}" data-delta="-1">−</button>
-                                <span>${item.quantite}</span>
-                                <button data-index="${index}" data-delta="1">+</button>
-                                <span class="cart-item-remove" data-index="${index}">Supprimer</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                return `<div class="cart-item"><div class="cart-item-info"><div class="cart-item-name">${item.nom}</div><div class="cart-item-price">${formatPrice(item.prix)}</div><div class="cart-item-quantity"><button data-index="${index}" data-delta="-1">−</button><span>${item.quantite}</span><button data-index="${index}" data-delta="1">+</button><span class="cart-item-remove" data-index="${index}">Supprimer</span></div></div></div>`;
             }).join('');
-            
             const totalApresReduction = subtotal * (1 - currentReduction / 100);
             cartTotalSpan.textContent = formatPrice(Math.round(totalApresReduction));
-            
             document.querySelectorAll('[data-delta]').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const index = parseInt(btn.dataset.index);
                     const delta = parseInt(btn.dataset.delta);
                     const newQty = cart[index].quantite + delta;
-                    if (newQty <= 0) {
-                        cart.splice(index, 1);
-                    } else {
-                        cart[index].quantite = newQty;
-                    }
+                    if (newQty <= 0) cart.splice(index, 1);
+                    else cart[index].quantite = newQty;
                     updateCartCount();
                 });
             });
-            
             document.querySelectorAll('.cart-item-remove').forEach(btn => {
                 btn.addEventListener('click', () => {
                     cart.splice(parseInt(btn.dataset.index), 1);
@@ -2176,10 +1749,7 @@
 
         function applyPromoCode() {
             const code = document.getElementById('promoCode')?.value.trim().toUpperCase();
-            if (!code) {
-                showNotification('Entrez un code promo', true);
-                return;
-            }
+            if (!code) { showNotification('Entrez un code promo', true); return; }
             showNotification('Code promo invalide', true);
         }
 
@@ -2187,20 +1757,9 @@
             const name = document.getElementById('clientName')?.value.trim();
             const phone = document.getElementById('clientPhone')?.value.trim();
             const address = document.getElementById('clientAddress')?.value.trim();
-            const payment = document.getElementById('paymentMethod')?.value;
-            
-            if (!name || !phone || !address) {
-                showNotification('Veuillez remplir tous les champs', true);
-                return;
-            }
-            
-            if (cart.length === 0) {
-                showNotification('Votre panier est vide', true);
-                return;
-            }
-            
+            if (!name || !phone || !address) { showNotification('Veuillez remplir tous les champs', true); return; }
+            if (cart.length === 0) { showNotification('Votre panier est vide', true); return; }
             showNotification('✅ Commande confirmée !');
-            
             cart = [];
             currentReduction = 0;
             currentPromoCode = "";
@@ -2208,105 +1767,53 @@
             checkoutModal?.classList.remove('open');
             cartOverlay?.classList.remove('open');
             cartModal?.classList.remove('open');
-            
-            const promoCodeInput = document.getElementById('promoCode');
-            const promoInfoDiv = document.getElementById('promoInfo');
-            const clientNameInput = document.getElementById('clientName');
-            const clientPhoneInput = document.getElementById('clientPhone');
-            const clientAddressInput = document.getElementById('clientAddress');
-            
-            if (promoCodeInput) promoCodeInput.value = "";
-            if (promoInfoDiv) promoInfoDiv.innerHTML = "";
-            if (clientNameInput) clientNameInput.value = "";
-            if (clientPhoneInput) clientPhoneInput.value = "";
-            if (clientAddressInput) clientAddressInput.value = "";
+            document.getElementById('promoCode').value = "";
+            document.getElementById('promoInfo').innerHTML = "";
+            document.getElementById('clientName').value = "";
+            document.getElementById('clientPhone').value = "";
+            document.getElementById('clientAddress').value = "";
         }
 
-        function openCart() {
-            renderCart();
-            cartModal?.classList.add('open');
-            cartOverlay?.classList.add('open');
-        }
+        function openCart() { renderCart(); cartModal?.classList.add('open'); cartOverlay?.classList.add('open'); }
+        function closeCart() { cartModal?.classList.remove('open'); cartOverlay?.classList.remove('open'); checkoutModal?.classList.remove('open'); }
 
-        function closeCart() {
+        document.querySelector('.nav-cart')?.addEventListener('click', openCart);
+        document.getElementById('cartClose')?.addEventListener('click', closeCart);
+        cartOverlay?.addEventListener('click', closeCart);
+        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+            if (cart.length === 0) { showNotification('Votre panier est vide', true); return; }
             cartModal?.classList.remove('open');
-            cartOverlay?.classList.remove('open');
-            checkoutModal?.classList.remove('open');
-        }
+            checkoutModal?.classList.add('open');
+        });
+        document.getElementById('closeCheckout')?.addEventListener('click', () => checkoutModal?.classList.remove('open'));
+        document.getElementById('applyPromo')?.addEventListener('click', applyPromoCode);
+        document.getElementById('submitOrder')?.addEventListener('click', submitOrder);
 
-        // ========== EVENT LISTENERS ==========
-        const navCart = document.querySelector('.nav-cart');
-        const cartCloseBtn = document.getElementById('cartClose');
-        const checkoutBtn = document.getElementById('checkoutBtn');
-        const closeCheckoutBtn = document.getElementById('closeCheckout');
-        const applyPromoBtn = document.getElementById('applyPromo');
-        const submitOrderBtn = document.getElementById('submitOrder');
-        const newsletterForm = document.getElementById('newsletterForm');
-        
-        if (navCart) navCart.addEventListener('click', openCart);
-        if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
-        if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
-        
-        if (checkoutBtn) {
-            checkoutBtn.addEventListener('click', () => {
-                if (cart.length === 0) {
-                    showNotification('Votre panier est vide', true);
-                    return;
-                }
-                cartModal?.classList.remove('open');
-                checkoutModal?.classList.add('open');
-            });
-        }
-        
-        if (closeCheckoutBtn) {
-            closeCheckoutBtn.addEventListener('click', () => {
-                checkoutModal?.classList.remove('open');
-            });
-        }
-        
-        if (applyPromoBtn) applyPromoBtn.addEventListener('click', applyPromoCode);
-        if (submitOrderBtn) submitOrderBtn.addEventListener('click', submitOrder);
-
-        // Smooth scroll
         document.querySelectorAll('[data-scroll]').forEach(el => {
             el.addEventListener('click', () => {
                 const target = document.getElementById(el.getAttribute('data-scroll'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
-        // Newsletter
-        if (newsletterForm) {
-            newsletterForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const emailInput = document.getElementById('newsletterEmail');
-                const email = emailInput?.value;
-                if (email) {
-                    showNotification('✅ Merci pour votre inscription !');
-                    if (emailInput) emailInput.value = '';
-                }
-            });
-        }
+        document.getElementById('newsletterForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('newsletterEmail')?.value;
+            if (email) { showNotification('✅ Merci pour votre inscription !'); document.getElementById('newsletterEmail').value = ''; }
+        });
 
-        // Categories filter
         document.querySelectorAll('.category-card').forEach(cat => {
             cat.addEventListener('click', () => {
                 const category = cat.dataset.category;
                 if (category && products.length) {
-                    const filtered = products.filter(p => 
-                        p.cat && p.cat.toLowerCase().includes(category.toLowerCase())
-                    );
+                    const filtered = products.filter(p => p.cat && p.cat.toLowerCase().includes(category.toLowerCase()));
                     renderProducts(filtered.length ? filtered : products);
                     showNotification(`Catégorie: ${category}`);
-                    
                     document.getElementById('produits')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
 
-        // ========== INITIALIZATION ==========
         loadProducts();
         updateCartCount();
     </script>
