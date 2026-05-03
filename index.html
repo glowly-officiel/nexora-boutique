@@ -438,6 +438,7 @@
             transform: translateX(-50%);
             z-index: 10;
             animation: bounce 2s infinite;
+            cursor: pointer;
         }
 
         .scroll-indicator svg {
@@ -865,10 +866,10 @@
             background: var(--color-accent);
             border-radius: 50%;
             box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulseDot 2s ease-in-out infinite;
         }
 
-        @keyframes pulse {
+        @keyframes pulseDot {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.5); opacity: 0.5; }
         }
@@ -1472,13 +1473,13 @@
 
     <!-- ========== HERO SECTION AVEC CARROUSEL D'IMAGES ========== -->
     <section class="hero">
-        <!-- Carrousel d'images -->
+        <!-- Carrousel d'images - CHEMINS CORRIGÉS POUR GITHUB -->
         <div class="hero-slider">
             <div class="slide active">
-                <img src="/mnt/user-data/uploads/Gemini_Generated_Image_535gku535gku535g.png" alt="NEXORA Tech Setup">
+                <img src="Gemini_Generated_Image_535gku535gku535g.png" alt="NEXORA Tech Setup">
             </div>
             <div class="slide">
-                <img src="/mnt/user-data/uploads/Gemini_Generated_Image_bddlm0bddlm0bddl.png" alt="NEXORA Products">
+                <img src="Gemini_Generated_Image_bddlm0bddlm0bddl.png" alt="NEXORA Products">
             </div>
         </div>
         
@@ -1762,22 +1763,26 @@
         const slideIndicators = document.querySelectorAll('.slide-indicator');
         
         function changeSlide(index) {
-            slides[currentSlide].classList.remove('active');
-            slideIndicators[currentSlide].classList.remove('active');
+            if (slides.length === 0) return;
+            slides[currentSlide]?.classList.remove('active');
+            slideIndicators[currentSlide]?.classList.remove('active');
             
             currentSlide = index;
             
-            slides[currentSlide].classList.add('active');
-            slideIndicators[currentSlide].classList.add('active');
+            slides[currentSlide]?.classList.add('active');
+            slideIndicators[currentSlide]?.classList.add('active');
         }
         
         function nextSlide() {
+            if (slides.length === 0) return;
             const nextIndex = (currentSlide + 1) % slides.length;
             changeSlide(nextIndex);
         }
         
         // Auto-change slides every 5 seconds
-        setInterval(nextSlide, 5000);
+        if (slides.length > 0) {
+            setInterval(nextSlide, 5000);
+        }
         
         // Click on indicators
         slideIndicators.forEach((indicator, index) => {
@@ -1798,33 +1803,36 @@
         let isDeleting = false;
         const taglineElement = document.getElementById('tagline');
         
-        function typeEffect() {
-            const currentTagline = taglines[taglineIndex];
-            
-            if (isDeleting) {
-                taglineElement.textContent = currentTagline.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                taglineElement.textContent = currentTagline.substring(0, charIndex + 1);
-                charIndex++;
+        if (taglineElement) {
+            function typeEffect() {
+                const currentTagline = taglines[taglineIndex];
+                
+                if (isDeleting) {
+                    taglineElement.textContent = currentTagline.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    taglineElement.textContent = currentTagline.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                taglineElement.innerHTML += '<span class="typing-cursor"></span>';
+                
+                if (!isDeleting && charIndex === currentTagline.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 2000);
+                    return;
+                }
+                
+                if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    taglineIndex = (taglineIndex + 1) % taglines.length;
+                    setTimeout(typeEffect, 500);
+                    return;
+                }
+                
+                setTimeout(typeEffect, isDeleting ? 50 : 100);
             }
-            
-            taglineElement.innerHTML += '<span class="typing-cursor"></span>';
-            
-            if (!isDeleting && charIndex === currentTagline.length) {
-                isDeleting = true;
-                setTimeout(typeEffect, 2000);
-                return;
-            }
-            
-            if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                taglineIndex = (taglineIndex + 1) % taglines.length;
-                setTimeout(typeEffect, 500);
-                return;
-            }
-            
-            setTimeout(typeEffect, isDeleting ? 50 : 100);
+            typeEffect();
         }
 
         // ========== NAVBAR SCROLL EFFECT ==========
@@ -1842,25 +1850,35 @@
             const cursor = document.querySelector('.cursor');
             const cursorFollower = document.querySelector('.cursor-follower');
             
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
+            if (cursor && cursorFollower) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                    
+                    setTimeout(() => {
+                        cursorFollower.style.left = e.clientX + 'px';
+                        cursorFollower.style.top = e.clientY + 'px';
+                    }, 50);
+                });
                 
-                setTimeout(() => {
-                    cursorFollower.style.left = e.clientX + 'px';
-                    cursorFollower.style.top = e.clientY + 'px';
-                }, 50);
-            });
-            
-            document.querySelectorAll('a, button, .product-card, .category-card, .nav-cart').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'scale(1.5)';
-                    cursorFollower.style.transform = 'scale(2)';
+                document.querySelectorAll('a, button, .product-card, .category-card, .nav-cart').forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.style.transform = 'scale(1.5)';
+                        cursorFollower.style.transform = 'scale(2)';
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursor.style.transform = 'scale(1)';
+                        cursorFollower.style.transform = 'scale(1)';
+                    });
                 });
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = 'scale(1)';
-                    cursorFollower.style.transform = 'scale(1)';
-                });
+            }
+        }
+
+        // ========== SCROLL INDICATOR ==========
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        if (scrollIndicator) {
+            scrollIndicator.addEventListener('click', () => {
+                document.getElementById('produits')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
 
@@ -1897,6 +1915,7 @@
         }
 
         function loadProducts() {
+            if (!productsGrid) return;
             productsGrid.innerHTML = '<div class="loading">Chargement des produits...</div>';
             const webAppUrl = 'https://script.google.com/macros/s/AKfycbz1nBMVwgJTxdA_ciaVi4OENFl60k6iGVyFfx0M00WGWrg4W_jhgQVjkpiS6DhAmxtchA/exec';
             
@@ -1917,6 +1936,7 @@
         }
 
         function renderProducts(productsList) {
+            if (!productsGrid) return;
             if (!productsList || productsList.length === 0) {
                 productsGrid.innerHTML = '<div class="loading">Aucun produit disponible</div>';
                 return;
@@ -1948,14 +1968,17 @@
             document.querySelectorAll('.product-card').forEach(card => {
                 const addBtn = card.querySelector('.add-to-cart');
                 const productData = JSON.parse(card.dataset.product);
-                addBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    addToCart(productData);
-                });
+                if (addBtn && productData) {
+                    addBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        addToCart(productData);
+                    });
+                }
             });
         }
 
         function addToCart(product) {
+            if (!product) return;
             const existing = cart.find(item => item.id === product.id);
             if (existing) {
                 existing.quantite++;
@@ -1972,6 +1995,7 @@
         }
 
         function renderCart() {
+            if (!cartItems || !cartTotalSpan) return;
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p style="text-align:center; color:var(--color-secondary); padding: 3rem 1rem;">Votre panier est vide</p>';
                 cartTotalSpan.textContent = '0 FCFA';
@@ -2023,7 +2047,7 @@
         }
 
         function applyPromoCode() {
-            const code = document.getElementById('promoCode').value.trim().toUpperCase();
+            const code = document.getElementById('promoCode')?.value.trim().toUpperCase();
             if (!code) {
                 showNotification('Entrez un code promo', true);
                 return;
@@ -2032,10 +2056,10 @@
         }
 
         function submitOrder() {
-            const name = document.getElementById('clientName').value.trim();
-            const phone = document.getElementById('clientPhone').value.trim();
-            const address = document.getElementById('clientAddress').value.trim();
-            const payment = document.getElementById('paymentMethod').value;
+            const name = document.getElementById('clientName')?.value.trim();
+            const phone = document.getElementById('clientPhone')?.value.trim();
+            const address = document.getElementById('clientAddress')?.value.trim();
+            const payment = document.getElementById('paymentMethod')?.value;
             
             if (!name || !phone || !address) {
                 showNotification('Veuillez remplir tous les champs', true);
@@ -2053,49 +2077,67 @@
             currentReduction = 0;
             currentPromoCode = "";
             updateCartCount();
-            checkoutModal.classList.remove('open');
-            cartOverlay.classList.remove('open');
-            cartModal.classList.remove('open');
+            checkoutModal?.classList.remove('open');
+            cartOverlay?.classList.remove('open');
+            cartModal?.classList.remove('open');
             
-            document.getElementById('promoCode').value = "";
-            document.getElementById('promoInfo').innerHTML = "";
-            document.getElementById('clientName').value = "";
-            document.getElementById('clientPhone').value = "";
-            document.getElementById('clientAddress').value = "";
+            const promoCodeInput = document.getElementById('promoCode');
+            const promoInfoDiv = document.getElementById('promoInfo');
+            const clientNameInput = document.getElementById('clientName');
+            const clientPhoneInput = document.getElementById('clientPhone');
+            const clientAddressInput = document.getElementById('clientAddress');
+            
+            if (promoCodeInput) promoCodeInput.value = "";
+            if (promoInfoDiv) promoInfoDiv.innerHTML = "";
+            if (clientNameInput) clientNameInput.value = "";
+            if (clientPhoneInput) clientPhoneInput.value = "";
+            if (clientAddressInput) clientAddressInput.value = "";
         }
 
         function openCart() {
             renderCart();
-            cartModal.classList.add('open');
-            cartOverlay.classList.add('open');
+            cartModal?.classList.add('open');
+            cartOverlay?.classList.add('open');
         }
 
         function closeCart() {
-            cartModal.classList.remove('open');
-            cartOverlay.classList.remove('open');
-            checkoutModal.classList.remove('open');
+            cartModal?.classList.remove('open');
+            cartOverlay?.classList.remove('open');
+            checkoutModal?.classList.remove('open');
         }
 
         // ========== EVENT LISTENERS ==========
-        document.querySelector('.nav-cart').addEventListener('click', openCart);
-        document.getElementById('cartClose').addEventListener('click', closeCart);
-        cartOverlay.addEventListener('click', closeCart);
+        const navCart = document.querySelector('.nav-cart');
+        const cartCloseBtn = document.getElementById('cartClose');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const closeCheckoutBtn = document.getElementById('closeCheckout');
+        const applyPromoBtn = document.getElementById('applyPromo');
+        const submitOrderBtn = document.getElementById('submitOrder');
+        const newsletterForm = document.getElementById('newsletterForm');
         
-        document.getElementById('checkoutBtn').addEventListener('click', () => {
-            if (cart.length === 0) {
-                showNotification('Votre panier est vide', true);
-                return;
-            }
-            cartModal.classList.remove('open');
-            checkoutModal.classList.add('open');
-        });
+        if (navCart) navCart.addEventListener('click', openCart);
+        if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
+        if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
         
-        document.getElementById('closeCheckout').addEventListener('click', () => {
-            checkoutModal.classList.remove('open');
-        });
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) {
+                    showNotification('Votre panier est vide', true);
+                    return;
+                }
+                cartModal?.classList.remove('open');
+                checkoutModal?.classList.add('open');
+            });
+        }
         
-        document.getElementById('applyPromo').addEventListener('click', applyPromoCode);
-        document.getElementById('submitOrder').addEventListener('click', submitOrder);
+        if (closeCheckoutBtn) {
+            closeCheckoutBtn.addEventListener('click', () => {
+                checkoutModal?.classList.remove('open');
+            });
+        }
+        
+        if (applyPromoBtn) applyPromoBtn.addEventListener('click', applyPromoCode);
+        if (submitOrderBtn) submitOrderBtn.addEventListener('click', submitOrder);
 
         // Smooth scroll
         document.querySelectorAll('[data-scroll]').forEach(el => {
@@ -2108,14 +2150,17 @@
         });
 
         // Newsletter
-        document.getElementById('newsletterForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('newsletterEmail').value;
-            if (email) {
-                showNotification('✅ Merci pour votre inscription !');
-                document.getElementById('newsletterEmail').value = '';
-            }
-        });
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const emailInput = document.getElementById('newsletterEmail');
+                const email = emailInput?.value;
+                if (email) {
+                    showNotification('✅ Merci pour votre inscription !');
+                    if (emailInput) emailInput.value = '';
+                }
+            });
+        }
 
         // Categories filter
         document.querySelectorAll('.category-card').forEach(cat => {
@@ -2129,13 +2174,12 @@
                     showNotification(`Catégorie: ${category}`);
                     
                     // Scroll to products
-                    document.getElementById('produits').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById('produits')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
 
         // ========== INITIALIZATION ==========
-        typeEffect();
         loadProducts();
         updateCartCount();
     </script>
