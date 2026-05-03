@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>NEXORA — Électronique Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -217,11 +217,10 @@
             50% { filter: drop-shadow(0 0 60px rgba(0, 102, 255, 0.8)); }
         }
 
-        /* ========== CARROUSEL AVEC QUADRILLAGE ET TEXTE ========== */
+        /* ========== CARROUSEL AVEC QUADRILLAGE RENFORCÉ ========== */
         .hero-carousel {
             position: relative;
             background: #000;
-            overflow: hidden;
         }
 
         .hero-slider {
@@ -232,7 +231,6 @@
         .slide {
             display: none;
             position: relative;
-            min-height: 500px;
         }
 
         .slide.active {
@@ -245,7 +243,7 @@
             display: block;
         }
 
-        /* Quadrillage sur les photos */
+        /* Quadrillage renforcé et plus visible */
         .slide-grid {
             position: absolute;
             top: 0;
@@ -253,21 +251,21 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 102, 255, 0.12) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 102, 255, 0.12) 1px, transparent 1px);
-            background-size: 50px 50px;
+                linear-gradient(rgba(0, 102, 255, 0.25) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.25) 1px, transparent 1px);
+            background-size: 40px 40px;
             pointer-events: none;
             z-index: 1;
         }
 
-        /* Overlay pour lisibilité du texte */
+        /* Overlay plus léger */
         .slide-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 100%);
             z-index: 2;
         }
 
@@ -284,21 +282,21 @@
         }
 
         .slide-tagline {
-            font-size: clamp(1rem, 4vw, 1.5rem);
-            color: rgba(255, 255, 255, 0.95);
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.98);
             font-weight: 500;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
         }
 
         .typing-cursor {
             display: inline-block;
             width: 2px;
-            height: 1em;
+            height: 1.2em;
             background: var(--color-accent);
-            margin-left: 4px;
+            margin-left: 5px;
             animation: blink 0.7s infinite;
             vertical-align: middle;
         }
@@ -365,7 +363,7 @@
             transform: translateY(-3px);
         }
 
-        /* Flèches de navigation */
+        /* Flèches de navigation (cachées sur mobile) */
         .slide-prev, .slide-next {
             position: absolute;
             top: 50%;
@@ -1159,23 +1157,68 @@
             .categories-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
         }
 
+        /* ===== VERSION MOBILE - PARFAITE ===== */
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .logo { font-size: 1.3rem; }
             
-            .hero-black-band { margin-top: 60px; padding: 1.5rem 1rem; }
+            /* Bande noire */
+            .hero-black-band { margin-top: 60px; padding: 1.2rem 1rem; }
             .hero-logo { font-size: 2.5rem; }
             
-            .slide { min-height: 400px; }
-            .slide-content { width: 95%; }
-            .slide-tagline { font-size: 0.9rem; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
-            .slide-cta { gap: 0.8rem; margin-top: 1.2rem; }
-            .btn-slide { padding: 0.7rem 1.5rem; font-size: 0.7rem; }
-            .slide-prev, .slide-next { width: 35px; height: 35px; }
-            .slide-prev { left: 10px; }
-            .slide-next { right: 10px; }
-            .slide-prev svg, .slide-next svg { width: 18px; height: 18px; }
+            /* Cacher les flèches sur mobile */
+            .slide-prev, .slide-next { display: none; }
             
+            /* Supprimer le fond noir sous les photos */
+            .hero-carousel { background: transparent; }
+            .slide { background: transparent; }
+            .slide img { width: 100%; height: auto; display: block; }
+            
+            /* Quadrillage plus visible sur mobile */
+            .slide-grid {
+                background-size: 30px 30px;
+                background-image: 
+                    linear-gradient(rgba(0, 102, 255, 0.2) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 102, 255, 0.2) 1px, transparent 1px);
+            }
+            
+            /* Overlay léger */
+            .slide-overlay {
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 100%);
+            }
+            
+            /* Contenu centré parfaitement */
+            .slide-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 90%;
+                padding: 0;
+            }
+            
+            .slide-tagline { 
+                font-size: 1rem; 
+                letter-spacing: 0.1em; 
+                margin-bottom: 1rem;
+                white-space: nowrap;
+            }
+            
+            .slide-cta { 
+                display: flex; 
+                gap: 0.8rem; 
+                justify-content: center; 
+                margin-top: 1.2rem;
+                flex-wrap: wrap;
+            }
+            
+            .btn-slide { 
+                padding: 0.7rem 1.5rem; 
+                font-size: 0.7rem;
+                white-space: nowrap;
+            }
+            
+            /* Sections */
             .featured, .categories, .innovation, .newsletter { padding: 3rem 5%; }
             .section-header { margin-bottom: 2rem; }
             .section-title { font-size: 2rem; }
@@ -1203,6 +1246,10 @@
         }
 
         @media (max-width: 480px) {
+            .hero-logo { font-size: 2rem; }
+            .slide-tagline { font-size: 0.8rem; white-space: normal; text-align: center; line-height: 1.3; }
+            .btn-slide { padding: 0.6rem 1.2rem; font-size: 0.65rem; }
+            .slide-cta { gap: 0.5rem; }
             .categories-grid { grid-template-columns: 1fr; }
             .innovation-stats { grid-template-columns: 1fr; }
             .product-info { padding: 1.5rem; }
@@ -1238,7 +1285,7 @@
         </div>
     </div>
 
-    <!-- CARROUSEL AVEC QUADRILLAGE, TEXTE ET BOUTONS -->
+    <!-- CARROUSEL AVEC QUADRILLAGE RENFORCÉ -->
     <div class="hero-carousel">
         <div class="hero-slider">
             <div class="slide active">
@@ -1422,18 +1469,24 @@
             slides[currentSlide]?.classList.remove('active');
             currentSlide = (index + slides.length) % slides.length;
             slides[currentSlide]?.classList.add('active');
+            
+            // Changer le texte animé selon le slide actif
+            const taglines = ["INNOVATION DE POINTE", "EXCELLENCE TECHNOLOGIQUE", "DESIGN MINIMALISTE", "QUALITÉ PREMIUM", "LIVRAISON RAPIDE"];
+            const taglineElement = document.getElementById(`tagline${currentSlide + 1}`);
+            if (taglineElement) {
+                startTyping(`tagline${currentSlide + 1}`, taglines[currentSlide % taglines.length]);
+            }
         }
 
         function nextSlide() { changeSlide(currentSlide + 1); }
         function prevSlide() { changeSlide(currentSlide - 1); }
 
-        if (slides.length > 0) setInterval(nextSlide, 6000);
-        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-
-        // ========== TYPING EFFECT SUR CHAQUE SLIDE ==========
-        const taglines = ["INNOVATION DE POINTE", "EXCELLENCE TECHNOLOGIQUE", "DESIGN MINIMALISTE", "QUALITÉ PREMIUM", "LIVRAISON RAPIDE"];
+        let autoSlide = setInterval(nextSlide, 6000);
         
+        if (prevBtn) prevBtn.addEventListener('click', () => { clearInterval(autoSlide); prevSlide(); autoSlide = setInterval(nextSlide, 6000); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { clearInterval(autoSlide); nextSlide(); autoSlide = setInterval(nextSlide, 6000); });
+
+        // ========== TYPING EFFECT ==========
         function startTyping(elementId, text) {
             let index = 0;
             let isDeleting = false;
@@ -1458,8 +1511,6 @@
                 }
                 if (isDeleting && index === 0) {
                     isDeleting = false;
-                    const nextIndex = (taglines.indexOf(text) + 1) % taglines.length;
-                    setTimeout(() => startTyping(elementId, taglines[nextIndex]), 500);
                     return;
                 }
                 setTimeout(type, isDeleting ? 50 : 100);
@@ -1467,9 +1518,9 @@
             type();
         }
 
-        // Démarrer le typing sur le slide actif
-        startTyping('tagline1', taglines[0]);
-        startTyping('tagline2', taglines[1]);
+        // Démarrer le typing sur les deux slides
+        startTyping('tagline1', 'INNOVATION DE POINTE');
+        startTyping('tagline2', 'EXCELLENCE TECHNOLOGIQUE');
 
         // ========== NAVBAR SCROLL EFFECT ==========
         window.addEventListener('scroll', () => {
