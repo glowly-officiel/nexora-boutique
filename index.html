@@ -175,7 +175,7 @@
             border: 2px solid var(--color-bg);
         }
 
-        /* ========== BANDE NOIRE - UNIQUEMENT NEXORA ========== */
+        /* BANDE NOIRE - UNIQUEMENT NEXORA */
         .hero-black-band {
             margin-top: 70px;
             background: #0A0A0A;
@@ -192,18 +192,12 @@
         }
 
         .hero-logo-text {
-            background: linear-gradient(135deg, 
-                #FFFFFF 0%, 
-                #0066FF 30%, 
-                #FFFFFF 50%, 
-                #0066FF 70%, 
-                #FFFFFF 100%);
+            background: linear-gradient(135deg, #FFFFFF 0%, #0066FF 30%, #FFFFFF 50%, #0066FF 70%, #FFFFFF 100%);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradientShift 8s ease-in-out infinite,
-                       textGlow 2s ease-in-out infinite;
+            animation: gradientShift 8s ease-in-out infinite, textGlow 2s ease-in-out infinite;
             filter: drop-shadow(0 0 40px rgba(0, 102, 255, 0.6));
         }
 
@@ -217,7 +211,7 @@
             50% { filter: drop-shadow(0 0 60px rgba(0, 102, 255, 0.8)); }
         }
 
-        /* ========== CARROUSEL AVEC QUADRILLAGE RENFORCÉ ========== */
+        /* CARROUSEL */
         .hero-carousel {
             position: relative;
             background: #000;
@@ -249,9 +243,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 102, 255, 0.25) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 102, 255, 0.25) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(0, 102, 255, 0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.25) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 1;
@@ -391,7 +383,7 @@
             stroke: white;
         }
 
-        /* ========== BEST SELLERS SECTION - STYLE COLLAGE LUXE ========== */
+        /* BEST SELLERS */
         .bestsellers {
             padding: 6rem 4%;
             background: var(--color-white);
@@ -433,7 +425,6 @@
             gap: 1.5rem;
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
         }
 
         .grid-item-1 { grid-column: span 2; grid-row: span 2; }
@@ -530,7 +521,7 @@
         .explore-link svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; transition: transform 0.3s ease; }
         .explore-link:hover svg { transform: translateX(5px); }
 
-        /* ========== CATÉGORIES - STYLE PAYSAGE IMAGE GAUCHE TEXTE DROITE ========== */
+        /* ========== CATÉGORIES - FORMAT PAYSAGE (IMAGE GAUCHE, TEXTE DROITE) ========== */
         .categories {
             padding: 6rem 4%;
             background: var(--color-bg);
@@ -573,60 +564,26 @@
             margin: 0 auto;
         }
 
-        /* Carte format paysage - IMAGE À GAUCHE, TEXTE À DROITE */
+        /* Carte - format horizontal IMAGE GAUCHE / TEXTE DROITE */
         .category-card {
-            display: flex;
-            flex-direction: row;
+            display: flex !important;
+            flex-direction: row !important;
             background: var(--color-white);
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            border: 1px solid transparent;
-            background: linear-gradient(var(--color-white), var(--color-white)) padding-box,
-                        linear-gradient(135deg, #C0A050, #E8D5A0, #C0A050, #8B7332, #C0A050) border-box;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(192, 160, 80, 0.3);
         }
 
         .category-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            border-color: var(--color-accent);
         }
 
-        /* Effet métallique brillant */
-        .category-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(115deg, 
-                transparent 0%, 
-                transparent 40%, 
-                rgba(255, 255, 255, 0.15) 45%,
-                rgba(255, 255, 255, 0.3) 50%,
-                rgba(255, 255, 255, 0.15) 55%,
-                transparent 60%,
-                transparent 100%);
-            transform: rotate(25deg);
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            pointer-events: none;
-        }
-
-        .category-card:hover::after {
-            opacity: 1;
-            animation: metallicShine 0.8s ease forwards;
-        }
-
-        @keyframes metallicShine {
-            0% { transform: rotate(25deg) translateX(-100%); }
-            100% { transform: rotate(25deg) translateX(100%); }
-        }
-
-        /* Image 40% - À GAUCHE */
+        /* Image - 40% à GAUCHE */
         .category-image {
             width: 40%;
             position: relative;
@@ -638,25 +595,26 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.5s ease;
         }
 
         .category-card:hover .category-image img {
             transform: scale(1.05);
         }
 
-        /* Contenu texte 60% - À DROITE */
+        /* Texte - 60% à DROITE */
         .category-content {
             width: 60%;
-            padding: 2.5rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            background: var(--color-white);
         }
 
         .category-name {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             letter-spacing: -0.02em;
@@ -667,22 +625,20 @@
         }
 
         .category-desc {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--color-secondary);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-            letter-spacing: 0.01em;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
         }
 
         /* Texte animé */
         .category-animated-text {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--color-accent);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             min-height: 2rem;
             font-family: var(--font-display);
         }
@@ -693,32 +649,32 @@
             height: 1em;
             background: var(--color-accent);
             margin-left: 4px;
-            animation: blinkCategory 0.7s infinite;
+            animation: blinkCate 0.7s infinite;
             vertical-align: middle;
         }
 
-        @keyframes blinkCategory {
+        @keyframes blinkCate {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
 
-        /* Bouton découvrir stylé */
+        /* Bouton découvrir */
         .category-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1.5rem;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
             background: transparent;
             border: 1px solid var(--color-border);
-            font-size: 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
             color: var(--color-primary);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             width: fit-content;
-            border-radius: 40px;
         }
 
         .category-btn span {
@@ -726,8 +682,8 @@
         }
 
         .category-btn svg {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             stroke: currentColor;
             stroke-width: 2;
             transition: transform 0.3s ease;
@@ -737,7 +693,7 @@
             background: var(--color-primary);
             color: var(--color-white);
             border-color: var(--color-primary);
-            gap: 1.2rem;
+            gap: 0.8rem;
         }
 
         .category-btn:hover span {
@@ -1157,7 +1113,7 @@
             .grid-item-1 .bestseller-card,
             .grid-item-4 .bestseller-card { aspect-ratio: 2 / 1; }
             .category-name { font-size: 1.6rem; }
-            .category-content { padding: 1.8rem; }
+            .category-content { padding: 1.5rem; }
         }
 
         @media (max-width: 768px) {
@@ -1195,17 +1151,41 @@
             .bestseller-badge { font-size: 0.55rem; padding: 0.2rem 0.5rem; top: 0.5rem; left: 0.5rem; }
             .explore-link { margin-top: 2rem; font-size: 0.8rem; }
             
-            /* CATÉGORIES - VERSION MOBILE (empilée) */
+            /* CATÉGORIES - MOBILE : empilé (image au-dessus, texte en dessous) */
             .categories { padding: 3rem 5%; }
             .categories-header { margin-bottom: 2rem; }
             .categories-grid { gap: 1.5rem; }
-            .category-card { flex-direction: column; }
-            .category-image { width: 100%; aspect-ratio: 1.5 / 1; }
-            .category-content { width: 100%; padding: 1.5rem; text-align: center; align-items: center; }
-            .category-name { font-size: 1.4rem; }
-            .category-desc { font-size: 0.85rem; margin-bottom: 1rem; text-align: center; }
-            .category-animated-text { font-size: 0.7rem; margin-bottom: 1rem; text-align: center; }
-            .category-btn { margin: 0 auto; }
+            
+            .category-card {
+                flex-direction: column !important;
+            }
+            .category-image {
+                width: 100%;
+                aspect-ratio: 1.5 / 1;
+            }
+            .category-content {
+                width: 100%;
+                padding: 1.5rem;
+                text-align: center;
+                align-items: center;
+            }
+            .category-name {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+            .category-desc {
+                font-size: 0.85rem;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            .category-animated-text {
+                font-size: 0.7rem;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            .category-btn {
+                margin: 0 auto;
+            }
             
             .innovation { padding: 3rem 5%; }
             .innovation-content { gap: 2rem; }
@@ -1260,14 +1240,14 @@
         </div>
     </nav>
 
-    <!-- BANDE NOIRE - UNIQUEMENT NEXORA -->
+    <!-- BANDE NOIRE -->
     <div class="hero-black-band">
         <div class="hero-logo">
             <div class="hero-logo-text">NEXORA</div>
         </div>
     </div>
 
-    <!-- CARROUSEL AVEC QUADRILLAGE RENFORCÉ -->
+    <!-- CARROUSEL -->
     <div class="hero-carousel">
         <div class="hero-slider">
             <div class="slide active">
@@ -1307,7 +1287,7 @@
         </div>
     </div>
 
-    <!-- ========== BEST SELLERS DU MOMENT - STYLE COLLAGE ========== -->
+    <!-- BEST SELLERS -->
     <section class="bestsellers" id="bestsellers">
         <div class="bestsellers-header">
             <span class="bestsellers-tag">⭐ BEST SELLERS</span>
@@ -1370,7 +1350,7 @@
         </div>
     </section>
 
-    <!-- ========== CATÉGORIES - FORMAT PAYSAGE (IMAGE GAUCHE, TEXTE DROITE) ========== -->
+    <!-- CATÉGORIES - FORMAT PAYSAGE (IMAGE GAUCHE, TEXTE DROITE) -->
     <section class="categories" id="categories">
         <div class="categories-header">
             <span class="categories-tag">✨ EXPLOREZ NOS UNIVERS</span>
@@ -1379,10 +1359,10 @@
         </div>
 
         <div class="categories-grid">
-            <!-- Catégorie Audio -->
+            <!-- Audio -->
             <div class="category-card" data-category="audio">
                 <div class="category-image">
-                    <img src="https://placehold.co/600x400/1a1a2e/FFFFFF?text=🎧" alt="Audio" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                    <img src="https://placehold.co/600x400/1a1a2e/FFFFFF?text=🎧" alt="Audio">
                 </div>
                 <div class="category-content">
                     <h3 class="category-name">Audio</h3>
@@ -1397,10 +1377,10 @@
                 </div>
             </div>
 
-            <!-- Catégorie Montres -->
+            <!-- Montres -->
             <div class="category-card" data-category="watches">
                 <div class="category-image">
-                    <img src="https://placehold.co/600x400/0f0c29/FFFFFF?text=⌚" alt="Montres" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                    <img src="https://placehold.co/600x400/0f0c29/FFFFFF?text=⌚" alt="Montres">
                 </div>
                 <div class="category-content">
                     <h3 class="category-name">Montres</h3>
@@ -1415,10 +1395,10 @@
                 </div>
             </div>
 
-            <!-- Catégorie Smartphones -->
+            <!-- Smartphones -->
             <div class="category-card" data-category="smartphones">
                 <div class="category-image">
-                    <img src="https://placehold.co/600x400/000428/FFFFFF?text=📱" alt="Smartphones" style="background: linear-gradient(135deg, #000428 0%, #004e92 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                    <img src="https://placehold.co/600x400/000428/FFFFFF?text=📱" alt="Smartphones">
                 </div>
                 <div class="category-content">
                     <h3 class="category-name">Smartphones</h3>
@@ -1433,10 +1413,10 @@
                 </div>
             </div>
 
-            <!-- Catégorie Accessoires -->
+            <!-- Accessoires -->
             <div class="category-card" data-category="accessoires">
                 <div class="category-image">
-                    <img src="https://placehold.co/600x400/1a1a1a/FFFFFF?text=🔌" alt="Accessoires" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                    <img src="https://placehold.co/600x400/1a1a1a/FFFFFF?text=🔌" alt="Accessoires">
                 </div>
                 <div class="category-content">
                     <h3 class="category-name">Accessoires</h3>
@@ -1533,7 +1513,7 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // ========== CARROUSEL ==========
+        // CARROUSEL
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const prevBtn = document.querySelector('.slide-prev');
@@ -1560,7 +1540,7 @@
         if (prevBtn) prevBtn.addEventListener('click', () => { clearInterval(autoSlide); prevSlide(); autoSlide = setInterval(nextSlide, 6000); });
         if (nextBtn) nextBtn.addEventListener('click', () => { clearInterval(autoSlide); nextSlide(); autoSlide = setInterval(nextSlide, 6000); });
 
-        // ========== TYPING EFFECT HERO ==========
+        // TYPING EFFECT HERO
         function startTyping(elementId, text) {
             let index = 0;
             let isDeleting = false;
@@ -1596,7 +1576,7 @@
         startTyping('tagline1', 'INNOVATION DE POINTE');
         startTyping('tagline2', 'EXCELLENCE TECHNOLOGIQUE');
 
-        // ========== TYPING EFFECT CATÉGORIES ==========
+        // TYPING EFFECT CATÉGORIES
         const categoryPhrases = [
             { id: "categoryAudioText", texts: ["EXCELLENCE SONORE", "QUALITÉ PREMIUM", "SON HAUTE DÉFINITION"] },
             { id: "categoryWatchText", texts: ["PRÉCISION SUISSE", "ÉLÉGANCE MODERNE", "TECHNOLOGIE CONNECTÉE"] },
@@ -1641,14 +1621,14 @@
             startCategoryTyping(cat.id, cat.texts);
         });
 
-        // ========== NAVBAR SCROLL EFFECT ==========
+        // NAVBAR SCROLL
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 100) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
         });
 
-        // ========== CUSTOM CURSOR ==========
+        // CUSTOM CURSOR
         if (window.innerWidth > 768) {
             const cursor = document.querySelector('.cursor');
             const cursorFollower = document.querySelector('.cursor-follower');
@@ -1674,7 +1654,7 @@
             }
         }
 
-        // ========== APP STATE ==========
+        // APP STATE
         let products = [];
         let cart = JSON.parse(localStorage.getItem('nexora_cart') || '[]');
         let currentReduction = 0;
