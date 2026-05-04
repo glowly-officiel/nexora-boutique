@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="NEXORA - Électronique premium au Sénégal. Découvrez nos produits high-tech : audio, montres connectées, smartphones et accessoires. Livraison rapide à Dakar et partout au Sénégal.">
+    <meta name="keywords" content="électronique, Sénégal, Dakar, high-tech, audio, smartphones, montres connectées, NEXORA">
+    <meta name="author" content="NEXORA">
+    <meta property="og:title" content="NEXORA — Électronique Premium">
+    <meta property="og:description" content="Découvrez l'excellence technologique avec NEXORA. Produits premium au meilleur prix.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <title>NEXORA — Électronique Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -22,6 +29,12 @@
             --color-border: #E0E0E0;
             --font-display: 'Syne', sans-serif;
             --font-body: 'Inter', sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --transition-fast: 150ms ease;
+            --transition-base: 300ms ease;
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
@@ -62,6 +75,36 @@
             .cursor, .cursor-follower { display: none !important; }
         }
 
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            border: none;
+            box-shadow: var(--shadow-lg);
+        }
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-top:hover {
+            background: var(--color-accent);
+            transform: translateY(-3px);
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -91,6 +134,30 @@
             letter-spacing: -0.02em;
             color: var(--color-primary);
             transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: var(--color-primary);
+            transition: all 0.3s ease;
+        }
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
         }
 
         .nav-menu {
@@ -175,7 +242,36 @@
             border: 2px solid var(--color-bg);
         }
 
-        /* BANDE NOIRE - UNIQUEMENT NEXORA */
+        /* Mobile navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 70px;
+            left: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: calc(100vh - 70px);
+            background: var(--color-white);
+            transition: left 0.3s ease;
+            z-index: 999;
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+        }
+        .mobile-nav.open { left: 0; }
+        .mobile-nav-links {
+            list-style: none;
+        }
+        .mobile-nav-links li {
+            margin-bottom: 1.5rem;
+        }
+        .mobile-nav-links a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--color-primary);
+            cursor: pointer;
+        }
+
+        /* BANDE NOIRE */
         .hero-black-band {
             margin-top: 70px;
             background: #0A0A0A;
@@ -352,6 +448,29 @@
             transform: translateY(-3px);
         }
 
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .dot.active {
+            background: var(--color-accent);
+            width: 24px;
+            border-radius: 10px;
+        }
+
         .slide-prev, .slide-next {
             position: absolute;
             top: 50%;
@@ -521,7 +640,7 @@
         .explore-link svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; transition: transform 0.3s ease; }
         .explore-link:hover svg { transform: translateX(5px); }
 
-        /* ========== CATÉGORIES - FORMAT PAYSAGE (IMAGE GAUCHE, TEXTE DROITE) ========== */
+        /* CATEGORIES */
         .categories {
             padding: 6rem 4%;
             background: var(--color-bg);
@@ -564,7 +683,6 @@
             margin: 0 auto;
         }
 
-        /* Carte - format horizontal IMAGE GAUCHE / TEXTE DROITE */
         .category-card {
             display: flex !important;
             flex-direction: row !important;
@@ -583,7 +701,6 @@
             border-color: var(--color-accent);
         }
 
-        /* Image - 40% à GAUCHE */
         .category-image {
             width: 40%;
             position: relative;
@@ -602,7 +719,6 @@
             transform: scale(1.05);
         }
 
-        /* Texte - 60% à DROITE */
         .category-content {
             width: 60%;
             padding: 2rem;
@@ -631,7 +747,6 @@
             margin-bottom: 1.2rem;
         }
 
-        /* Texte animé */
         .category-animated-text {
             font-size: 0.8rem;
             font-weight: 500;
@@ -658,7 +773,6 @@
             50% { opacity: 0; }
         }
 
-        /* Bouton découvrir */
         .category-btn {
             display: inline-flex;
             align-items: center;
@@ -806,6 +920,258 @@
         @keyframes pulseDot {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        /* ========== SECTION À PROPOS ========== */
+        .about {
+            padding: 6rem 4%;
+            background: var(--color-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            background: rgba(0, 102, 255, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .about-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--color-accent);
+            margin: 0 auto 1.5rem;
+        }
+
+        .about-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .about-card {
+            background: var(--color-white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p {
+            color: var(--color-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .about-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .about-list li {
+            margin-bottom: 0.6rem;
+            color: var(--color-secondary);
+            font-size: 0.95rem;
+        }
+
+        .about-values {
+            margin-bottom: 5rem;
+        }
+
+        .values-title {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .value-card {
+            background: var(--color-white);
+            padding: 1.8rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-border);
+        }
+
+        .value-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-3px);
+        }
+
+        .value-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+        }
+
+        .value-card p {
+            font-size: 0.9rem;
+            color: var(--color-secondary);
+            line-height: 1.5;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .about-stat-item {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1a1a2e 100%);
+            border-radius: 20px;
+            color: white;
+        }
+
+        .about-stat-number {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-stat-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            letter-spacing: 0.05em;
+        }
+
+        .about-engagement {
+            background: linear-gradient(135deg, var(--color-accent) 0%, #0044cc 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .engagement-content p {
+            color: white;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .about-team {
+            text-align: center;
+        }
+
+        .about-team h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .team-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .team-card {
+            background: var(--color-white);
+            padding: 1.8rem;
+            border-radius: 20px;
+            text-align: center;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .team-avatar {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .team-card p {
+            color: var(--color-accent);
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card small {
+            font-size: 0.75rem;
+            color: var(--color-secondary);
         }
 
         /* Newsletter */
@@ -1102,6 +1468,7 @@
 
         @media (max-width: 1024px) {
             .footer-content { grid-template-columns: repeat(2, 1fr); }
+            .about-stats { grid-template-columns: repeat(2, 1fr); }
             .bestsellers-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
@@ -1117,6 +1484,7 @@
         }
 
         @media (max-width: 768px) {
+            .mobile-menu-btn { display: flex; }
             .nav-links { display: none; }
             .logo { font-size: 1.3rem; }
             .hero-black-band { margin-top: 60px; padding: 1.2rem 1rem; }
@@ -1125,11 +1493,6 @@
             .hero-carousel { background: transparent; }
             .slide { background: transparent; }
             .slide img { width: 100%; height: auto; display: block; }
-            .slide-grid {
-                background-size: 30px 30px;
-                background-image: linear-gradient(rgba(0, 102, 255, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.2) 1px, transparent 1px);
-            }
-            .slide-overlay { background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 100%); }
             .slide-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; padding: 0; }
             .slide-tagline { font-size: 1rem; letter-spacing: 0.1em; margin-bottom: 1rem; white-space: nowrap; }
             .slide-cta { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
@@ -1151,41 +1514,16 @@
             .bestseller-badge { font-size: 0.55rem; padding: 0.2rem 0.5rem; top: 0.5rem; left: 0.5rem; }
             .explore-link { margin-top: 2rem; font-size: 0.8rem; }
             
-            /* CATÉGORIES - MOBILE : empilé (image au-dessus, texte en dessous) */
             .categories { padding: 3rem 5%; }
             .categories-header { margin-bottom: 2rem; }
             .categories-grid { gap: 1.5rem; }
-            
-            .category-card {
-                flex-direction: column !important;
-            }
-            .category-image {
-                width: 100%;
-                aspect-ratio: 1.5 / 1;
-            }
-            .category-content {
-                width: 100%;
-                padding: 1.5rem;
-                text-align: center;
-                align-items: center;
-            }
-            .category-name {
-                font-size: 1.4rem;
-                text-align: center;
-            }
-            .category-desc {
-                font-size: 0.85rem;
-                text-align: center;
-                margin-bottom: 1rem;
-            }
-            .category-animated-text {
-                font-size: 0.7rem;
-                text-align: center;
-                margin-bottom: 1rem;
-            }
-            .category-btn {
-                margin: 0 auto;
-            }
+            .category-card { flex-direction: column !important; }
+            .category-image { width: 100%; aspect-ratio: 1.5 / 1; }
+            .category-content { width: 100%; padding: 1.5rem; text-align: center; align-items: center; }
+            .category-name { font-size: 1.4rem; text-align: center; }
+            .category-desc { font-size: 0.85rem; text-align: center; margin-bottom: 1rem; }
+            .category-animated-text { font-size: 0.7rem; text-align: center; margin-bottom: 1rem; }
+            .category-btn { margin: 0 auto; }
             
             .innovation { padding: 3rem 5%; }
             .innovation-content { gap: 2rem; }
@@ -1198,6 +1536,15 @@
             .tech-circle:nth-child(1) { width: 150px; height: 150px; }
             .tech-circle:nth-child(2) { width: 200px; height: 200px; }
             .tech-circle:nth-child(3) { width: 250px; height: 250px; }
+
+            .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .about-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .about-stat-number { font-size: 2rem; }
+            .values-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .value-card { padding: 1.2rem; }
+            .about-engagement { padding: 1.5rem; }
+            .engagement-content p { font-size: 1rem; }
+
             .newsletter { padding: 3rem 5%; }
             .newsletter h2 { font-size: 1.8rem; }
             .newsletter p { font-size: 0.9rem; margin-bottom: 1.5rem; }
@@ -1215,6 +1562,10 @@
             .btn-slide { padding: 0.6rem 1.2rem; font-size: 0.65rem; }
             .slide-cta { gap: 0.5rem; }
             .category-name { font-size: 1.2rem; }
+            .values-grid { grid-template-columns: 1fr; }
+            .about-stats { grid-template-columns: 1fr; }
+            .team-grid { flex-direction: column; align-items: center; }
+            .team-card { width: 100%; max-width: 280px; }
         }
     </style>
 </head>
@@ -1224,11 +1575,15 @@
 
     <nav id="navbar">
         <div class="logo">NEXORA</div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
         <div class="nav-menu">
             <ul class="nav-links">
                 <li><a data-scroll="bestsellers">Best Sellers</a></li>
                 <li><a data-scroll="categories">Catégories</a></li>
                 <li><a data-scroll="innovation">Innovation</a></li>
+                <li><a data-scroll="about">À propos</a></li>
                 <li><a data-scroll="contact">Contact</a></li>
             </ul>
             <div class="nav-cart">
@@ -1239,6 +1594,17 @@
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-links">
+            <li><a data-scroll="bestsellers">Best Sellers</a></li>
+            <li><a data-scroll="categories">Catégories</a></li>
+            <li><a data-scroll="innovation">Innovation</a></li>
+            <li><a data-scroll="about">À propos</a></li>
+            <li><a data-scroll="contact">Contact</a></li>
+        </ul>
+    </div>
 
     <!-- BANDE NOIRE -->
     <div class="hero-black-band">
@@ -1275,6 +1641,7 @@
                 </div>
             </div>
         </div>
+        <div class="carousel-dots" id="carouselDots"></div>
         <div class="slide-prev">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -1350,7 +1717,7 @@
         </div>
     </section>
 
-    <!-- CATÉGORIES - FORMAT PAYSAGE (IMAGE GAUCHE, TEXTE DROITE) -->
+    <!-- CATÉGORIES -->
     <section class="categories" id="categories">
         <div class="categories-header">
             <span class="categories-tag">✨ EXPLOREZ NOS UNIVERS</span>
@@ -1359,7 +1726,6 @@
         </div>
 
         <div class="categories-grid">
-            <!-- Audio -->
             <div class="category-card" data-category="audio">
                 <div class="category-image">
                     <img src="https://placehold.co/600x400/1a1a2e/FFFFFF?text=🎧" alt="Audio">
@@ -1368,66 +1734,34 @@
                     <h3 class="category-name">Audio</h3>
                     <p class="category-desc">Plongez dans l'univers sonore avec nos écouteurs et enceintes premium. Une expérience auditive exceptionnelle vous attend.</p>
                     <div class="category-animated-text" id="categoryAudioText"></div>
-                    <button class="category-btn">
-                        <span>DÉCOUVRIR</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                        </svg>
-                    </button>
+                    <button class="category-btn"><span>DÉCOUVRIR</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg></button>
                 </div>
             </div>
-
-            <!-- Montres -->
             <div class="category-card" data-category="watches">
-                <div class="category-image">
-                    <img src="https://placehold.co/600x400/0f0c29/FFFFFF?text=⌚" alt="Montres">
-                </div>
+                <div class="category-image"><img src="https://placehold.co/600x400/0f0c29/FFFFFF?text=⌚" alt="Montres"></div>
                 <div class="category-content">
                     <h3 class="category-name">Montres</h3>
                     <p class="category-desc">Style et technologie à votre poignet. Nos montres connectées allient élégance et fonctionnalités avancées.</p>
                     <div class="category-animated-text" id="categoryWatchText"></div>
-                    <button class="category-btn">
-                        <span>DÉCOUVRIR</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                        </svg>
-                    </button>
+                    <button class="category-btn"><span>DÉCOUVRIR</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg></button>
                 </div>
             </div>
-
-            <!-- Smartphones -->
             <div class="category-card" data-category="smartphones">
-                <div class="category-image">
-                    <img src="https://placehold.co/600x400/000428/FFFFFF?text=📱" alt="Smartphones">
-                </div>
+                <div class="category-image"><img src="https://placehold.co/600x400/000428/FFFFFF?text=📱" alt="Smartphones"></div>
                 <div class="category-content">
                     <h3 class="category-name">Smartphones</h3>
                     <p class="category-desc">La puissance et l'innovation dans votre poche. Découvrez des performances exceptionnelles au quotidien.</p>
                     <div class="category-animated-text" id="categoryPhoneText"></div>
-                    <button class="category-btn">
-                        <span>DÉCOUVRIR</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                        </svg>
-                    </button>
+                    <button class="category-btn"><span>DÉCOUVRIR</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg></button>
                 </div>
             </div>
-
-            <!-- Accessoires -->
             <div class="category-card" data-category="accessoires">
-                <div class="category-image">
-                    <img src="https://placehold.co/600x400/1a1a1a/FFFFFF?text=🔌" alt="Accessoires">
-                </div>
+                <div class="category-image"><img src="https://placehold.co/600x400/1a1a1a/FFFFFF?text=🔌" alt="Accessoires"></div>
                 <div class="category-content">
                     <h3 class="category-name">Accessoires</h3>
                     <p class="category-desc">Complétez votre expérience avec nos accessoires premium conçus pour la perfection.</p>
                     <div class="category-animated-text" id="categoryAccessoryText"></div>
-                    <button class="category-btn">
-                        <span>DÉCOUVRIR</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                        </svg>
-                    </button>
+                    <button class="category-btn"><span>DÉCOUVRIR</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg></button>
                 </div>
             </div>
         </div>
@@ -1453,6 +1787,71 @@
                 <div class="tech-dot" style="top:30%; left:40%;"></div>
                 <div class="tech-dot" style="top:60%; left:60%; animation-delay: 1s;"></div>
                 <div class="tech-dot" style="top:45%; left:70%; animation-delay: 0.5s;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION À PROPOS -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-header">
+                <span class="about-tag">🇫🇷 À PROPOS DE NEXORA</span>
+                <h2 class="about-title">L'excellence technologique<br>à portée de main</h2>
+                <div class="about-divider"></div>
+                <p class="about-subtitle">Depuis 2018, NEXORA réinvente l'expérience technologique en Afrique avec des produits premium au meilleur rapport qualité-prix.</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">📖</div>
+                    <h3>Notre Histoire</h3>
+                    <p>NEXORA est née d'un constat simple : en Afrique, l'accès à la technologie de qualité était soit trop cher, soit de mauvaise qualité. Nous avons décidé de changer cela en créant une marque qui allie <strong>design minimaliste</strong>, <strong>performances élevées</strong> et <strong>prix justes</strong>.</p>
+                    <p>Aujourd'hui, nous sommes fiers d'accompagner plus de <strong>50 000 clients</strong> à travers le Sénégal et la sous-région dans leur quotidien numérique.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🎯</div>
+                    <h3>Notre Mission</h3>
+                    <p>Démocratiser l'accès à la technologie premium sans compromis sur la qualité. Chaque produit NEXORA est rigoureusement sélectionné pour offrir :</p>
+                    <ul class="about-list">
+                        <li>✓ Design élégant et intemporel</li>
+                        <li>✓ Composants de première qualité</li>
+                        <li>✓ Support client réactif</li>
+                        <li>✓ Garantie 2 ans minimum</li>
+                        <li>✓ Livraison rapide partout au Sénégal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="about-values">
+                <h3 class="values-title">Nos Valeurs 🔥</h3>
+                <div class="values-grid">
+                    <div class="value-card"><div class="value-icon">✨</div><h4>Qualité d'abord</h4><p>Test et validation de chaque produit avant mise en vente</p></div>
+                    <div class="value-card"><div class="value-icon">🤝</div><h4>Transparence</h4><p>Prix clairs, sans marge abusive</p></div>
+                    <div class="value-card"><div class="value-icon">🚀</div><h4>Innovation</h4><p>Veille technologique constante</p></div>
+                    <div class="value-card"><div class="value-icon">🌍</div><h4>Local</h4><p>Équipe et support basés au Sénégal</p></div>
+                    <div class="value-card"><div class="value-icon">💚</div><h4>Éco-responsable</h4><p>Emballages recyclés, engagement durable</p></div>
+                    <div class="value-card"><div class="value-icon">⚡</div><h4>Réactivité</h4><p>Livraison 24-48h à Dakar</p></div>
+                </div>
+            </div>
+
+            <div class="about-stats">
+                <div class="about-stat-item"><span class="about-stat-number" data-count="2018">0</span><span class="about-stat-label">Année de création</span></div>
+                <div class="about-stat-item"><span class="about-stat-number" data-count="50000">0</span><span class="about-stat-label">Clients satisfaits</span></div>
+                <div class="about-stat-item"><span class="about-stat-number" data-count="100">0</span><span class="about-stat-label">% produits testés</span></div>
+                <div class="about-stat-item"><span class="about-stat-number" data-count="24">0</span><span class="about-stat-label">Support / 7j</span></div>
+            </div>
+
+            <div class="about-engagement">
+                <div class="engagement-content"><p>🇸🇳 <strong>100% entreprise sénégalaise</strong> — Nous payons nos impôts ici, nous créons de l'emploi localement, et nous investissons dans notre communauté.</p></div>
+            </div>
+
+            <div class="about-team">
+                <h3>L'équipe derrière NEXORA</h3>
+                <div class="team-grid">
+                    <div class="team-card"><div class="team-avatar">👨‍💼</div><h4>Mamadou Diallo</h4><p>Fondateur & CEO</p><small>12 ans d'expérience dans la tech</small></div>
+                    <div class="team-card"><div class="team-avatar">👩‍💻</div><h4>Aïssatou Sow</h4><p>Directrice Technique</p><small>Ex-Google, passionnée d'innovation</small></div>
+                    <div class="team-card"><div class="team-avatar">👨‍🎨</div><h4>Cheikh Diop</h4><p>Lead Designer</p><small>Prix du design 2024</small></div>
+                </div>
             </div>
         </div>
     </section>
@@ -1483,11 +1882,14 @@
             </div>
             <div class="footer-section"><h4>Boutique</h4><ul class="footer-links"><li><a data-scroll="bestsellers">Best Sellers</a></li><li><a data-scroll="categories">Catégories</a></li><li><a>Promotions</a></li></ul></div>
             <div class="footer-section"><h4>Aide</h4><ul class="footer-links"><li><a>Support Client</a></li><li><a>Livraison</a></li><li><a>Retours</a></li><li><a>FAQ</a></li></ul></div>
-            <div class="footer-section"><h4>Entreprise</h4><ul class="footer-links"><li><a>À Propos</a></li><li><a>Carrières</a></li><li><a>Presse</a></li></ul></div>
+            <div class="footer-section"><h4>Entreprise</h4><ul class="footer-links"><li><a data-scroll="about">À Propos</a></li><li><a>Carrières</a></li><li><a>Presse</a></li></ul></div>
             <div class="footer-section"><h4>Légal</h4><ul class="footer-links"><li><a>Confidentialité</a></li><li><a>CGV</a></li><li><a>Mentions Légales</a></li></ul></div>
         </div>
         <div class="footer-bottom"><p>© 2026 NEXORA. Tous droits réservés.</p><p>Conçu avec passion pour la technologie</p></div>
     </footer>
+
+    <!-- Scroll to top button -->
+    <button class="scroll-top" id="scrollTop">↑</button>
 
     <!-- Cart Modal -->
     <div class="cart-overlay" id="cartOverlay"></div>
@@ -1518,14 +1920,34 @@
         const slides = document.querySelectorAll('.slide');
         const prevBtn = document.querySelector('.slide-prev');
         const nextBtn = document.querySelector('.slide-next');
+        const dotsContainer = document.getElementById('carouselDots');
+
+        function createDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === currentSlide) dot.classList.add('active');
+                dot.addEventListener('click', () => changeSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
 
         function changeSlide(index) {
             if (slides.length === 0) return;
             slides[currentSlide]?.classList.remove('active');
             currentSlide = (index + slides.length) % slides.length;
             slides[currentSlide]?.classList.add('active');
+            updateDots();
             
-            const taglines = ["INNOVATION DE POINTE", "EXCELLENCE TECHNOLOGIQUE", "DESIGN MINIMALISTE", "QUALITÉ PREMIUM", "LIVRAISON RAPIDE"];
+            const taglines = ["INNOVATION DE POINTE", "EXCELLENCE TECHNOLOGIQUE"];
             const taglineElement = document.getElementById(`tagline${currentSlide + 1}`);
             if (taglineElement) {
                 startTyping(`tagline${currentSlide + 1}`, taglines[currentSlide % taglines.length]);
@@ -1539,6 +1961,8 @@
         
         if (prevBtn) prevBtn.addEventListener('click', () => { clearInterval(autoSlide); prevSlide(); autoSlide = setInterval(nextSlide, 6000); });
         if (nextBtn) nextBtn.addEventListener('click', () => { clearInterval(autoSlide); nextSlide(); autoSlide = setInterval(nextSlide, 6000); });
+
+        createDots();
 
         // TYPING EFFECT HERO
         function startTyping(elementId, text) {
@@ -1621,12 +2045,70 @@
             startCategoryTyping(cat.id, cat.texts);
         });
 
+        // Animation compteur pour la section À propos
+        function animateAboutStats() {
+            const stats = document.querySelectorAll('.about-stat-number');
+            if (!stats.length) return;
+            
+            const observerOptions = { threshold: 0.3, rootMargin: "0px 0px -100px 0px" };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = parseInt(el.getAttribute('data-count'));
+                        if (isNaN(target)) return;
+                        
+                        let current = 0;
+                        const increment = target / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                el.textContent = target.toLocaleString();
+                                clearInterval(timer);
+                            } else {
+                                el.textContent = Math.floor(current).toLocaleString();
+                            }
+                        }, 30);
+                        observer.unobserve(el);
+                    }
+                });
+            }, observerOptions);
+            stats.forEach(stat => observer.observe(stat));
+        }
+
         // NAVBAR SCROLL
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+                scrollTop?.classList.add('show');
+            } else {
+                navbar.classList.remove('scrolled');
+                scrollTop?.classList.remove('show');
+            }
         });
+
+        // Scroll to top
+        document.getElementById('scrollTop')?.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        if (mobileMenuBtn && mobileNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                mobileNav.classList.toggle('open');
+            });
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuBtn.classList.remove('active');
+                    mobileNav.classList.remove('open');
+                });
+            });
+        }
 
         // CUSTOM CURSOR
         if (window.innerWidth > 768) {
@@ -1655,7 +2137,6 @@
         }
 
         // APP STATE
-        let products = [];
         let cart = JSON.parse(localStorage.getItem('nexora_cart') || '[]');
         let currentReduction = 0;
         let currentPromoCode = "";
@@ -1688,7 +2169,11 @@
         document.querySelectorAll('.bestseller-card').forEach(card => {
             card.addEventListener('click', (e) => {
                 const productData = JSON.parse(card.dataset.product);
-                showNotification(`👀 ${productData.nom} - Détails à venir`);
+                const existing = cart.find(item => item.id === productData.id);
+                if (existing) existing.quantite++;
+                else cart.push({ id: productData.id, nom: productData.nom, prix: productData.prix, quantite: 1 });
+                updateCartCount();
+                showNotification(`✅ ${productData.nom} ajouté au panier`);
             });
         });
 
@@ -1698,15 +2183,6 @@
                 showNotification(`✨ Catégorie ${category} - Prochainement`);
             });
         });
-
-        function addToCart(product) {
-            if (!product) return;
-            const existing = cart.find(item => item.id === product.id);
-            if (existing) existing.quantite++;
-            else cart.push({ id: product.id, nom: product.nom, prix: product.prix, quantite: 1 });
-            updateCartCount();
-            showNotification(`✅ ${product.nom} ajouté au panier`);
-        }
 
         function renderCart() {
             if (!cartItems || !cartTotalSpan) return;
@@ -1793,10 +2269,16 @@
         document.getElementById('newsletterForm')?.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('newsletterEmail')?.value;
-            if (email) { showNotification('✅ Merci pour votre inscription !'); document.getElementById('newsletterEmail').value = ''; }
+            if (email && email.includes('@')) { 
+                showNotification('✅ Merci pour votre inscription !'); 
+                document.getElementById('newsletterEmail').value = ''; 
+            } else {
+                showNotification('Veuillez entrer un email valide', true);
+            }
         });
 
         updateCartCount();
+        animateAboutStats();
     </script>
 </body>
 </html>
