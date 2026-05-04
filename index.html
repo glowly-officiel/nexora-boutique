@@ -1226,10 +1226,11 @@
             .slide-cta { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
             .btn-slide { padding: 0.7rem 1.5rem; font-size: 0.7rem; white-space: nowrap; }
             
+            /* BEST SELLERS - 2 PRODUITS PAR LIGNE SUR MOBILE */
             .bestsellers { padding: 3rem 5%; }
             .bestsellers-header { margin-bottom: 2rem; }
             .bestsellers-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
             .grid-item-1,
@@ -1244,10 +1245,13 @@
             .grid-item-4 .bestseller-card {
                 aspect-ratio: 1 / 1;
             }
-            .card-overlay { padding: 1rem; }
-            .card-title { font-size: 1rem; }
-            .card-category { font-size: 0.6rem; }
-            .card-price { font-size: 0.85rem; }
+            .card-overlay { padding: 0.8rem; }
+            .card-title { font-size: 0.9rem; margin-bottom: 0.2rem; }
+            .card-category { font-size: 0.55rem; margin-bottom: 0.2rem; }
+            .card-price { font-size: 0.75rem; }
+            .card-price .old-price { font-size: 0.65rem; }
+            .bestseller-badge { font-size: 0.55rem; padding: 0.2rem 0.5rem; top: 0.5rem; left: 0.5rem; }
+            .explore-link { margin-top: 2rem; font-size: 0.8rem; }
             
             .categories { padding: 3rem 5%; }
             .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
