@@ -586,78 +586,212 @@
             transform: translateX(5px);
         }
 
-        /* Categories */
+        /* ========== NOUVELLE SECTION CATÉGORIES - STYLE LUXE PAYSAGE ========== */
         .categories {
             padding: 6rem 4%;
             background: var(--color-bg);
         }
 
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1.5rem;
-            max-width: 1400px;
+        .categories-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .categories-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .categories-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .categories-subtitle {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            max-width: 500px;
             margin: 0 auto;
         }
 
-        .category-card {
-            aspect-ratio: 1;
-            background: var(--color-white);
-            border: 1px solid var(--color-border);
-            border-radius: 12px;
+        /* Grille catégories - format paysage */
+        .categories-grid {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Carte catégorie format paysage avec bordure métallique */
+        .category-card {
+            display: flex;
+            background: var(--color-white);
+            border-radius: 24px;
+            overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid transparent;
+            background: linear-gradient(var(--color-white), var(--color-white)) padding-box,
+                        linear-gradient(135deg, #C0A050, #E8D5A0, #C0A050, #8B7332, #C0A050) border-box;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Effet métallique brillant au survol */
+        .category-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(115deg, 
+                transparent 0%, 
+                transparent 40%, 
+                rgba(255, 255, 255, 0.15) 45%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.15) 55%,
+                transparent 60%,
+                transparent 100%);
+            transform: rotate(25deg);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .category-card:hover::after {
+            opacity: 1;
+            animation: metallicShine 0.8s ease forwards;
+        }
+
+        @keyframes metallicShine {
+            0% { transform: rotate(25deg) translateX(-100%); }
+            100% { transform: rotate(25deg) translateX(100%); }
+        }
+
+        /* Image 40% de la largeur */
+        .category-image {
+            width: 40%;
             position: relative;
             overflow: hidden;
         }
 
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .category-image img {
             width: 100%;
             height: 100%;
-            background: var(--color-accent);
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 0;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .category-card:hover::before { left: 0; }
-        .category-card:hover { border-color: var(--color-accent); transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0, 102, 255, 0.2); }
-
-        .category-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 1.2rem;
-            position: relative;
-            z-index: 1;
-            transition: all 0.4s ease;
+        .category-card:hover .category-image img {
+            transform: scale(1.05);
         }
 
-        .category-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: var(--color-primary);
-            transition: stroke 0.4s ease;
+        /* Contenu texte 60% */
+        .category-content {
+            width: 60%;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-
-        .category-card:hover .category-icon svg { stroke: var(--color-white); }
 
         .category-name {
             font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-            transition: color 0.4s ease;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .category-card:hover .category-name { color: var(--color-white); }
+        .category-desc {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Texte animé (comme dans le hero) */
+        .category-animated-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            min-height: 2rem;
+        }
+
+        .animated-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--color-accent);
+            margin-left: 4px;
+            animation: blinkCategory 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blinkCategory {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Bouton découvrir */
+        .category-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 0;
+            background: none;
+            border: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: fit-content;
+        }
+
+        .category-btn span {
+            transition: transform 0.3s ease;
+        }
+
+        .category-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .category-btn:hover {
+            color: var(--color-accent);
+            gap: 1rem;
+        }
+
+        .category-btn:hover span {
+            transform: translateX(5px);
+        }
 
         /* Innovation Section */
         .innovation {
@@ -1177,7 +1311,6 @@
 
         @media (max-width: 1024px) {
             .footer-content { grid-template-columns: repeat(2, 1fr); }
-            .categories-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
             .bestsellers-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
@@ -1198,6 +1331,8 @@
             .grid-item-4 .bestseller-card {
                 aspect-ratio: 2 / 1;
             }
+            .category-name { font-size: 1.6rem; }
+            .category-content { padding: 1.8rem; }
         }
 
         @media (max-width: 768px) {
@@ -1253,8 +1388,19 @@
             .bestseller-badge { font-size: 0.55rem; padding: 0.2rem 0.5rem; top: 0.5rem; left: 0.5rem; }
             .explore-link { margin-top: 2rem; font-size: 0.8rem; }
             
+            /* CATÉGORIES - VERSION MOBILE */
             .categories { padding: 3rem 5%; }
-            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .categories-header { margin-bottom: 2rem; }
+            .categories-grid { gap: 1.5rem; }
+            
+            .category-card { flex-direction: column; }
+            .category-image { width: 100%; aspect-ratio: 1.5 / 1; }
+            .category-content { width: 100%; padding: 1.5rem; }
+            .category-name { font-size: 1.4rem; }
+            .category-desc { font-size: 0.85rem; margin-bottom: 1rem; }
+            .category-animated-text { font-size: 0.7rem; margin-bottom: 1rem; }
+            .category-btn { font-size: 0.7rem; }
+            
             .innovation { padding: 3rem 5%; }
             .innovation-content { gap: 2rem; }
             .innovation-text h2 { font-size: 1.8rem; }
@@ -1282,8 +1428,7 @@
             .slide-tagline { font-size: 0.8rem; white-space: normal; text-align: center; line-height: 1.3; }
             .btn-slide { padding: 0.6rem 1.2rem; font-size: 0.65rem; }
             .slide-cta { gap: 0.5rem; }
-            .categories-grid { grid-template-columns: 1fr; }
-            .innovation-stats { grid-template-columns: 1fr; }
+            .category-name { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -1423,44 +1568,85 @@
         </div>
     </section>
 
-    <!-- Categories -->
+    <!-- ========== NOUVELLE SECTION CATÉGORIES - STYLE LUXE PAYSAGE ========== -->
     <section class="categories" id="categories">
-        <div class="section-header">
-            <h2 class="section-title">Catégories</h2>
-            <p class="section-subtitle">Explorez nos différentes gammes de produits</p>
+        <div class="categories-header">
+            <span class="categories-tag">✨ EXPLOREZ NOS UNIVERS</span>
+            <h2 class="categories-title">Catégories</h2>
+            <p class="categories-subtitle">Plongez dans l'excellence technologique</p>
         </div>
+
         <div class="categories-grid">
+            <!-- Catégorie Audio -->
             <div class="category-card" data-category="audio">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"/></svg></div>
-                <h3 class="category-name">Audio</h3>
+                <div class="category-image">
+                    <img src="https://placehold.co/600x400/1a1a2e/FFFFFF?text=🎧" alt="Audio" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                </div>
+                <div class="category-content">
+                    <h3 class="category-name">Audio</h3>
+                    <p class="category-desc">Plongez dans l'univers sonore avec nos écouteurs et enceintes premium. Une expérience auditive exceptionnelle vous attend.</p>
+                    <div class="category-animated-text" id="categoryAudioText"></div>
+                    <button class="category-btn">
+                        <span>DÉCOUVRIR</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </button>
+                </div>
             </div>
+
+            <!-- Catégorie Montres -->
             <div class="category-card" data-category="montres">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <h3 class="category-name">Montres</h3>
+                <div class="category-image">
+                    <img src="https://placehold.co/600x400/0f0c29/FFFFFF?text=⌚" alt="Montres" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                </div>
+                <div class="category-content">
+                    <h3 class="category-name">Montres</h3>
+                    <p class="category-desc">Style et technologie à votre poignet. Nos montres connectées allient élégance et fonctionnalités avancées.</p>
+                    <div class="category-animated-text" id="categoryWatchText"></div>
+                    <button class="category-btn">
+                        <span>DÉCOUVRIR</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </button>
+                </div>
             </div>
+
+            <!-- Catégorie Smartphones -->
             <div class="category-card" data-category="smartphones">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg></div>
-                <h3 class="category-name">Smartphones</h3>
+                <div class="category-image">
+                    <img src="https://placehold.co/600x400/000428/FFFFFF?text=📱" alt="Smartphones" style="background: linear-gradient(135deg, #000428 0%, #004e92 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                </div>
+                <div class="category-content">
+                    <h3 class="category-name">Smartphones</h3>
+                    <p class="category-desc">La puissance et l'innovation dans votre poche. Découvrez des performances exceptionnelles au quotidien.</p>
+                    <div class="category-animated-text" id="categoryPhoneText"></div>
+                    <button class="category-btn">
+                        <span>DÉCOUVRIR</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <div class="category-card" data-category="ordinateurs">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/></svg></div>
-                <h3 class="category-name">Ordinateurs</h3>
-            </div>
-            <div class="category-card" data-category="photo">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/></svg></div>
-                <h3 class="category-name">Photo</h3>
-            </div>
+
+            <!-- Catégorie Accessoires -->
             <div class="category-card" data-category="accessoires">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
-                <h3 class="category-name">Accessoires</h3>
-            </div>
-            <div class="category-card" data-category="gaming">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z"/></svg></div>
-                <h3 class="category-name">Gaming</h3>
-            </div>
-            <div class="category-card" data-category="maison">
-                <div class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg></div>
-                <h3 class="category-name">Maison</h3>
+                <div class="category-image">
+                    <img src="https://placehold.co/600x400/1a1a1a/FFFFFF?text=🔌" alt="Accessoires" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                </div>
+                <div class="category-content">
+                    <h3 class="category-name">Accessoires</h3>
+                    <p class="category-desc">Complétez votre expérience avec nos accessoires premium conçus pour la perfection.</p>
+                    <div class="category-animated-text" id="categoryAccessoryText"></div>
+                    <button class="category-btn">
+                        <span>DÉCOUVRIR</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -1572,7 +1758,7 @@
         if (prevBtn) prevBtn.addEventListener('click', () => { clearInterval(autoSlide); prevSlide(); autoSlide = setInterval(nextSlide, 6000); });
         if (nextBtn) nextBtn.addEventListener('click', () => { clearInterval(autoSlide); nextSlide(); autoSlide = setInterval(nextSlide, 6000); });
 
-        // ========== TYPING EFFECT ==========
+        // ========== TYPING EFFECT HERO ==========
         function startTyping(elementId, text) {
             let index = 0;
             let isDeleting = false;
@@ -1607,6 +1793,52 @@
 
         startTyping('tagline1', 'INNOVATION DE POINTE');
         startTyping('tagline2', 'EXCELLENCE TECHNOLOGIQUE');
+
+        // ========== TYPING EFFECT CATÉGORIES ==========
+        const categoryPhrases = [
+            { id: "categoryAudioText", texts: ["EXCELLENCE SONORE", "QUALITÉ PREMIUM", "SON HAUTE DÉFINITION"] },
+            { id: "categoryWatchText", texts: ["PRÉCISION SUISSE", "ÉLÉGANCE MODERNE", "TECHNOLOGIE CONNECTÉE"] },
+            { id: "categoryPhoneText", texts: ["PUISSANCE ILLIMITÉE", "INNOVATION TOTALE", "PERFORMANCE ULTRA"] },
+            { id: "categoryAccessoryText", texts: ["DÉTAIL PARFAIT", "COMPLÉMENT INDISPENSABLE", "QUALITÉ SUPREME"] }
+        ];
+
+        function startCategoryTyping(elementId, texts, index = 0, isDeleting = false, charIndex = 0) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const currentText = texts[index];
+            
+            function type() {
+                if (isDeleting) {
+                    element.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    element.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                element.innerHTML += '<span class="animated-cursor"></span>';
+                
+                if (!isDeleting && charIndex === currentText.length) {
+                    isDeleting = true;
+                    setTimeout(type, 2000);
+                    return;
+                }
+                if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    const nextIndex = (index + 1) % texts.length;
+                    setTimeout(() => startCategoryTyping(elementId, texts, nextIndex, false, 0), 500);
+                    return;
+                }
+                setTimeout(type, isDeleting ? 50 : 100);
+            }
+            type();
+        }
+
+        // Démarrer les animations de chaque catégorie
+        categoryPhrases.forEach(cat => {
+            startCategoryTyping(cat.id, cat.texts);
+        });
 
         // ========== NAVBAR SCROLL EFFECT ==========
         window.addEventListener('scroll', () => {
@@ -1680,19 +1912,19 @@
             });
         });
 
+        // Catégories au clic
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.dataset.category;
+                showNotification(`✨ Catégorie ${category} - Prochainement`);
+            });
+        });
+
         function addToCart(product) {
             if (!product) return;
             const existing = cart.find(item => item.id === product.id);
-            if (existing) {
-                existing.quantite++;
-            } else {
-                cart.push({
-                    id: product.id,
-                    nom: product.nom,
-                    prix: product.prix,
-                    quantite: 1
-                });
-            }
+            if (existing) existing.quantite++;
+            else cart.push({ id: product.id, nom: product.nom, prix: product.prix, quantite: 1 });
             updateCartCount();
             showNotification(`✅ ${product.nom} ajouté au panier`);
         }
@@ -1783,14 +2015,6 @@
             e.preventDefault();
             const email = document.getElementById('newsletterEmail')?.value;
             if (email) { showNotification('✅ Merci pour votre inscription !'); document.getElementById('newsletterEmail').value = ''; }
-        });
-
-        document.querySelectorAll('.category-card').forEach(cat => {
-            cat.addEventListener('click', () => {
-                const category = cat.dataset.category;
-                showNotification(`Catégorie: ${category}`);
-                document.getElementById('bestsellers')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
         });
 
         updateCartCount();
