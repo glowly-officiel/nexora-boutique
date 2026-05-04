@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>NEXORA — Singularity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="description" content="NEXORA — Le futur s'invite chez vous. Découvrez une technologie repensée pour les pionniers. Audio 3D, wearables, énergie propre, intelligence ambiante.">
+    <meta name="theme-color" content="#0A0F1A">
+    <title>NEXORA — Quantum Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,691 +15,734 @@
         }
 
         :root {
-            --glitch-cyan: #00ffff;
-            --glitch-magenta: #ff00ff;
-            --glitch-yellow: #ffff00;
-            --dark-bg: #000000;
-            --dark-card: #0a0a0f;
-            --dark-elevated: #111118;
-            --neon-blue: #0a4dff;
-            --neon-purple: #b000ff;
-            --grid-color: rgba(0, 255, 255, 0.08);
+            --bg-deep: #0A0F1A;
+            --bg-elevated: #111827;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --cyan-neon: #00F0FF;
+            --violet-neon: #B200FF;
+            --cyan-glow: rgba(0, 240, 255, 0.4);
+            --violet-glow: rgba(178, 0, 255, 0.3);
+            --text-light: #E0E0E0;
+            --text-white: #FFFFFF;
+            --transition-default: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         body {
-            background: var(--dark-bg);
-            color: #e0e0ff;
-            font-family: 'Space Mono', monospace;
+            background: var(--bg-deep);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            position: relative;
+            line-height: 1.5;
         }
 
-        /* === CANVAS 3D PARTICULES QUANTIQUES === */
-        #quantum-canvas {
+        /* === ARRIÈRE-PLAN HEXAGONAL ANIMÉ === */
+        .hex-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%2300F0FF' stroke-width='0.5' stroke-opacity='0.1' d='M50 5L93.3 27.5V72.5L50 95L6.7 72.5V27.5L50 5z M50 15L80 30V70L50 85L20 70V30L50 15z M50 25L70 37.5V62.5L50 75L30 62.5V37.5L50 25z'/%3E%3C/svg%3E");
+            background-size: 80px 80px;
+            animation: slowDrift 60s infinite linear;
             pointer-events: none;
         }
+        @keyframes slowDrift {
+            0% { background-position: 0 0; transform: scale(1); }
+            50% { background-position: 40px 40px; transform: scale(1.02); }
+            100% { background-position: 0 0; transform: scale(1); }
+        }
 
-        /* === GRILLE CYBERPUNK DYNAMIQUE === */
-        .cyber-grid {
+        /* Particules flottantes */
+        .floating-particles {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 50px 50px;
             z-index: 1;
             pointer-events: none;
-            animation: gridPulse 8s infinite alternate;
         }
-        @keyframes gridPulse {
-            0% { opacity: 0.3; background-size: 50px 50px; }
-            100% { opacity: 0.8; background-size: 55px 55px; }
-        }
-
-        /* === SCANLINE EFFECT === */
-        .scanline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(0deg, rgba(0,255,255,0.03) 0px, rgba(0,255,255,0.03) 2px, transparent 2px, transparent 6px);
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        /* === CURSOR QUANTIQUE === */
-        .quantum-cursor {
-            width: 30px;
-            height: 30px;
-            border: 2px solid var(--glitch-cyan);
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, var(--cyan-neon), transparent);
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            transition: all 0.08s linear;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 0 20px rgba(0,255,255,0.8);
-            mix-blend-mode: difference;
+            opacity: 0.15;
+            animation: floatParticle linear infinite;
         }
-        .quantum-trail {
-            width: 6px;
-            height: 6px;
-            background: var(--glitch-magenta);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10001;
-            filter: blur(2px);
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.25; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
-        /* === HEADER FLOTTANT ULTRA-TECH === */
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--cyan-neon); border-radius: 10px; }
+
+        /* === HEADER STICKY GLASS === */
         .header {
             position: fixed;
             top: 20px;
             left: 3%;
             right: 3%;
-            padding: 0.8rem 2rem;
+            padding: 0.6rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
             border-radius: 60px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            transition: var(--transition-default);
+        }
+        .header.scrolled {
+            top: 0;
+            border-radius: 0 0 30px 30px;
+            background: rgba(10, 15, 26, 0.95);
+            box-shadow: 0 0 20px rgba(0,240,255,0.2);
         }
         .logo {
             font-family: 'Orbitron', monospace;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #00ffff, #ff00ff, #00ffff);
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--cyan-neon), var(--violet-neon));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: logoPulse 3s infinite;
-        }
-        @keyframes logoPulse {
-            0%,100% { text-shadow: 0 0 5px cyan; }
-            50% { text-shadow: 0 0 20px magenta; }
+            text-shadow: 0 0 8px var(--cyan-glow);
+            letter-spacing: 2px;
         }
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.2rem;
             list-style: none;
         }
         .nav-links a {
-            color: #aaaaff;
+            color: var(--text-light);
             text-decoration: none;
             font-size: 0.75rem;
-            letter-spacing: 2px;
-            transition: 0.3s;
-            font-weight: bold;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            transition: var(--transition-default);
         }
-        .nav-links a:hover { color: cyan; text-shadow: 0 0 8px cyan; }
-        .cart-icon {
-            width: 45px;
-            height: 45px;
-            border: 1px solid cyan;
+        .nav-links a:hover { color: var(--cyan-neon); text-shadow: 0 0 6px var(--cyan-neon); }
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .search-trigger {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(0,240,255,0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: 0.3s;
+            background: transparent;
+            transition: var(--transition-default);
         }
-        .cart-icon:hover { background: cyan; box-shadow: 0 0 20px cyan; }
+        .search-trigger:hover { background: var(--cyan-neon); border-color: var(--cyan-neon); }
+        .cart-icon {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--violet-neon);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-default);
+        }
+        .cart-icon:hover { background: var(--violet-neon); box-shadow: 0 0 20px var(--violet-glow); }
         .cart-count {
-            background: magenta;
-            border-radius: 20px;
-            padding: 2px 8px;
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--cyan-neon);
+            color: #000;
             font-size: 0.7rem;
-            margin-left: 5px;
+            font-weight: bold;
+            border-radius: 20px;
+            padding: 2px 7px;
         }
 
-        /* === HERO : HOLOGRAMME 3D === */
+        /* === HERO AVEC VIDÉO === */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            z-index: 10;
+            z-index: 5;
             text-align: center;
+            padding: 2rem;
         }
-        .glitch-text {
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+        .hero-content {
+            max-width: 800px;
+        }
+        .hero-title {
             font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 12vw, 7rem);
-            font-weight: 900;
-            position: relative;
-            text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,255,0.75);
-            animation: glitch 2s infinite;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
         }
-        @keyframes glitch {
-            0%,100% { transform: skew(0deg, 0deg); }
-            95% { transform: skew(2deg, 1deg); text-shadow: 0.05em 0 0 cyan, -0.05em -0.025em 0 magenta; }
-            96% { transform: skew(-2deg, -1deg); }
-            97% { transform: skew(1deg, 0.5deg); }
-        }
-        .hero-sub {
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            margin-top: 1rem;
-            color: #88aaff;
-        }
-        .hero-cta {
-            margin-top: 3rem;
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-        }
-        .btn-neon {
-            padding: 1rem 2.5rem;
-            background: transparent;
-            border: 2px solid cyan;
-            color: cyan;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: monospace;
-        }
-        .btn-neon:hover {
-            background: cyan;
-            color: black;
-            box-shadow: 0 0 40px cyan;
-            transform: scale(1.05);
-        }
-        .btn-neon.purple {
-            border-color: magenta;
-            color: magenta;
-        }
-        .btn-neon.purple:hover {
-            background: magenta;
-            color: black;
-            box-shadow: 0 0 40px magenta;
-        }
-
-        /* === SECTIONS FUTURISTES === */
-        section {
-            padding: 6rem 5%;
-            position: relative;
-            z-index: 10;
-        }
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: linear-gradient(45deg, cyan, magenta);
+        .hero-title span {
+            background: linear-gradient(135deg, var(--cyan-neon), var(--violet-neon));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
+        .hero-sub {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #b0c4de;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            padding: 1rem 2.2rem;
+            background: linear-gradient(135deg, var(--cyan-neon), var(--violet-neon));
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            transition: var(--transition-default);
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--cyan-glow); }
+        .btn-secondary {
+            padding: 1rem 2.2rem;
+            background: transparent;
+            border: 1px solid var(--cyan-neon);
+            border-radius: 40px;
+            color: var(--cyan-neon);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-default);
+        }
+        .btn-secondary:hover { background: rgba(0,240,255,0.1); box-shadow: 0 0 15px var(--cyan-glow); }
 
-        /* GRILLE PRODUITS HOLOGRAPHIQUE */
-        .product-grid {
+        /* SECTIONS GÉNÉRIQUES */
+        section {
+            padding: 5rem 5%;
+            position: relative;
+            z-index: 5;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-tag {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--cyan-neon);
+            text-transform: uppercase;
+        }
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            margin-top: 0.5rem;
+        }
+
+        /* CATÉGORIES QUADRATURE */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.8rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .category-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,240,255,0.2);
+            border-radius: 28px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition-default);
+            cursor: pointer;
+        }
+        .category-card:hover {
+            border-color: var(--cyan-neon);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(0,240,255,0.1);
+        }
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .category-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* PRODUITS GRILLE DYNAMIQUE */
+        .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
         }
-        .holo-card {
-            background: rgba(10, 10, 20, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0,255,255,0.4);
-            border-radius: 20px;
-            padding: 1.5rem;
-            transition: all 0.4s;
-            cursor: pointer;
-            position: relative;
+        .product-card {
+            background: var(--bg-elevated);
+            border-radius: 24px;
             overflow: hidden;
+            border-bottom: 2px solid var(--cyan-neon);
+            transition: var(--transition-default);
+            cursor: pointer;
         }
-        .holo-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(0,255,255,0.2), transparent);
-            opacity: 0;
-            transition: 0.3s;
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(0,240,255,0.2);
         }
-        .holo-card:hover::before { opacity: 1; }
-        .holo-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: magenta;
-            box-shadow: 0 0 30px rgba(255,0,255,0.3);
+        .product-img {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            background: radial-gradient(circle at 30% 20%, #1a2538, #0A0F1A);
         }
-        .product-emoji {
-            font-size: 4rem;
-            filter: drop-shadow(0 0 10px cyan);
+        .product-info {
+            padding: 1.5rem;
+        }
+        .product-badge {
+            display: inline-block;
+            background: var(--violet-neon);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
         }
         .product-price {
             font-size: 1.8rem;
-            color: cyan;
-            margin: 1rem 0;
+            font-weight: 700;
+            color: var(--cyan-neon);
+            margin: 0.8rem 0;
         }
 
-        /* BANDEAUX CHIFFRES */
-        .stats-bar {
+        /* BANDEAU CARE + VIDÉO */
+        .care-banner {
+            background: linear-gradient(95deg, #0A0F1A, #111827);
+            border-radius: 40px;
+            padding: 3rem;
             display: flex;
-            justify-content: space-around;
+            align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 2rem;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid cyan;
-            border-radius: 80px;
-            padding: 2rem;
+            border: 1px solid var(--cyan-neon);
             margin: 2rem 0;
         }
-        .stat-cell {
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            font-family: monospace;
-            text-shadow: 0 0 10px cyan;
+        .care-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* TIMELINE TECH */
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        .timeline-item {
+        /* AVIS CLIENTS SLIDER */
+        .reviews-slider {
             display: flex;
             gap: 2rem;
-            align-items: center;
-            border-left: 3px solid cyan;
-            padding-left: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 1rem 0;
         }
-        .timeline-year {
-            font-size: 2rem;
-            font-family: monospace;
-            color: cyan;
+        .review-card {
+            min-width: 300px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 1.8rem;
+            scroll-snap-align: start;
+            border: 1px solid rgba(178,0,255,0.3);
         }
 
         /* NEWSLETTER */
         .newsletter-box {
-            background: rgba(0,0,0,0.8);
-            border: 2px solid magenta;
-            border-radius: 30px;
+            background: linear-gradient(145deg, #0A0F1A, #05080f);
+            border-radius: 60px;
             padding: 3rem;
             text-align: center;
+            border: 1px solid var(--cyan-neon);
+        }
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
         .newsletter-input {
-            padding: 1rem;
-            background: transparent;
-            border: 1px solid cyan;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--violet-neon);
+            border-radius: 60px;
             color: white;
-            width: 70%;
-            margin-right: 1rem;
+            width: 300px;
         }
 
-        /* FOOTER MATRIX */
+        /* FOOTER */
         footer {
-            background: #010101;
-            padding: 3rem;
-            border-top: 1px solid cyan;
-            text-align: center;
-            font-family: monospace;
+            background: #03060b;
+            padding: 3rem 5%;
+            border-top: 1px solid var(--cyan-neon);
+            margin-top: 2rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         /* MODAL PANIER */
-        .modal {
+        .cart-drawer {
             position: fixed;
             top: 0;
             right: -100%;
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             height: 100%;
-            background: #0a0a0f;
+            background: var(--bg-elevated);
             z-index: 2000;
-            transition: 0.4s;
+            transition: 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             padding: 2rem;
-            border-left: 3px solid cyan;
-            backdrop-filter: blur(20px);
+            border-left: 2px solid var(--cyan-neon);
         }
-        .modal.open { right: 0; }
-        .overlay {
+        .cart-drawer.open { right: 0; }
+        .overlay-dark {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
             z-index: 1999;
             display: none;
         }
-        .overlay.open { display: block; }
+        .overlay-dark.open { display: block; }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .glitch-text { font-size: 2.5rem; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .care-banner { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-<canvas id="quantum-canvas"></canvas>
-<div class="cyber-grid"></div>
-<div class="scanline"></div>
-<div class="quantum-cursor"></div>
-<div class="quantum-trail"></div>
+<div class="hex-bg"></div>
+<div class="floating-particles" id="particles"></div>
 
-<div class="header">
-    <div class="logo">⎆ NEXORA // SINGULARITY</div>
+<header class="header" id="header">
+    <div class="logo">⎈ NEXORA</div>
     <ul class="nav-links">
-        <li><a href="#" data-scroll="products">[PRODUCTS]</a></li>
-        <li><a href="#" data-scroll="timeline">[TIMELINE]</a></li>
-        <li><a href="#" data-scroll="stats">[STATS]</a></li>
-        <li><a href="#" data-scroll="contact">[MATRIX]</a></li>
+        <li><a href="#" data-scroll="categories">UNIVERS</a></li>
+        <li><a href="#" data-scroll="products">PRODUITS</a></li>
+        <li><a href="#" data-scroll="reviews">AVIS</a></li>
+        <li><a href="#" data-scroll="contact">CONTACT</a></li>
     </ul>
-    <div class="cart-icon" id="cartBtn">
-        🛸 <span class="cart-count" id="cartCount">0</span>
+    <div class="header-actions">
+        <div class="search-trigger" id="searchBtn">🔍</div>
+        <div class="cart-icon" id="cartBtn">
+            🛒
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
     </div>
-</div>
+</header>
 
-<!-- HERO -->
+<!-- HERO WITH VIDEO -->
 <section class="hero">
-    <div>
-        <div class="glitch-text">NEXORA</div>
-        <div class="glitch-text" style="font-size: 2rem; text-shadow: none;">QUANTUM ERA</div>
-        <div class="hero-sub">// CONSCIOUS TECHNOLOGY // BEYOND THE VOID //</div>
+    <video class="hero-video-bg" autoplay muted loop playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-circuit-animation-21805-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+        <h1 class="hero-title">Le futur s’invite <span>chez vous</span></h1>
+        <p class="hero-sub">NEXORA, la technologie repensée pour les pionniers.</p>
         <div class="hero-cta">
-            <button class="btn-neon" data-scroll="products">⟁ INITIATE</button>
-            <button class="btn-neon purple" data-scroll="timeline">⌬ LOG</button>
+            <button class="btn-primary" data-scroll="products">⟡ Explorer la collection</button>
+            <button class="btn-secondary" id="demoBtn">⟡ Voir la démo</button>
         </div>
     </div>
 </section>
 
-<!-- PRODUITS HOLOGRAPHIQUES -->
+<!-- CATÉGORIES -->
+<section id="categories">
+    <div class="section-header">
+        <div class="section-tag">⎈ QUADRATURE</div>
+        <h2 class="section-title">Univers NEXORA</h2>
+    </div>
+    <div class="categories-grid">
+        <div class="category-card" data-cat="audio"><div class="category-icon">🎧</div><div class="category-name">Audio 3D</div><div>Immersion spatiale</div></div>
+        <div class="category-card" data-cat="wear"><div class="category-icon">⌚</div><div class="category-name">Wearables</div><div>Biométrie connectée</div></div>
+        <div class="category-card" data-cat="energy"><div class="category-icon">⚡</div><div class="category-name">Énergie propre</div><div>Charge solaire intégrée</div></div>
+        <div class="category-card" data-cat="ai"><div class="category-icon">🧠</div><div class="category-name">Intelligence ambiante</div><div>IA prédictive</div></div>
+    </div>
+</section>
+
+<!-- PRODUITS PHARES -->
 <section id="products">
-    <h2 class="section-title">⟁ HOLOGRAPHIC INVENTORY</h2>
-    <div class="product-grid" id="productContainer"></div>
-</section>
-
-<!-- TIMELINE TECH -->
-<section id="timeline">
-    <h2 class="section-title">⌬ TEMPORAL NEXUS</h2>
-    <div class="timeline">
-        <div class="timeline-item"><div class="timeline-year">2018</div><div>Genesis // NEXORA foundation</div></div>
-        <div class="timeline-item"><div class="timeline-year">2021</div><div>First AI-enhanced audio core</div></div>
-        <div class="timeline-item"><div class="timeline-year">2024</div><div>Quantum chipset integration</div></div>
-        <div class="timeline-item"><div class="timeline-year">2026</div><div>Neural interface prototype</div></div>
+    <div class="section-header">
+        <div class="section-tag">⚡ SÉLECTION QUANTIQUE</div>
+        <h2 class="section-title">Les incontournables du mois</h2>
+    </div>
+    <div class="products-grid" id="productGrid"></div>
+    <div style="text-align: center; margin-top: 3rem;">
+        <button class="btn-secondary" data-scroll="categories">⟡ Voir tout →</button>
     </div>
 </section>
 
-<!-- STATS QUANTIQUES -->
-<section id="stats">
-    <div class="stats-bar" id="statsBar">
-        <div class="stat-cell"><div class="stat-number" data-target="800">0</div><div>AI OPERATIONS</div></div>
-        <div class="stat-cell"><div class="stat-number" data-target="125000">0</div><div>ACTIVE NODES</div></div>
-        <div class="stat-cell"><div class="stat-number" data-target="99.9">0</div><div>UPTIME %</div></div>
-        <div class="stat-cell"><div class="stat-number" data-target="24">0</div><div>QUANTUM CORES</div></div>
+<!-- BANDEAU CARE -->
+<section>
+    <div class="care-banner">
+        <div class="care-text"><h3>NEXORA Care</h3><p>2 ans de garantie quantique & livraison par drone.</p></div>
+        <button class="btn-primary" id="careBtn">En savoir plus</button>
     </div>
 </section>
 
-<!-- NEWSLETTER FUTURISTE -->
+<!-- AVIS CLIENTS -->
+<section id="reviews">
+    <div class="section-header">
+        <div class="section-tag">⎈ PROOF SOCIAL</div>
+        <h2 class="section-title">Ils ont déjà basculé</h2>
+    </div>
+    <div class="reviews-slider" id="reviewsSlider"></div>
+</section>
+
+<!-- NEWSLETTER -->
 <section id="contact">
     <div class="newsletter-box">
-        <h2 style="color:cyan;">⟁ SYNAPSE FEED</h2>
-        <p>Subscribe to the neural link // exclusive drops</p>
-        <input type="email" id="newsEmail" class="newsletter-input" placeholder="your@neural.link">
-        <button class="btn-neon" id="subBtn">SYNCHRONIZE</button>
+        <h2 style="color: var(--cyan-neon);">⟡ Rejoignez l’avant-garde</h2>
+        <p>Offre exclusive + mise à jour produits avant tout le monde.</p>
+        <div class="newsletter-form">
+            <input type="email" id="newsEmail" class="newsletter-input" placeholder="votre@nexus.email">
+            <button class="btn-primary" id="subNewsBtn">S’abonner</button>
+        </div>
     </div>
 </section>
 
 <footer>
-    <div>NEXORA // SINGULARITY // 2026</div>
-    <div style="font-size:0.7rem; margin-top:1rem;">[ encrypted protocol // quantum safe ]</div>
+    <div class="footer-grid">
+        <div><strong>NEXORA</strong><br>Quantum tech since 2023</div>
+        <div><a href="#">À propos</a><br><a href="#">CGV</a><br><a href="#">Confidentialité</a></div>
+        <div><a href="#">Discord</a><br><a href="#">Twitter/X</a><br><a href="#">GitHub</a></div>
+        <div><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 100 30'%3E%3Crect width='30' height='20' fill='%2300F0FF'/%3E%3C/svg%3E" alt="paiement" style="filter: drop-shadow(0 0 2px cyan);"> Crypto | Visa</div>
+    </div>
+    <div style="text-align: center; font-size: 0.7rem;">© NEXORA 2026 — Interface quantique</div>
 </footer>
 
 <!-- MODALS -->
-<div class="overlay" id="overlay"></div>
-<div class="modal" id="cartModal">
-    <h2 style="color:cyan;">⟁ QUANTUM BASKET</h2>
+<div class="overlay-dark" id="overlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <h2 style="color:cyan;">Panier quantique</h2>
     <div id="cartItemsList"></div>
-    <div id="cartTotalPrice" style="font-size:1.8rem; margin:2rem 0;"></div>
-    <button class="btn-neon" id="checkoutBtn">⟁ VALIDATE</button>
+    <div id="cartTotalAmount" style="font-size:1.8rem; margin:2rem 0;"></div>
+    <button class="btn-primary" id="checkoutBtn">⟡ Finaliser</button>
 </div>
 
 <script>
-    // ========================
-    // CANVAS 3D PARTICULES (STYLE QUANTUM)
-    // ========================
-    const canvas = document.getElementById('quantum-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-    const PARTICLE_COUNT = 200;
-
-    function resizeCanvas() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-    }
-
-    function initParticles() {
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 2 + 1,
-                speedX: (Math.random() - 0.5) * 1.5,
-                speedY: (Math.random() - 0.5) * 1.5,
-                color: `hsl(${Math.random() * 60 + 180}, 100%, 60%)`
-            });
+    (function() {
+        // === PARTICULES FLOTTANTES ===
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 60; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                const size = Math.random() * 4 + 1;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = Math.random() * 15 + 8 + 's';
+                p.style.animationDelay = Math.random() * 10 + 's';
+                container.appendChild(p);
+            }
         }
-    }
+        createParticles();
 
-    function drawParticles() {
-        ctx.clearRect(0, 0, width, height);
-        for (let p of particles) {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = 'cyan';
-            ctx.fill();
-            p.x += p.speedX;
-            p.y += p.speedY;
-            if (p.x < 0) p.x = width;
-            if (p.x > width) p.x = 0;
-            if (p.y < 0) p.y = height;
-            if (p.y > height) p.y = 0;
-        }
-        requestAnimationFrame(drawParticles);
-    }
+        // === HEADER SCROLL ===
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
 
-    window.addEventListener('resize', () => { resizeCanvas(); });
-    resizeCanvas();
-    initParticles();
-    drawParticles();
-
-    // ========================
-    // CURSOR + TRAIL QUANTIQUE
-    // ========================
-    const cursor = document.querySelector('.quantum-cursor');
-    const trail = document.querySelector('.quantum-trail');
-    let trailPositions = [];
-
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX - 15 + 'px';
-        cursor.style.top = e.clientY - 15 + 'px';
-        trailPositions.push({ x: e.clientX, y: e.clientY });
-        if (trailPositions.length > 8) trailPositions.shift();
-        trail.style.left = e.clientX - 3 + 'px';
-        trail.style.top = e.clientY - 3 + 'px';
-    });
-
-    // ========================
-    // PRODUITS
-    // ========================
-    const products = [
-        { id: 1, name: "AirSync ∞", price: 34900, old: 59900, emoji: "🎧", tag: "⟁ NEXUS" },
-        { id: 2, name: "TimeFlow Singularity", price: 99900, old: 149900, emoji: "⌚", tag: "⚡ QUANTUM" },
-        { id: 3, name: "SoundCore Void", price: 27900, old: 49900, emoji: "🔊", tag: "🌀 PHANTOM" },
-        { id: 4, name: "Canvas Neural", price: 199900, old: 249900, emoji: "📱", tag: "🧠 LINK" },
-        { id: 5, name: "CyberGlasses XR", price: 299900, old: 399900, emoji: "👓", tag: "✨ HOLO" }
-    ];
-
-    let cart = JSON.parse(localStorage.getItem('nexora_quantum') || '[]');
-
-    function renderProducts() {
-        const container = document.getElementById('productContainer');
-        if (!container) return;
-        container.innerHTML = products.map(p => `
-            <div class="holo-card" data-id="${p.id}">
-                <div class="product-emoji">${p.emoji}</div>
-                <h3>${p.name}</h3>
-                <div class="product-price">${p.price.toLocaleString()} FCFA <span style="font-size:0.8rem; text-decoration:line-through;">${p.old.toLocaleString()}</span></div>
-                <button class="btn-neon add-to-cart" data-id="${p.id}" style="padding:0.5rem 1rem; margin-top:1rem;">⟁ ACQUIRE</button>
-            </div>
-        `).join('');
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
+        // === SMOOTH SCROLL ===
+        document.querySelectorAll('[data-scroll]').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const id = parseInt(btn.dataset.id);
-                const product = products.find(p => p.id === id);
-                addToCart(product);
+                const targetId = btn.getAttribute('data-scroll');
+                const el = document.getElementById(targetId);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
-    }
 
-    function addToCart(product) {
-        const exist = cart.find(i => i.id === product.id);
-        if (exist) exist.qty++;
-        else cart.push({ ...product, qty: 1 });
-        updateCart();
-        showFlash(`${product.name} ⟁ added`);
-    }
+        // === PRODUITS ===
+        const products = [
+            { id: 1, name: "Auralis X1", price: 44900, old: 69900, badge: "⟁ NOUVEAU", emoji: "🎧", cat: "audio" },
+            { id: 2, name: "Chrono Sync", price: 89900, old: 129900, badge: "⚡ TOP", emoji: "⌚", cat: "wear" },
+            { id: 3, name: "SolarCore", price: 59900, old: null, badge: "🌱 GREEN", emoji: "🔋", cat: "energy" }
+        ];
 
-    function updateCart() {
-        localStorage.setItem('nexora_quantum', JSON.stringify(cart));
-        const totalItems = cart.reduce((s,i) => s + i.qty, 0);
-        document.getElementById('cartCount').innerText = totalItems;
-        renderCartModal();
-    }
+        let cart = JSON.parse(localStorage.getItem('nexora_cart') || '[]');
 
-    function renderCartModal() {
-        const listDiv = document.getElementById('cartItemsList');
-        const totalDiv = document.getElementById('cartTotalPrice');
-        if (!listDiv) return;
-        if (cart.length === 0) {
-            listDiv.innerHTML = '<div style="color:#aaa;">∅ VOID</div>';
-            totalDiv.innerHTML = '0 FCFA';
-            return;
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            if (!grid) return;
+            grid.innerHTML = products.map(p => `
+                <div class="product-card" data-id="${p.id}">
+                    <div class="product-img">${p.emoji}</div>
+                    <div class="product-info">
+                        <div class="product-badge">${p.badge}</div>
+                        <h3>${p.name}</h3>
+                        <div class="product-price">${p.price.toLocaleString()} FCFA ${p.old ? `<span style="font-size:0.9rem; text-decoration:line-through;">${p.old.toLocaleString()}</span>` : ''}</div>
+                        <button class="btn-secondary add-cart-btn" data-id="${p.id}" style="margin-top:1rem; padding:0.5rem 1rem;">⟡ Ajouter</button>
+                    </div>
+                </div>
+            `).join('');
+            document.querySelectorAll('.add-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = parseInt(btn.dataset.id);
+                    const product = products.find(p => p.id === id);
+                    addToCart(product);
+                });
+            });
         }
-        let total = 0;
-        listDiv.innerHTML = cart.map(i => {
-            total += i.price * i.qty;
-            return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid cyan; margin:1rem 0;">
-                        <span>${i.name} x${i.qty}</span>
-                        <span>${(i.price * i.qty).toLocaleString()} FCFA</span>
-                    </div>`;
-        }).join('');
-        totalDiv.innerHTML = `${total.toLocaleString()} FCFA`;
-    }
 
-    function showFlash(msg) {
-        const f = document.createElement('div');
-        f.innerText = msg;
-        f.style.position = 'fixed';
-        f.style.bottom = '20px';
-        f.style.right = '20px';
-        f.style.background = 'cyan';
-        f.style.color = 'black';
-        f.style.padding = '1rem 2rem';
-        f.style.zIndex = '10005';
-        f.style.fontFamily = 'monospace';
-        f.style.borderRadius = '0px';
-        f.style.borderLeft = '4px solid magenta';
-        document.body.appendChild(f);
-        setTimeout(() => f.remove(), 2000);
-    }
+        function addToCart(product) {
+            const existing = cart.find(i => i.id === product.id);
+            if (existing) existing.qty++;
+            else cart.push({ ...product, qty: 1 });
+            updateCartUI();
+            showToast(`⟡ ${product.name} ajouté au panier`);
+        }
 
-    // ========================
-    // ANIMATION STATS (counter)
-    // ========================
-    function animateStats() {
-        const stats = document.querySelectorAll('.stat-number');
-        stats.forEach(stat => {
-            const target = parseFloat(stat.dataset.target);
-            let current = 0;
-            const increment = target / 60;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    stat.innerText = target.toLocaleString();
-                    clearInterval(timer);
-                } else stat.innerText = Math.floor(current).toLocaleString();
-            }, 30);
+        function updateCartUI() {
+            localStorage.setItem('nexora_cart', JSON.stringify(cart));
+            const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+            document.getElementById('cartCount').innerText = totalQty;
+            renderCartDrawer();
+        }
+
+        function renderCartDrawer() {
+            const container = document.getElementById('cartItemsList');
+            const totalSpan = document.getElementById('cartTotalAmount');
+            if (!container) return;
+            if (cart.length === 0) {
+                container.innerHTML = '<div style="color:#aaa;">∅ Le vide quantique...</div>';
+                totalSpan.innerText = '0 FCFA';
+                return;
+            }
+            let total = 0;
+            container.innerHTML = cart.map(i => {
+                total += i.price * i.qty;
+                return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid cyan; margin:1rem 0;">
+                            <span>${i.name} x${i.qty}</span>
+                            <span>${(i.price * i.qty).toLocaleString()} FCFA</span>
+                        </div>`;
+            }).join('');
+            totalSpan.innerText = `${total.toLocaleString()} FCFA`;
+        }
+
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.innerText = msg;
+            t.style.position = 'fixed';
+            t.style.bottom = '20px';
+            t.style.left = '20px';
+            t.style.background = '#00F0FF';
+            t.style.color = '#000';
+            t.style.padding = '1rem 2rem';
+            t.style.borderRadius = '30px';
+            t.style.zIndex = '10000';
+            t.style.fontWeight = 'bold';
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
+        }
+
+        // === AVIS CLIENTS ===
+        const reviews = [
+            { name: "Dr. Aïcha Ndiaye", role: "Ingénieur spatial", text: "L'audio 3D est une révolution. Je ne retournerai jamais en arrière.", stars: 5 },
+            { name: "Mamadou Diallo", role: "Lead dev quantum", text: "La montre Chrono Sync a changé ma perception du temps.", stars: 5 },
+            { name: "Sophie L.", role: "Early adopter", text: "Livraison drone en 45min, expérience surréaliste.", stars: 4 }
+        ];
+        function renderReviews() {
+            const slider = document.getElementById('reviewsSlider');
+            if (!slider) return;
+            slider.innerHTML = reviews.map(r => `
+                <div class="review-card">
+                    <div style="color:cyan;">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
+                    <p style="margin:1rem 0;">“${r.text}”</p>
+                    <strong>${r.name}</strong><br><small>${r.role}</small>
+                </div>
+            `).join('');
+        }
+
+        // === MODAL PANIER ===
+        const drawer = document.getElementById('cartDrawer');
+        const overlay = document.getElementById('overlay');
+        document.getElementById('cartBtn').addEventListener('click', () => {
+            renderCartDrawer();
+            drawer.classList.add('open');
+            overlay.classList.add('open');
         });
-    }
-
-    // ========================
-    // MODAL PANIER
-    // ========================
-    const cartModal = document.getElementById('cartModal');
-    const overlayDiv = document.getElementById('overlay');
-    document.getElementById('cartBtn').addEventListener('click', () => {
-        renderCartModal();
-        cartModal.classList.add('open');
-        overlayDiv.classList.add('open');
-    });
-    overlayDiv.addEventListener('click', () => {
-        cartModal.classList.remove('open');
-        overlayDiv.classList.remove('open');
-    });
-    document.getElementById('checkoutBtn')?.addEventListener('click', () => {
-        if (cart.length === 0) return showFlash('∅ VOID BASKET');
-        showFlash('✅ ORDER TRANSMITTED // neural confirmation');
-        cart = [];
-        updateCart();
-        cartModal.classList.remove('open');
-        overlayDiv.classList.remove('open');
-    });
-
-    // NEWSLETTER
-    document.getElementById('subBtn')?.addEventListener('click', () => {
-        const email = document.getElementById('newsEmail').value;
-        if (email.includes('@')) showFlash('⟁ LINK SYNCHRONIZED');
-        else showFlash('❌ INVALID NEURAL CODE');
-    });
-
-    // SMOOTH SCROLL
-    document.querySelectorAll('[data-scroll]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const id = link.getAttribute('data-scroll');
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        overlay.addEventListener('click', () => {
+            drawer.classList.remove('open');
+            overlay.classList.remove('open');
         });
-    });
-
-    // Mouse holographic effect on cards
-    document.querySelectorAll('.holo-card').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            card.style.setProperty('--x', `${x}%`);
-            card.style.setProperty('--y', `${y}%`);
+        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+            if (cart.length === 0) return showToast("Panier vide");
+            showToast("✅ Commande quantique validée");
+            cart = [];
+            updateCartUI();
+            drawer.classList.remove('open');
+            overlay.classList.remove('open');
         });
-    });
 
-    renderProducts();
-    updateCart();
-    animateStats();
+        // NEWSLETTER
+        document.getElementById('subNewsBtn')?.addEventListener('click', () => {
+            const email = document.getElementById('newsEmail').value;
+            if (email.includes('@')) showToast("⟡ Abonnement réussi, bienvenue dans l'avenir");
+            else showToast("❌ Email invalide");
+        });
+
+        // DEMO MODALE (simple)
+        document.getElementById('demoBtn')?.addEventListener('click', () => {
+            showToast("Démo immersive : bientôt disponible");
+        });
+        document.getElementById('careBtn')?.addEventListener('click', () => {
+            showToast("Garantie quantique : 2 ans pièces et main-d'œuvre");
+        });
+        document.getElementById('searchBtn')?.addEventListener('click', () => {
+            showToast("Recherche neuronale en développement");
+        });
+
+        renderProducts();
+        renderReviews();
+        updateCartUI();
+    })();
 </script>
 </body>
 </html>
