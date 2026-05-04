@@ -391,314 +391,202 @@
             stroke: white;
         }
 
-        /* ========== FEATURED PRODUCTS AMÉLIORÉ ========== */
-        .featured {
+        /* ========== BEST SELLERS SECTION - STYLE COLLAGE LUXE ========== */
+        .bestsellers {
             padding: 6rem 4%;
             background: var(--color-white);
         }
 
-        .section-header {
-            max-width: 1400px;
-            margin: 0 auto 4rem;
+        .bestsellers-header {
             text-align: center;
+            margin-bottom: 4rem;
         }
 
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
+        .bestsellers-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: block;
         }
 
-        .section-subtitle {
-            font-size: 1.125rem;
+        .bestsellers-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .bestsellers-subtitle {
+            font-size: 1rem;
             color: var(--color-secondary);
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
-        .products-grid {
+        /* Grille collage asymétrique */
+        .bestsellers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: auto;
+            gap: 1.5rem;
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
         }
 
-        .product-card {
-            background: var(--color-light-gray);
-            border-radius: 16px;
+        /* Disposition asymétrique */
+        .grid-item-1 {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .grid-item-2 {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .grid-item-3 {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .grid-item-4 {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        /* Carte produit style collage */
+        .bestseller-card {
+            position: relative;
             overflow: hidden;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: var(--color-light-gray);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(0, 102, 255, 0.08) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 1;
-            pointer-events: none;
+        .bestseller-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.15);
         }
 
-        .product-card:hover::before { opacity: 1; }
-        .product-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); }
-
-        .product-image {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image img {
+        .card-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .product-card:hover .product-image img { transform: scale(1.08); }
+        .bestseller-card:hover .card-image {
+            transform: scale(1.05);
+        }
 
-        /* Badges multiples */
-        .product-badges {
+        /* Différentes hauteurs pour l'asymétrie */
+        .grid-item-1 .bestseller-card {
+            aspect-ratio: 1.2 / 1;
+        }
+
+        .grid-item-2 .bestseller-card,
+        .grid-item-3 .bestseller-card {
+            aspect-ratio: 1 / 1;
+        }
+
+        .grid-item-4 .bestseller-card {
+            aspect-ratio: 2 / 1;
+        }
+
+        /* Overlay élégant */
+        .card-overlay {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
-            display: flex;
-            gap: 0.5rem;
-            flex-direction: column;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+            color: white;
             z-index: 2;
         }
 
-        .product-badge {
-            background: var(--color-primary);
-            color: var(--color-white);
-            padding: 0.3rem 0.8rem;
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            border-radius: 20px;
-        }
-
-        .product-badge.sale {
-            background: #E53935;
-        }
-
-        .product-badge.new {
-            background: #2E7D32;
-        }
-
-        .product-badge.bestseller {
-            background: #F57F17;
-        }
-
-        .product-badge.limited {
-            background: #6A1B9A;
-        }
-
-        /* Actions rapides */
-        .product-actions {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 0.5rem;
-            opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.3s ease;
-            z-index: 3;
-        }
-
-        .product-card:hover .product-actions {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .product-action {
-            width: 38px;
-            height: 38px;
-            background: var(--color-white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .product-action:hover {
-            background: var(--color-accent);
-            transform: scale(1.1);
-        }
-
-        .product-action svg {
-            width: 16px;
-            height: 16px;
-            stroke: var(--color-primary);
-            transition: stroke 0.3s ease;
-        }
-
-        .product-action:hover svg {
-            stroke: var(--color-white);
-        }
-
-        .product-info {
-            padding: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .product-category {
+        .card-category {
             font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--color-accent);
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.3rem;
         }
 
-        .product-name {
+        .card-title {
             font-family: var(--font-display);
             font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
+            margin-bottom: 0.3rem;
         }
 
-        /* Étoiles de notation */
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.8rem;
+        .card-price {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-white);
         }
 
-        .stars {
-            display: flex;
-            gap: 0.2rem;
-        }
-
-        .stars i {
-            font-style: normal;
-            color: #FFB800;
+        .card-price .old-price {
             font-size: 0.8rem;
-        }
-
-        .stars i.empty {
-            color: #DDD;
-        }
-
-        .reviews-count {
-            font-size: 0.7rem;
-            color: var(--color-secondary);
-        }
-
-        .product-description {
-            font-size: 0.85rem;
-            color: var(--color-secondary);
-            line-height: 1.5;
-            margin-bottom: 1.2rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .product-price {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-primary);
-        }
-
-        .product-price .old-price {
-            font-size: 0.9rem;
-            color: var(--color-secondary);
+            color: rgba(255, 255, 255, 0.5);
             text-decoration: line-through;
             margin-right: 0.5rem;
         }
 
-        .product-price .discount {
+        /* Badge Best Seller */
+        .bestseller-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--color-accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
             font-size: 0.7rem;
-            color: #E53935;
-            margin-left: 0.3rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 20px;
+            z-index: 3;
+            backdrop-filter: blur(4px);
         }
 
-        .product-cta {
-            width: 44px;
-            height: 44px;
-            background: var(--color-primary);
-            border-radius: 50%;
+        /* Flèche explorer */
+        .explore-link {
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 3rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-primary);
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
-        .product-cta:hover {
-            background: var(--color-accent);
-            transform: scale(1.1) rotate(90deg);
+        .explore-link:hover {
+            color: var(--color-accent);
+            gap: 1.2rem;
         }
 
-        .product-cta svg {
+        .explore-link svg {
             width: 20px;
             height: 20px;
-            stroke: var(--color-white);
+            stroke: currentColor;
             stroke-width: 2;
+            transition: transform 0.3s ease;
         }
 
-        /* Stock indication */
-        .product-stock {
-            display: inline-block;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            margin-top: 0.5rem;
+        .explore-link:hover svg {
+            transform: translateX(5px);
         }
 
-        .product-stock.in-stock {
-            background: rgba(46, 125, 50, 0.1);
-            color: #2E7D32;
-        }
-
-        .product-stock.low-stock {
-            background: rgba(245, 127, 23, 0.1);
-            color: #F57F17;
-        }
-
-        .product-stock.out-stock {
-            background: rgba(198, 40, 40, 0.1);
-            color: #C62828;
-        }
-
-        /* Categories - gardé identique */
+        /* Categories */
         .categories {
             padding: 6rem 4%;
             background: var(--color-bg);
@@ -1283,7 +1171,6 @@
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
             .innovation-content { grid-template-columns: 1fr; gap: 4rem; }
             .innovation-visual { height: 400px; }
         }
@@ -1291,6 +1178,26 @@
         @media (max-width: 1024px) {
             .footer-content { grid-template-columns: repeat(2, 1fr); }
             .categories-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .bestsellers-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .grid-item-1 {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+            .grid-item-4 {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+            .grid-item-2 .bestseller-card,
+            .grid-item-3 .bestseller-card {
+                aspect-ratio: 1 / 1;
+            }
+            .grid-item-1 .bestseller-card,
+            .grid-item-4 .bestseller-card {
+                aspect-ratio: 2 / 1;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1318,12 +1225,33 @@
             .slide-tagline { font-size: 1rem; letter-spacing: 0.1em; margin-bottom: 1rem; white-space: nowrap; }
             .slide-cta { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
             .btn-slide { padding: 0.7rem 1.5rem; font-size: 0.7rem; white-space: nowrap; }
-            .featured, .categories, .innovation, .newsletter { padding: 3rem 5%; }
-            .section-header { margin-bottom: 2rem; }
-            .section-title { font-size: 2rem; }
-            .section-subtitle { font-size: 0.9rem; }
-            .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            
+            .bestsellers { padding: 3rem 5%; }
+            .bestsellers-header { margin-bottom: 2rem; }
+            .bestsellers-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .grid-item-1,
+            .grid-item-2,
+            .grid-item-3,
+            .grid-item-4 {
+                grid-column: span 1;
+            }
+            .grid-item-1 .bestseller-card,
+            .grid-item-2 .bestseller-card,
+            .grid-item-3 .bestseller-card,
+            .grid-item-4 .bestseller-card {
+                aspect-ratio: 1 / 1;
+            }
+            .card-overlay { padding: 1rem; }
+            .card-title { font-size: 1rem; }
+            .card-category { font-size: 0.6rem; }
+            .card-price { font-size: 0.85rem; }
+            
+            .categories { padding: 3rem 5%; }
             .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .innovation { padding: 3rem 5%; }
             .innovation-content { gap: 2rem; }
             .innovation-text h2 { font-size: 1.8rem; }
             .innovation-text p { font-size: 0.9rem; margin-bottom: 1.5rem; }
@@ -1334,6 +1262,7 @@
             .tech-circle:nth-child(1) { width: 150px; height: 150px; }
             .tech-circle:nth-child(2) { width: 200px; height: 200px; }
             .tech-circle:nth-child(3) { width: 250px; height: 250px; }
+            .newsletter { padding: 3rem 5%; }
             .newsletter h2 { font-size: 1.8rem; }
             .newsletter p { font-size: 0.9rem; margin-bottom: 1.5rem; }
             .newsletter-form { flex-direction: column; }
@@ -1351,9 +1280,6 @@
             .slide-cta { gap: 0.5rem; }
             .categories-grid { grid-template-columns: 1fr; }
             .innovation-stats { grid-template-columns: 1fr; }
-            .product-info { padding: 1.2rem; }
-            .product-name { font-size: 1.1rem; }
-            .product-price { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -1365,7 +1291,7 @@
         <div class="logo">NEXORA</div>
         <div class="nav-menu">
             <ul class="nav-links">
-                <li><a data-scroll="produits">Produits</a></li>
+                <li><a data-scroll="bestsellers">Best Sellers</a></li>
                 <li><a data-scroll="categories">Catégories</a></li>
                 <li><a data-scroll="innovation">Innovation</a></li>
                 <li><a data-scroll="contact">Contact</a></li>
@@ -1396,7 +1322,7 @@
                 <div class="slide-content">
                     <div class="slide-tagline" id="tagline1"></div>
                     <div class="slide-cta">
-                        <button class="btn-slide btn-slide-primary" data-scroll="produits">Explorer la Collection</button>
+                        <button class="btn-slide btn-slide-primary" data-scroll="bestsellers">Explorer la Collection</button>
                         <button class="btn-slide btn-slide-secondary" data-scroll="innovation">En Savoir Plus</button>
                     </div>
                 </div>
@@ -1408,7 +1334,7 @@
                 <div class="slide-content">
                     <div class="slide-tagline" id="tagline2"></div>
                     <div class="slide-cta">
-                        <button class="btn-slide btn-slide-primary" data-scroll="produits">Explorer la Collection</button>
+                        <button class="btn-slide btn-slide-primary" data-scroll="bestsellers">Explorer la Collection</button>
                         <button class="btn-slide btn-slide-secondary" data-scroll="innovation">En Savoir Plus</button>
                     </div>
                 </div>
@@ -1426,14 +1352,70 @@
         </div>
     </div>
 
-    <!-- Featured Products -->
-    <section class="featured" id="produits">
-        <div class="section-header">
-            <h2 class="section-title">Produits Phares</h2>
-            <p class="section-subtitle">Découvrez notre sélection exclusive de produits électroniques premium</p>
+    <!-- ========== BEST SELLERS DU MOMENT - STYLE COLLAGE ========== -->
+    <section class="bestsellers" id="bestsellers">
+        <div class="bestsellers-header">
+            <span class="bestsellers-tag">⭐ BEST SELLERS</span>
+            <h2 class="bestsellers-title">Les plus recherchés</h2>
+            <p class="bestsellers-subtitle">Découvrez nos produits les plus plébiscités par notre communauté</p>
         </div>
-        <div class="products-grid" id="productsGrid">
-            <div class="loading">Chargement des produits...</div>
+
+        <div class="bestsellers-grid">
+            <!-- Produit 1 - Grand format -->
+            <div class="grid-item-1">
+                <div class="bestseller-card" data-product='{"id":"PRD-001","nom":"AirSync Pro","prix":34900,"oldPrice":49900,"cat":"Audio"}'>
+                    <div class="bestseller-badge">⭐ BEST SELLER</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🎧</div>
+                    <div class="card-overlay">
+                        <div class="card-category">Audio</div>
+                        <h3 class="card-title">AirSync Pro</h3>
+                        <div class="card-price"><span class="old-price">49 900 FCFA</span> 34 900 FCFA</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Produit 2 - Format carré -->
+            <div class="grid-item-2">
+                <div class="bestseller-card" data-product='{"id":"PRD-002","nom":"TimeFlow Elite","prix":59900,"cat":"Montres"}'>
+                    <div class="bestseller-badge">⭐ TOP RATING</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">⌚</div>
+                    <div class="card-overlay">
+                        <div class="card-category">Montres</div>
+                        <h3 class="card-title">TimeFlow Elite</h3>
+                        <div class="card-price">59 900 FCFA</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Produit 3 - Format carré -->
+            <div class="grid-item-3">
+                <div class="bestseller-card" data-product='{"id":"PRD-003","nom":"SoundCore X","prix":27900,"oldPrice":39900,"cat":"Audio"}'>
+                    <div class="bestseller-badge">⭐ -30%</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🔊</div>
+                    <div class="card-overlay">
+                        <div class="card-category">Audio</div>
+                        <h3 class="card-title">SoundCore X</h3>
+                        <div class="card-price"><span class="old-price">39 900 FCFA</span> 27 900 FCFA</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Produit 4 - Format large -->
+            <div class="grid-item-4">
+                <div class="bestseller-card" data-product='{"id":"PRD-004","nom":"Canvas Pro 12","prix":119900,"cat":"Tablette"}'>
+                    <div class="bestseller-badge">⭐ NOUVEAU</div>
+                    <div class="card-image" style="background: linear-gradient(135deg, #000428 0%, #004e92 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📱</div>
+                    <div class="card-overlay">
+                        <div class="card-category">Tablette</div>
+                        <h3 class="card-title">Canvas Pro 12</h3>
+                        <div class="card-price">119 900 FCFA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="explore-link" data-scroll="categories">
+            <span>Explorer toute la collection</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+            </svg>
         </div>
     </section>
 
@@ -1527,7 +1509,7 @@
                     <div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></div>
                 </div>
             </div>
-            <div class="footer-section"><h4>Boutique</h4><ul class="footer-links"><li><a data-scroll="produits">Nouveautés</a></li><li><a data-scroll="produits">Best-sellers</a></li><li><a data-scroll="produits">Promotions</a></li></ul></div>
+            <div class="footer-section"><h4>Boutique</h4><ul class="footer-links"><li><a data-scroll="bestsellers">Best Sellers</a></li><li><a data-scroll="categories">Catégories</a></li><li><a>Promotions</a></li></ul></div>
             <div class="footer-section"><h4>Aide</h4><ul class="footer-links"><li><a>Support Client</a></li><li><a>Livraison</a></li><li><a>Retours</a></li><li><a>FAQ</a></li></ul></div>
             <div class="footer-section"><h4>Entreprise</h4><ul class="footer-links"><li><a>À Propos</a></li><li><a>Carrières</a></li><li><a>Presse</a></li></ul></div>
             <div class="footer-section"><h4>Légal</h4><ul class="footer-links"><li><a>Confidentialité</a></li><li><a>CGV</a></li><li><a>Mentions Légales</a></li></ul></div>
@@ -1642,7 +1624,7 @@
                         cursorFollower.style.top = e.clientY + 'px';
                     }, 50);
                 });
-                document.querySelectorAll('a, button, .product-card, .category-card, .nav-cart').forEach(el => {
+                document.querySelectorAll('a, button, .bestseller-card, .category-card, .nav-cart').forEach(el => {
                     el.addEventListener('mouseenter', () => {
                         cursor.style.transform = 'scale(1.5)';
                         cursorFollower.style.transform = 'scale(2)';
@@ -1661,7 +1643,6 @@
         let currentReduction = 0;
         let currentPromoCode = "";
 
-        const productsGrid = document.getElementById('productsGrid');
         const cartCount = document.querySelector('.cart-count');
         const cartModal = document.getElementById('cartModal');
         const cartOverlay = document.getElementById('cartOverlay');
@@ -1687,205 +1668,13 @@
             return price.toLocaleString() + ' FCFA';
         }
 
-        // Données de démonstration améliorées avec tous les nouveaux champs
-        function loadProducts() {
-            if (!productsGrid) return;
-            productsGrid.innerHTML = '<div class="loading">Chargement des produits...</div>';
-            
-            // Produits de démonstration avec toutes les nouvelles fonctionnalités
-            products = [
-                { 
-                    id: "PRD-001", 
-                    nom: "AirSync Pro", 
-                    prix: 34900, 
-                    oldPrice: 49900,
-                    cat: "Audio", 
-                    desc: "Écouteurs sans fil avec réduction de bruit active, autonomie 48h, son spatial adaptatif.", 
-                    img: "", 
-                    rating: 4.8, 
-                    reviews: 156,
-                    badge: "bestseller",
-                    stock: 15
-                },
-                { 
-                    id: "PRD-002", 
-                    nom: "TimeFlow Elite", 
-                    prix: 59900, 
-                    oldPrice: 79900,
-                    cat: "Montres", 
-                    desc: "Montre connectée premium avec écran AMOLED, suivi santé avancé, autonomie 14 jours.", 
-                    img: "", 
-                    rating: 4.9, 
-                    reviews: 89,
-                    badge: "new",
-                    stock: 8
-                },
-                { 
-                    id: "PRD-003", 
-                    nom: "SoundCore X", 
-                    prix: 27900, 
-                    oldPrice: 39900,
-                    cat: "Audio", 
-                    desc: "Enceinte portable haute-fidélité, son 360°, résistance IP67, 20h d'autonomie.", 
-                    img: "", 
-                    rating: 4.7, 
-                    reviews: 234,
-                    badge: "sale",
-                    stock: 3
-                },
-                { 
-                    id: "PRD-004", 
-                    nom: "Canvas Pro 12", 
-                    prix: 119900, 
-                    oldPrice: 0,
-                    cat: "Tablette", 
-                    desc: "Tablette professionnelle 12.9\", stylet inclus, écran 120Hz, processeur dernière génération.", 
-                    img: "", 
-                    rating: 4.6, 
-                    reviews: 45,
-                    badge: "",
-                    stock: 12
-                },
-                { 
-                    id: "PRD-005", 
-                    nom: "PowerHub Ultra", 
-                    prix: 14900, 
-                    oldPrice: 24900,
-                    cat: "Accessoires", 
-                    desc: "Station de charge sans fil 65W, compatible tous appareils, design premium.", 
-                    img: "", 
-                    rating: 4.5, 
-                    reviews: 312,
-                    badge: "bestseller",
-                    stock: 2
-                },
-                { 
-                    id: "PRD-006", 
-                    nom: "VisionCam 4K", 
-                    prix: 22900, 
-                    oldPrice: 0,
-                    cat: "Photo", 
-                    desc: "Webcam professionnelle 4K, micro antibruit, mise au point auto AI.", 
-                    img: "", 
-                    rating: 4.4, 
-                    reviews: 78,
-                    badge: "new",
-                    stock: 25
-                }
-            ];
-            
-            renderProducts(products);
-        }
-
-        function renderProducts(productsList) {
-            if (!productsGrid) return;
-            if (!productsList || productsList.length === 0) {
-                productsGrid.innerHTML = '<div class="loading">Aucun produit disponible</div>';
-                return;
-            }
-            
-            productsGrid.innerHTML = productsList.map(product => {
-                // Badge HTML
-                let badgeHtml = '';
-                if (product.badge === 'new') badgeHtml = '<div class="product-badge new">NOUVEAU</div>';
-                else if (product.badge === 'sale') badgeHtml = '<div class="product-badge sale">PROMO</div>';
-                else if (product.badge === 'bestseller') badgeHtml = '<div class="product-badge bestseller">TOP VENTE</div>';
-                else badgeHtml = '<div class="product-badge">NOUVEAU</div>';
-                
-                // Stock indication
-                let stockHtml = '';
-                if (product.stock <= 0) stockHtml = '<div class="product-stock out-stock">🚫 Rupture</div>';
-                else if (product.stock <= 5) stockHtml = `<div class="product-stock low-stock">⚠️ Plus que ${product.stock}</div>`;
-                else stockHtml = '<div class="product-stock in-stock">✅ En stock</div>';
-                
-                // Prix HTML (avec ancien prix si promo)
-                let priceHtml = `<span class="product-price">${formatPrice(product.prix)}</span>`;
-                if (product.oldPrice && product.oldPrice > 0) {
-                    const discount = Math.round(((product.oldPrice - product.prix) / product.oldPrice) * 100);
-                    priceHtml = `<span class="product-price"><span class="old-price">${formatPrice(product.oldPrice)}</span> ${formatPrice(product.prix)} <span class="discount">-${discount}%</span></span>`;
-                }
-                
-                // Étoiles
-                const fullStars = Math.floor(product.rating);
-                const hasHalf = product.rating % 1 >= 0.5;
-                let starsHtml = '';
-                for (let i = 0; i < fullStars; i++) starsHtml += '<i>★</i>';
-                if (hasHalf) starsHtml += '<i>½</i>';
-                while (starsHtml.split('★').length - 1 + (hasHalf ? 1 : 0) < 5) starsHtml += '<i class="empty">★</i>';
-                
-                return `
-                    <div class="product-card" data-product='${JSON.stringify(product)}'>
-                        <div class="product-image">
-                            ${product.img ? `<img src="${product.img}" alt="${product.nom}">` : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:3rem;">📦</div>'}
-                            <div class="product-badges">
-                                ${badgeHtml}
-                            </div>
-                            <div class="product-actions">
-                                <div class="product-action quick-view">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                </div>
-                                <div class="product-action add-to-cart">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-category">${product.cat || 'Électronique'}</div>
-                            <h3 class="product-name">${product.nom}</h3>
-                            <div class="product-rating">
-                                <div class="stars">${starsHtml}</div>
-                                <span class="reviews-count">(${product.reviews || 12} avis)</span>
-                            </div>
-                            <p class="product-description">${product.desc || 'Produit high-tech de qualité premium'}</p>
-                            <div class="product-footer">
-                                ${priceHtml}
-                                <div class="product-cta add-to-cart">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                    </svg>
-                                </div>
-                            </div>
-                            ${stockHtml}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            // Attach event listeners pour les boutons d'ajout au panier
-            document.querySelectorAll('.product-card .add-to-cart').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const card = btn.closest('.product-card');
-                    const productData = JSON.parse(card.dataset.product);
-                    addToCart(productData);
-                });
+        // Best Sellers au clic
+        document.querySelectorAll('.bestseller-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const productData = JSON.parse(card.dataset.product);
+                showNotification(`👀 ${productData.nom} - Détails à venir`);
             });
-            
-            // Attach event listeners pour les cards (clic pour voir détail)
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    if (e.target.closest('.add-to-cart')) return;
-                    if (e.target.closest('.quick-view')) return;
-                    const productData = JSON.parse(card.dataset.product);
-                    showNotification(`👀 ${productData.nom} - Page détail à venir`);
-                });
-            });
-            
-            // Quick view
-            document.querySelectorAll('.quick-view').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const card = btn.closest('.product-card');
-                    const productData = JSON.parse(card.dataset.product);
-                    showNotification(`🔍 ${productData.nom} - Aperçu rapide`);
-                });
-            });
-        }
+        });
 
         function addToCart(product) {
             if (!product) return;
@@ -1995,16 +1784,11 @@
         document.querySelectorAll('.category-card').forEach(cat => {
             cat.addEventListener('click', () => {
                 const category = cat.dataset.category;
-                if (category && products.length) {
-                    const filtered = products.filter(p => p.cat && p.cat.toLowerCase().includes(category.toLowerCase()));
-                    renderProducts(filtered.length ? filtered : products);
-                    showNotification(`Catégorie: ${category}`);
-                    document.getElementById('produits')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                showNotification(`Catégorie: ${category}`);
+                document.getElementById('bestsellers')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
-        loadProducts();
         updateCartCount();
     </script>
 </body>
