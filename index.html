@@ -1,748 +1,1236 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="NEXORA — Le futur s'invite chez vous. Découvrez une technologie repensée pour les pionniers. Audio 3D, wearables, énergie propre, intelligence ambiante.">
-    <meta name="theme-color" content="#0A0F1A">
-    <title>NEXORA — Quantum Interface</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+import React, { useState, useEffect, useRef } from 'react';
+import { ShoppingCart, Search, User, Heart, ChevronRight, Star, Award, Shield, Truck, Package, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Menu, X, Moon, Sun, ChevronLeft, Play, Pause, Sparkles, Zap, Crown, Clock, ArrowRight } from 'lucide-react';
 
-        :root {
-            --bg-deep: #0A0F1A;
-            --bg-elevated: #111827;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --cyan-neon: #00F0FF;
-            --violet-neon: #B200FF;
-            --cyan-glow: rgba(0, 240, 255, 0.4);
-            --violet-glow: rgba(178, 0, 255, 0.3);
-            --text-light: #E0E0E0;
-            --text-white: #FFFFFF;
-            --transition-default: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+// Composant ProductCard réutilisable
+const ProductCard = ({ produit, onAddToCart, index, darkMode }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`group opacity-0 translate-y-8 transition-all duration-700 ${
+        darkMode ? 'bg-gray-800/50' : 'bg-white'
+      } elegant-border overflow-hidden hover-lift card-3d`}
+      style={{ transitionDelay: `${index * 0.05}s` }}
+    >
+      <div className="relative overflow-hidden aspect-square">
+        {!imageLoaded && (
+          <div className={`absolute inset-0 ${darkMode ? 'bg-gray-700' : 'bg-gray-100'} animate-pulse`} />
+        )}
+        <img
+          src={produit.image}
+          alt={produit.nom}
+          loading="lazy"
+          className={`w-full h-full object-cover transition-all duration-700 ${
+            isHovered ? 'scale-110 rotate-1' : 'scale-100'
+          } ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(true)}
+        />
+        
+        {/* Badge flottant amélioré */}
+        {produit.badge && (
+          <div className="absolute top-4 left-4 px-4 py-1.5 bg-gradient-to-r from-gold to-amber-500 text-white text-xs tracking-wider shadow-lg transform -rotate-3">
+            {produit.badge}
+          </div>
+        )}
+
+        {/* Overlay avec effet glassmorphique */}
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-center p-6 transition-all duration-500 ${
+          isHovered ? 'opacity-100' : 'opacity-0'
+        }`}>
+          <button
+            onClick={() => onAddToCart(produit)}
+            className="w-full py-4 bg-white/90 backdrop-blur-sm text-black text-sm tracking-wider transform transition-all duration-500 hover:bg-gold hover:text-white group-hover:translate-y-0"
+          >
+            AJOUTER AU PANIER
+          </button>
+        </div>
+
+        {/* Icône favori flottante */}
+        <button className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110">
+          <Heart className="w-4 h-4 hover:text-gold transition-colors" />
+        </button>
+      </div>
+
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className={`elegant-text text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {produit.nom}
+          </h3>
+          <div className="flex items-center gap-1">
+            <Star className="w-4 h-4 fill-gold text-gold" />
+            <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{produit.note}</span>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+          <span className={`text-2xl elegant-text font-semibold ${darkMode ? 'text-gold' : 'text-gray-900'}`}>
+            {produit.prix}€
+          </span>
+          <button className="p-2 hover:text-gold transition-all duration-300 hover:scale-110 hover:rotate-12">
+            <Heart className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Composant HeroCarousel
+const HeroCarousel = ({ darkMode }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const timerRef = useRef(null);
+
+  const slides = [
+    {
+      image: "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=1600&h=800&fit=crop",
+      title: "L'Excellence Technologique",
+      subtitle: "Collection 2024",
+      description: "Découvrez notre sélection raffinée de produits technologiques haut de gamme",
+      cta: "DÉCOUVRIR"
+    },
+    {
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=1600&h=800&fit=crop",
+      title: "Innovation Sans Compromis",
+      subtitle: "Édition Limitée",
+      description: "Des produits conçus pour les connaisseurs qui exigent le meilleur",
+      cta: "EN SAVOIR PLUS"
+    },
+    {
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1600&h=800&fit=crop",
+      title: "Luxe & Performance",
+      subtitle: "Nouvelle Gamme",
+      description: "L'alliance parfaite entre design élégant et puissance exceptionnelle",
+      cta: "COMMANDER"
+    }
+  ];
+
+  useEffect(() => {
+    if (isPlaying) {
+      timerRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }, 5000);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [isPlaying, slides.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    resetTimer();
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    resetTimer();
+  };
+
+  const resetTimer = () => {
+    clearInterval(timerRef.current);
+    if (isPlaying) {
+      timerRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }, 5000);
+    }
+  };
+
+  return (
+    <div className="relative h-[90vh] min-h-[600px] overflow-hidden">
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-all duration-1000 ${
+            index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
+          }`}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10" />
+          <img
+            src={slide.image}
+            alt={slide.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 z-20 flex items-center">
+            <div className="max-w-7xl mx-auto px-6 w-full">
+              <div className="max-w-2xl animate-slide-up">
+                <div className="inline-block mb-6 px-4 py-2 bg-gold/20 backdrop-blur-sm rounded-full">
+                  <p className="text-gold text-sm tracking-widest font-light">{slide.subtitle}</p>
+                </div>
+                <h1 className={`text-6xl lg:text-7xl section-title mb-6 ${darkMode ? 'text-white' : 'text-white'}`}>
+                  {slide.title}
+                </h1>
+                <p className="text-xl text-white/90 mb-10 leading-relaxed">
+                  {slide.description}
+                </p>
+                <button className="px-10 py-4 bg-gold text-black font-light tracking-wider text-sm hover:bg-white transition-all duration-300 hover:scale-105 rounded-none group">
+                  {slide.cta}
+                  <ArrowRight className="inline ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {/* Contrôles du carrousel */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-6 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 backdrop-blur-sm hover:bg-white/40 transition-all duration-300 rounded-full hover:scale-110"
+      >
+        <ChevronLeft className="w-6 h-6 text-white" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-6 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 backdrop-blur-sm hover:bg-white/40 transition-all duration-300 rounded-full hover:scale-110"
+      >
+        <ChevronRight className="w-6 h-6 text-white" />
+      </button>
+
+      {/* Indicateurs de slide */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setCurrentSlide(index);
+              resetTimer();
+            }}
+            className={`transition-all duration-300 ${
+              index === currentSlide
+                ? 'w-12 bg-gold'
+                : 'w-3 bg-white/50 hover:bg-white/80'
+            } h-1 rounded-full`}
+          />
+        ))}
+      </div>
+
+      {/* Bouton play/pause */}
+      <button
+        onClick={() => setIsPlaying(!isPlaying)}
+        className="absolute bottom-8 right-8 z-30 p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/40 transition-all duration-300"
+      >
+        {isPlaying ? <Pause className="w-4 h-4 text-white" /> : <Play className="w-4 h-4 text-white" />}
+      </button>
+    </div>
+  );
+};
+
+// Composant ParallaxSection
+const ParallaxSection = ({ children, image, darkMode }) => {
+  const [offset, setOffset] = useState(0);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        const scrolled = window.scrollY;
+        const speed = 0.3;
+        setOffset(scrolled * speed);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative overflow-hidden">
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${image})`,
+          backgroundAttachment: 'fixed',
+          backgroundPosition: `50% ${50 + offset * 0.1}%`,
+          backgroundSize: 'cover',
+          transform: `translateY(${offset * 0.2}px)`
+        }}
+      />
+      <div className={`absolute inset-0 ${darkMode ? 'bg-black/70' : 'bg-gray-900/60'} z-10`} />
+      <div className="relative z-20">{children}</div>
+    </div>
+  );
+};
+
+// Composant Témoignage
+const TestimonialCard = ({ temoignage, index, darkMode }) => {
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`p-8 rounded-2xl transition-all duration-700 opacity-0 translate-y-8 ${
+        darkMode ? 'bg-gray-800/50 border border-gray-700' : 'bg-gray-50'
+      } hover-lift glass-effect`}
+      style={{ transitionDelay: `${index * 0.1}s` }}
+    >
+      <div className="flex gap-1 mb-6">
+        {[...Array(temoignage.note)].map((_, i) => (
+          <Star key={i} className="w-5 h-5 fill-gold text-gold animate-pulse-slow" style={{ animationDelay: `${i * 0.1}s` }} />
+        ))}
+      </div>
+      <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} italic mb-6 leading-relaxed text-lg`}>
+        "{temoignage.texte}"
+      </p>
+      <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+        <p className="elegant-text font-semibold text-xl mb-1">{temoignage.nom}</p>
+        <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{temoignage.role}</p>
+      </div>
+    </div>
+  );
+};
+
+// Composant principal
+export default function NexoraElegant() {
+  const [scrolled, setScrolled] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [activeCategory, setActiveCategory] = useState('tous');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [darkMode, setDarkMode] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      setShowBackToTop(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Sauvegarder le thème dans localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('darkMode');
+    if (savedTheme) {
+      setDarkMode(JSON.parse(savedTheme));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const produits = [
+    {
+      id: 1,
+      nom: "NEXORA Elite X1",
+      categorie: "smartphones",
+      prix: "1,299",
+      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=600&fit=crop",
+      note: 4.9,
+      avis: 234,
+      badge: "Nouveau",
+      bestseller: true
+    },
+    {
+      id: 2,
+      nom: "ProBook Air M3",
+      categorie: "ordinateurs",
+      prix: "2,499",
+      image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=600&fit=crop",
+      note: 5.0,
+      avis: 567,
+      badge: null,
+      bestseller: true
+    },
+    {
+      id: 3,
+      nom: "AuraPods Pro",
+      categorie: "audio",
+      prix: "349",
+      image: "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=600&h=600&fit=crop",
+      note: 4.8,
+      avis: 892,
+      badge: null,
+      bestseller: true
+    },
+    {
+      id: 4,
+      nom: "SmartWatch Infinity",
+      categorie: "montres",
+      prix: "599",
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop",
+      note: 4.7,
+      avis: 445,
+      badge: null,
+      bestseller: false
+    },
+    {
+      id: 5,
+      nom: "Gaming Rig X900",
+      categorie: "ordinateurs",
+      prix: "3,999",
+      image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600&h=600&fit=crop",
+      note: 5.0,
+      avis: 123,
+      badge: "Exclusif",
+      bestseller: true
+    },
+    {
+      id: 6,
+      nom: "StudioPods Max",
+      categorie: "audio",
+      prix: "679",
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop",
+      note: 4.9,
+      avis: 678,
+      badge: "Nouveau",
+      bestseller: false
+    },
+    {
+      id: 7,
+      nom: "UltraTab Pro 12",
+      categorie: "tablettes",
+      prix: "899",
+      image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&h=600&fit=crop",
+      note: 4.8,
+      avis: 334,
+      badge: null,
+      bestseller: true
+    },
+    {
+      id: 8,
+      nom: "Cinema Display 4K",
+      categorie: "moniteurs",
+      prix: "1,499",
+      image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&h=600&fit=crop",
+      note: 4.9,
+      avis: 289,
+      badge: null,
+      bestseller: false
+    }
+  ];
+
+  const categories = [
+    { id: 'tous', nom: 'Tous les produits', icon: Sparkles },
+    { id: 'smartphones', nom: 'Smartphones', icon: Zap },
+    { id: 'ordinateurs', nom: 'Ordinateurs', icon: Crown },
+    { id: 'audio', nom: 'Audio', icon: Star },
+    { id: 'montres', nom: 'Montres', icon: Clock },
+    { id: 'tablettes', nom: 'Tablettes', icon: Sparkles },
+    { id: 'moniteurs', nom: 'Moniteurs', icon: Zap }
+  ];
+
+  const temoignages = [
+    {
+      nom: "Sophie Martin",
+      role: "Designer",
+      texte: "La qualité des produits NEXORA est exceptionnelle. J'ai acheté le ProBook Air et je suis absolument ravie de mon achat.",
+      note: 5
+    },
+    {
+      nom: "Thomas Dubois",
+      role: "Développeur",
+      texte: "Service client irréprochable et livraison ultra rapide. Les produits sont exactement comme décrits. Je recommande vivement.",
+      note: 5
+    },
+    {
+      nom: "Marie Laurent",
+      role: "Photographe",
+      texte: "NEXORA propose une sélection de produits premium avec un excellent rapport qualité-prix. Mon équipement préféré.",
+      note: 5
+    }
+  ];
+
+  const avantages = [
+    { icon: Truck, titre: 'Livraison Gratuite', desc: 'Sur toutes les commandes', color: 'from-blue-500 to-cyan-500' },
+    { icon: Shield, titre: 'Garantie Premium', desc: '3 ans incluse', color: 'from-green-500 to-emerald-500' },
+    { icon: Award, titre: 'Qualité Certifiée', desc: 'Produits authentiques', color: 'from-gold to-amber-500' },
+    { icon: Package, titre: 'Retours Faciles', desc: '30 jours satisfait', color: 'from-purple-500 to-pink-500' }
+  ];
+
+  const produitsAffiches = activeCategory === 'tous'
+    ? produits
+    : produits.filter(p => p.categorie === activeCategory);
+
+  const bestsellers = produits.filter(p => p.bestseller);
+
+  const ajouterAuPanier = (produit) => {
+    setCartItems(prev => [...prev, produit]);
+    // Animation de notification
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-24 right-6 z-50 bg-gold text-black px-6 py-3 rounded-lg shadow-lg animate-slide-in-right';
+    notification.textContent = `${produit.nom} ajouté au panier !`;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 2000);
+  };
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    alert(`✨ Merci ${email} ! Vous êtes inscrit à notre newsletter premium.`);
+    setEmail('');
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const cartCount = cartItems.length;
+
+  return (
+    <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&display=swap');
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
         }
 
         body {
-            background: var(--bg-deep);
-            color: var(--text-light);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.5;
+          overflow-x: hidden;
+          font-family: 'Lato', sans-serif;
         }
 
-        /* === ARRIÈRE-PLAN HEXAGONAL ANIMÉ === */
-        .hex-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%2300F0FF' stroke-width='0.5' stroke-opacity='0.1' d='M50 5L93.3 27.5V72.5L50 95L6.7 72.5V27.5L50 5z M50 15L80 30V70L50 85L20 70V30L50 15z M50 25L70 37.5V62.5L50 75L30 62.5V37.5L50 25z'/%3E%3C/svg%3E");
-            background-size: 80px 80px;
-            animation: slowDrift 60s infinite linear;
-            pointer-events: none;
-        }
-        @keyframes slowDrift {
-            0% { background-position: 0 0; transform: scale(1); }
-            50% { background-position: 40px 40px; transform: scale(1.02); }
-            100% { background-position: 0 0; transform: scale(1); }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
-        /* Particules flottantes */
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-        .particle {
-            position: absolute;
-            background: radial-gradient(circle, var(--cyan-neon), transparent);
-            border-radius: 50%;
-            opacity: 0.15;
-            animation: floatParticle linear infinite;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.25; }
-            90% { opacity: 0.15; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
 
-        /* === SCROLLBAR === */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: var(--cyan-neon); border-radius: 10px; }
-
-        /* === HEADER STICKY GLASS === */
-        .header {
-            position: fixed;
-            top: 20px;
-            left: 3%;
-            right: 3%;
-            padding: 0.6rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 60px;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            transition: var(--transition-default);
-        }
-        .header.scrolled {
-            top: 0;
-            border-radius: 0 0 30px 30px;
-            background: rgba(10, 15, 26, 0.95);
-            box-shadow: 0 0 20px rgba(0,240,255,0.2);
-        }
-        .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--cyan-neon), var(--violet-neon));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 8px var(--cyan-glow);
-            letter-spacing: 2px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 2.2rem;
-            list-style: none;
-        }
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 1.5px;
-            transition: var(--transition-default);
-        }
-        .nav-links a:hover { color: var(--cyan-neon); text-shadow: 0 0 6px var(--cyan-neon); }
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        .search-trigger {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(0,240,255,0.4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            background: transparent;
-            transition: var(--transition-default);
-        }
-        .search-trigger:hover { background: var(--cyan-neon); border-color: var(--cyan-neon); }
-        .cart-icon {
-            position: relative;
-            width: 44px;
-            height: 44px;
-            border: 1px solid var(--violet-neon);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-default);
-        }
-        .cart-icon:hover { background: var(--violet-neon); box-shadow: 0 0 20px var(--violet-glow); }
-        .cart-count {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: var(--cyan-neon);
-            color: #000;
-            font-size: 0.7rem;
-            font-weight: bold;
-            border-radius: 20px;
-            padding: 2px 7px;
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
 
-        /* === HERO AVEC VIDÉO === */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 5;
-            text-align: center;
-            padding: 2rem;
-        }
-        .hero-video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.3;
-            filter: blur(2px);
-        }
-        .hero-content {
-            max-width: 800px;
-        }
-        .hero-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-        .hero-title span {
-            background: linear-gradient(135deg, var(--cyan-neon), var(--violet-neon));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero-sub {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: #b0c4de;
-        }
-        .hero-cta {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .btn-primary {
-            padding: 1rem 2.2rem;
-            background: linear-gradient(135deg, var(--cyan-neon), var(--violet-neon));
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            color: #000;
-            cursor: pointer;
-            transition: var(--transition-default);
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--cyan-glow); }
-        .btn-secondary {
-            padding: 1rem 2.2rem;
-            background: transparent;
-            border: 1px solid var(--cyan-neon);
-            border-radius: 40px;
-            color: var(--cyan-neon);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-default);
-        }
-        .btn-secondary:hover { background: rgba(0,240,255,0.1); box-shadow: 0 0 15px var(--cyan-glow); }
-
-        /* SECTIONS GÉNÉRIQUES */
-        section {
-            padding: 5rem 5%;
-            position: relative;
-            z-index: 5;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        .section-tag {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: var(--cyan-neon);
-            text-transform: uppercase;
-        }
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            margin-top: 0.5rem;
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(100px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
 
-        /* CATÉGORIES QUADRATURE */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.8rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .category-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0,240,255,0.2);
-            border-radius: 28px;
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition-default);
-            cursor: pointer;
-        }
-        .category-card:hover {
-            border-color: var(--cyan-neon);
-            transform: translateY(-6px);
-            box-shadow: 0 15px 30px rgba(0,240,255,0.1);
-        }
-        .category-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .category-name {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
-        /* PRODUITS GRILLE DYNAMIQUE */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1300px;
-            margin: 0 auto;
+        @keyframes gentleFloat {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
         }
+
+        @keyframes shimmer {
+          0% {
+            background-position: -200% center;
+          }
+          100% {
+            background-position: 200% center;
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+
+        @keyframes rotateIn {
+          from {
+            opacity: 0;
+            transform: rotate(-10deg) scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-slide-in {
+          animation: slideIn 0.6s ease-out forwards;
+        }
+
+        .animate-slide-in-right {
+          animation: slideInRight 0.5s ease-out forwards;
+        }
+
+        .animate-slide-up {
+          animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .animate-gentle-float {
+          animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
+        }
+
+        .animate-rotate-in {
+          animation: rotateIn 0.5s ease-out forwards;
+        }
+
+        .fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+          opacity: 0;
+        }
+
+        .fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+          opacity: 0;
+        }
+
+        .slide-in {
+          animation: slideIn 0.6s ease-out forwards;
+          opacity: 0;
+        }
+
+        .gentle-float {
+          animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        .gold-shimmer {
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(212, 175, 55, 0.1) 50%,
+            transparent 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .text-gold {
+          color: #d4af37;
+        }
+
+        .bg-gold {
+          background-color: #d4af37;
+        }
+
+        .border-gold {
+          border-color: #d4af37;
+        }
+
+        .hover-lift {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-3d {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transform-style: preserve-3d;
+        }
+
+        .card-3d:hover {
+          transform: translateY(-10px) rotateX(5deg);
+          box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+        }
+
         .product-card {
-            background: var(--bg-elevated);
-            border-radius: 24px;
-            overflow: hidden;
-            border-bottom: 2px solid var(--cyan-neon);
-            transition: var(--transition-default);
-            cursor: pointer;
+          transition: all 0.3s ease;
         }
+
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 35px rgba(0,240,255,0.2);
-        }
-        .product-img {
-            height: 220px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            background: radial-gradient(circle at 30% 20%, #1a2538, #0A0F1A);
-        }
-        .product-info {
-            padding: 1.5rem;
-        }
-        .product-badge {
-            display: inline-block;
-            background: var(--violet-neon);
-            font-size: 0.7rem;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            margin-bottom: 0.8rem;
-        }
-        .product-price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--cyan-neon);
-            margin: 0.8rem 0;
+          transform: translateY(-5px);
         }
 
-        /* BANDEAU CARE + VIDÉO */
-        .care-banner {
-            background: linear-gradient(95deg, #0A0F1A, #111827);
-            border-radius: 40px;
-            padding: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            border: 1px solid var(--cyan-neon);
-            margin: 2rem 0;
-        }
-        .care-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+        .product-card img {
+          transition: transform 0.5s ease;
         }
 
-        /* AVIS CLIENTS SLIDER */
-        .reviews-slider {
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 1rem 0;
-        }
-        .review-card {
-            min-width: 300px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border-radius: 28px;
-            padding: 1.8rem;
-            scroll-snap-align: start;
-            border: 1px solid rgba(178,0,255,0.3);
+        .product-card:hover img {
+          transform: scale(1.05);
         }
 
-        /* NEWSLETTER */
-        .newsletter-box {
-            background: linear-gradient(145deg, #0A0F1A, #05080f);
-            border-radius: 60px;
-            padding: 3rem;
-            text-align: center;
-            border: 1px solid var(--cyan-neon);
-        }
-        .newsletter-form {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        .newsletter-input {
-            padding: 1rem 1.5rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--violet-neon);
-            border-radius: 60px;
-            color: white;
-            width: 300px;
+        .elegant-border {
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          border-radius: 8px;
         }
 
-        /* FOOTER */
-        footer {
-            background: #03060b;
-            padding: 3rem 5%;
-            border-top: 1px solid var(--cyan-neon);
-            margin-top: 2rem;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .dark .elegant-border {
+          border-color: rgba(255, 255, 255, 0.05);
         }
 
-        /* MODAL PANIER */
-        .cart-drawer {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            max-width: 480px;
-            height: 100%;
-            background: var(--bg-elevated);
-            z-index: 2000;
-            transition: 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            padding: 2rem;
-            border-left: 2px solid var(--cyan-neon);
+        .elegant-border:hover {
+          border-color: #d4af37;
         }
-        .cart-drawer.open { right: 0; }
-        .overlay-dark {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            z-index: 1999;
-            display: none;
+
+        .glass-effect {
+          backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, 0.05);
         }
-        .overlay-dark.open { display: block; }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .categories-grid { grid-template-columns: 1fr; }
-            .care-banner { flex-direction: column; text-align: center; }
+        .dark .glass-effect {
+          background: rgba(0, 0, 0, 0.3);
         }
-    </style>
-</head>
-<body>
 
-<div class="hex-bg"></div>
-<div class="floating-particles" id="particles"></div>
+        .btn-primary {
+          background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+          color: white;
+          transition: all 0.3s ease;
+        }
 
-<header class="header" id="header">
-    <div class="logo">⎈ NEXORA</div>
-    <ul class="nav-links">
-        <li><a href="#" data-scroll="categories">UNIVERS</a></li>
-        <li><a href="#" data-scroll="products">PRODUITS</a></li>
-        <li><a href="#" data-scroll="reviews">AVIS</a></li>
-        <li><a href="#" data-scroll="contact">CONTACT</a></li>
-    </ul>
-    <div class="header-actions">
-        <div class="search-trigger" id="searchBtn">🔍</div>
-        <div class="cart-icon" id="cartBtn">
-            🛒
-            <span class="cart-count" id="cartCount">0</span>
+        .btn-primary:hover {
+          background: linear-gradient(135deg, #d4af37 0%, #e6c84a 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-outline {
+          border: 2px solid #1a1a1a;
+          color: #1a1a1a;
+          transition: all 0.3s ease;
+        }
+
+        .dark .btn-outline {
+          border-color: #d4af37;
+          color: #d4af37;
+        }
+
+        .btn-outline:hover {
+          background-color: #1a1a1a;
+          color: white;
+          transform: translateY(-2px);
+        }
+
+        .dark .btn-outline:hover {
+          background-color: #d4af37;
+          color: black;
+        }
+
+        .section-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+        }
+
+        .elegant-text {
+          font-family: 'Cormorant Garamond', serif;
+        }
+
+        .smooth-scroll {
+          scroll-behavior: smooth;
+        }
+
+        .animate-in {
+          animation: fadeInUp 0.8s ease-out forwards !important;
+        }
+
+        /* Scrollbar personnalisée */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+          background: #2a2a2a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: #d4af37;
+          border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: #e6c84a;
+        }
+      `}</style>
+
+      {/* Header avec glassmorphisme */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? darkMode
+            ? 'bg-gray-900/90 backdrop-blur-md shadow-lg'
+            : 'bg-white/90 backdrop-blur-md shadow-lg'
+          : darkMode
+          ? 'bg-gray-900/50 backdrop-blur-sm'
+          : 'bg-white/70 backdrop-blur-sm'
+      }`}>
+        <div className="max-w-7xl mx-auto px-6 py-5">
+          <div className="flex items-center justify-between">
+            {/* Logo avec animation */}
+            <div className="slide-in">
+              <h1 className="text-3xl elegant-text font-semibold tracking-wider group cursor-pointer">
+                <span className="text-gold transition-all duration-300 group-hover:scale-110 inline-block">N</span>
+                <span className={`transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`}>EXORA</span>
+              </h1>
+              <p className={`text-xs tracking-widest ${darkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>PREMIUM TECHNOLOGY</p>
+            </div>
+
+            {/* Navigation Desktop */}
+            <nav className="hidden lg:flex items-center space-x-10">
+              {['Accueil', 'Boutique', 'À propos', 'Contact'].map((item, index) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className={`text-sm tracking-wide transition-all duration-300 relative group ${
+                    darkMode ? 'text-gray-300 hover:text-gold' : 'text-gray-700 hover:text-gold'
+                  }`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {item}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              ))}
+            </nav>
+
+            {/* Actions */}
+            <div className="flex items-center space-x-4">
+              {/* Bouton Dark Mode */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 hover:text-gold transition-all duration-300 hover:scale-110 hover:rotate-12"
+              >
+                {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+
+              <button className="p-2 hover:text-gold transition-all duration-300 hover:scale-110">
+                <Search className="w-5 h-5" />
+              </button>
+              <button className="p-2 hover:text-gold transition-all duration-300 hover:scale-110">
+                <Heart className="w-5 h-5" />
+              </button>
+              <button className="p-2 hover:text-gold transition-all duration-300 hover:scale-110">
+                <User className="w-5 h-5" />
+              </button>
+              <button className="p-2 hover:text-gold transition-all duration-300 relative">
+                <ShoppingCart className="w-5 h-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-gold text-white text-xs rounded-full flex items-center justify-center font-semibold animate-pulse">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+              <button
+                className="lg:hidden p-2"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Menu avec animation */}
+          <div className={`lg:hidden transition-all duration-300 overflow-hidden ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+            <nav className="mt-6 pb-6 border-t border-gray-200 dark:border-gray-700 pt-6">
+              {['Accueil', 'Boutique', 'À propos', 'Contact'].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className={`block py-3 transition-colors ${darkMode ? 'text-gray-300 hover:text-gold' : 'text-gray-700 hover:text-gold'}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item}
+                </a>
+              ))}
+            </nav>
+          </div>
         </div>
-    </div>
-</header>
+      </header>
 
-<!-- HERO WITH VIDEO -->
-<section class="hero">
-    <video class="hero-video-bg" autoplay muted loop playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-circuit-animation-21805-large.mp4" type="video/mp4">
-    </video>
-    <div class="hero-content">
-        <h1 class="hero-title">Le futur s’invite <span>chez vous</span></h1>
-        <p class="hero-sub">NEXORA, la technologie repensée pour les pionniers.</p>
-        <div class="hero-cta">
-            <button class="btn-primary" data-scroll="products">⟡ Explorer la collection</button>
-            <button class="btn-secondary" id="demoBtn">⟡ Voir la démo</button>
-        </div>
-    </div>
-</section>
+      {/* Hero Carousel */}
+      <HeroCarousel darkMode={darkMode} />
 
-<!-- CATÉGORIES -->
-<section id="categories">
-    <div class="section-header">
-        <div class="section-tag">⎈ QUADRATURE</div>
-        <h2 class="section-title">Univers NEXORA</h2>
-    </div>
-    <div class="categories-grid">
-        <div class="category-card" data-cat="audio"><div class="category-icon">🎧</div><div class="category-name">Audio 3D</div><div>Immersion spatiale</div></div>
-        <div class="category-card" data-cat="wear"><div class="category-icon">⌚</div><div class="category-name">Wearables</div><div>Biométrie connectée</div></div>
-        <div class="category-card" data-cat="energy"><div class="category-icon">⚡</div><div class="category-name">Énergie propre</div><div>Charge solaire intégrée</div></div>
-        <div class="category-card" data-cat="ai"><div class="category-icon">🧠</div><div class="category-name">Intelligence ambiante</div><div>IA prédictive</div></div>
-    </div>
-</section>
-
-<!-- PRODUITS PHARES -->
-<section id="products">
-    <div class="section-header">
-        <div class="section-tag">⚡ SÉLECTION QUANTIQUE</div>
-        <h2 class="section-title">Les incontournables du mois</h2>
-    </div>
-    <div class="products-grid" id="productGrid"></div>
-    <div style="text-align: center; margin-top: 3rem;">
-        <button class="btn-secondary" data-scroll="categories">⟡ Voir tout →</button>
-    </div>
-</section>
-
-<!-- BANDEAU CARE -->
-<section>
-    <div class="care-banner">
-        <div class="care-text"><h3>NEXORA Care</h3><p>2 ans de garantie quantique & livraison par drone.</p></div>
-        <button class="btn-primary" id="careBtn">En savoir plus</button>
-    </div>
-</section>
-
-<!-- AVIS CLIENTS -->
-<section id="reviews">
-    <div class="section-header">
-        <div class="section-tag">⎈ PROOF SOCIAL</div>
-        <h2 class="section-title">Ils ont déjà basculé</h2>
-    </div>
-    <div class="reviews-slider" id="reviewsSlider"></div>
-</section>
-
-<!-- NEWSLETTER -->
-<section id="contact">
-    <div class="newsletter-box">
-        <h2 style="color: var(--cyan-neon);">⟡ Rejoignez l’avant-garde</h2>
-        <p>Offre exclusive + mise à jour produits avant tout le monde.</p>
-        <div class="newsletter-form">
-            <input type="email" id="newsEmail" class="newsletter-input" placeholder="votre@nexus.email">
-            <button class="btn-primary" id="subNewsBtn">S’abonner</button>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <div class="footer-grid">
-        <div><strong>NEXORA</strong><br>Quantum tech since 2023</div>
-        <div><a href="#">À propos</a><br><a href="#">CGV</a><br><a href="#">Confidentialité</a></div>
-        <div><a href="#">Discord</a><br><a href="#">Twitter/X</a><br><a href="#">GitHub</a></div>
-        <div><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 100 30'%3E%3Crect width='30' height='20' fill='%2300F0FF'/%3E%3C/svg%3E" alt="paiement" style="filter: drop-shadow(0 0 2px cyan);"> Crypto | Visa</div>
-    </div>
-    <div style="text-align: center; font-size: 0.7rem;">© NEXORA 2026 — Interface quantique</div>
-</footer>
-
-<!-- MODALS -->
-<div class="overlay-dark" id="overlay"></div>
-<div class="cart-drawer" id="cartDrawer">
-    <h2 style="color:cyan;">Panier quantique</h2>
-    <div id="cartItemsList"></div>
-    <div id="cartTotalAmount" style="font-size:1.8rem; margin:2rem 0;"></div>
-    <button class="btn-primary" id="checkoutBtn">⟡ Finaliser</button>
-</div>
-
-<script>
-    (function() {
-        // === PARTICULES FLOTTANTES ===
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 60; i++) {
-                const p = document.createElement('div');
-                p.classList.add('particle');
-                const size = Math.random() * 4 + 1;
-                p.style.width = size + 'px';
-                p.style.height = size + 'px';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.animationDuration = Math.random() * 15 + 8 + 's';
-                p.style.animationDelay = Math.random() * 10 + 's';
-                container.appendChild(p);
-            }
-        }
-        createParticles();
-
-        // === HEADER SCROLL ===
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-        });
-
-        // === SMOOTH SCROLL ===
-        document.querySelectorAll('[data-scroll]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const targetId = btn.getAttribute('data-scroll');
-                const el = document.getElementById(targetId);
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        // === PRODUITS ===
-        const products = [
-            { id: 1, name: "Auralis X1", price: 44900, old: 69900, badge: "⟁ NOUVEAU", emoji: "🎧", cat: "audio" },
-            { id: 2, name: "Chrono Sync", price: 89900, old: 129900, badge: "⚡ TOP", emoji: "⌚", cat: "wear" },
-            { id: 3, name: "SolarCore", price: 59900, old: null, badge: "🌱 GREEN", emoji: "🔋", cat: "energy" }
-        ];
-
-        let cart = JSON.parse(localStorage.getItem('nexora_cart') || '[]');
-
-        function renderProducts() {
-            const grid = document.getElementById('productGrid');
-            if (!grid) return;
-            grid.innerHTML = products.map(p => `
-                <div class="product-card" data-id="${p.id}">
-                    <div class="product-img">${p.emoji}</div>
-                    <div class="product-info">
-                        <div class="product-badge">${p.badge}</div>
-                        <h3>${p.name}</h3>
-                        <div class="product-price">${p.price.toLocaleString()} FCFA ${p.old ? `<span style="font-size:0.9rem; text-decoration:line-through;">${p.old.toLocaleString()}</span>` : ''}</div>
-                        <button class="btn-secondary add-cart-btn" data-id="${p.id}" style="margin-top:1rem; padding:0.5rem 1rem;">⟡ Ajouter</button>
+      {/* Section Avantages avec effets glassmorphiques */}
+      <section className={`py-20 px-6 ${darkMode ? 'bg-gray-800/30' : 'bg-white'} border-y border-gray-200 dark:border-gray-700`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            {avantages.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.titre}
+                  className="text-center group cursor-pointer"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="relative inline-block">
+                    <div className={`absolute inset-0 bg-gradient-to-r ${item.color} rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
+                    <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 border-gold/30 rounded-full mb-4 group-hover:scale-110 transition-all duration-500 group-hover:border-gold">
+                      <Icon className="w-8 h-8 text-gold group-hover:scale-110 transition-transform duration-300" />
                     </div>
+                  </div>
+                  <h3 className={`text-xl elegant-text font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{item.titre}</h3>
+                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{item.desc}</p>
                 </div>
-            `).join('');
-            document.querySelectorAll('.add-cart-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const id = parseInt(btn.dataset.id);
-                    const product = products.find(p => p.id === id);
-                    addToCart(product);
-                });
-            });
-        }
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-        function addToCart(product) {
-            const existing = cart.find(i => i.id === product.id);
-            if (existing) existing.qty++;
-            else cart.push({ ...product, qty: 1 });
-            updateCartUI();
-            showToast(`⟡ ${product.name} ajouté au panier`);
-        }
+      {/* Best Sellers avec animation au scroll */}
+      <section id="boutique" className={`py-24 px-6 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-block mb-4 px-4 py-2 bg-gold/10 rounded-full">
+              <p className="text-gold text-sm tracking-widest">⭐ SÉLECTION EXCLUSIVE ⭐</p>
+            </div>
+            <h2 className={`text-5xl section-title mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Nos Best-Sellers
+            </h2>
+            <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} max-w-2xl mx-auto text-lg`}>
+              Les produits préférés de nos clients, reconnus pour leur excellence et leur fiabilité
+            </p>
+          </div>
 
-        function updateCartUI() {
-            localStorage.setItem('nexora_cart', JSON.stringify(cart));
-            const totalQty = cart.reduce((s, i) => s + i.qty, 0);
-            document.getElementById('cartCount').innerText = totalQty;
-            renderCartDrawer();
-        }
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {bestsellers.map((produit, index) => (
+              <ProductCard
+                key={produit.id}
+                produit={produit}
+                onAddToCart={ajouterAuPanier}
+                index={index}
+                darkMode={darkMode}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
 
-        function renderCartDrawer() {
-            const container = document.getElementById('cartItemsList');
-            const totalSpan = document.getElementById('cartTotalAmount');
-            if (!container) return;
-            if (cart.length === 0) {
-                container.innerHTML = '<div style="color:#aaa;">∅ Le vide quantique...</div>';
-                totalSpan.innerText = '0 FCFA';
-                return;
-            }
-            let total = 0;
-            container.innerHTML = cart.map(i => {
-                total += i.price * i.qty;
-                return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid cyan; margin:1rem 0;">
-                            <span>${i.name} x${i.qty}</span>
-                            <span>${(i.price * i.qty).toLocaleString()} FCFA</span>
-                        </div>`;
-            }).join('');
-            totalSpan.innerText = `${total.toLocaleString()} FCFA`;
-        }
+      {/* Catégories avec icônes */}
+      <section className={`py-24 px-6 ${darkMode ? 'bg-gray-900' : 'bg-white'}`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-gold text-sm tracking-widest mb-4">✨ EXPLOREZ ✨</p>
+            <h2 className={`text-5xl section-title mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Nos Catégories
+            </h2>
+          </div>
 
-        function showToast(msg) {
-            const t = document.createElement('div');
-            t.innerText = msg;
-            t.style.position = 'fixed';
-            t.style.bottom = '20px';
-            t.style.left = '20px';
-            t.style.background = '#00F0FF';
-            t.style.color = '#000';
-            t.style.padding = '1rem 2rem';
-            t.style.borderRadius = '30px';
-            t.style.zIndex = '10000';
-            t.style.fontWeight = 'bold';
-            document.body.appendChild(t);
-            setTimeout(() => t.remove(), 2500);
-        }
+          <div className="flex flex-wrap justify-center gap-3 mb-16">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`group px-6 py-3 text-sm tracking-wider transition-all duration-300 flex items-center gap-2 ${
+                    activeCategory === cat.id
+                      ? 'bg-gold text-white shadow-lg scale-105'
+                      : darkMode
+                      ? 'bg-gray-800 border border-gray-700 text-gray-300 hover:border-gold hover:scale-105'
+                      : 'bg-white border border-gray-200 text-gray-700 hover:border-gold hover:scale-105'
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 transition-all duration-300 ${activeCategory === cat.id ? 'text-white' : 'text-gold'} group-hover:rotate-12`} />
+                  {cat.nom}
+                </button>
+              );
+            })}
+          </div>
 
-        // === AVIS CLIENTS ===
-        const reviews = [
-            { name: "Dr. Aïcha Ndiaye", role: "Ingénieur spatial", text: "L'audio 3D est une révolution. Je ne retournerai jamais en arrière.", stars: 5 },
-            { name: "Mamadou Diallo", role: "Lead dev quantum", text: "La montre Chrono Sync a changé ma perception du temps.", stars: 5 },
-            { name: "Sophie L.", role: "Early adopter", text: "Livraison drone en 45min, expérience surréaliste.", stars: 4 }
-        ];
-        function renderReviews() {
-            const slider = document.getElementById('reviewsSlider');
-            if (!slider) return;
-            slider.innerHTML = reviews.map(r => `
-                <div class="review-card">
-                    <div style="color:cyan;">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
-                    <p style="margin:1rem 0;">“${r.text}”</p>
-                    <strong>${r.name}</strong><br><small>${r.role}</small>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {produitsAffiches.map((produit, index) => (
+              <ProductCard
+                key={produit.id}
+                produit={produit}
+                onAddToCart={ajouterAuPanier}
+                index={index}
+                darkMode={darkMode}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section À Propos avec parallaxe */}
+      <ParallaxSection
+        image="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=1080&fit=crop"
+        darkMode={darkMode}
+      >
+        <section id="à propos" className="py-32 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="fade-in-up">
+                <div className="relative">
+                  <div className="absolute -inset-4 bg-gold/20 blur-2xl rounded-2xl animate-pulse-slow" />
+                  <img
+                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop"
+                    alt="À propos"
+                    className="w-full h-auto rounded-2xl shadow-2xl relative z-10"
+                  />
                 </div>
-            `).join('');
-        }
+              </div>
 
-        // === MODAL PANIER ===
-        const drawer = document.getElementById('cartDrawer');
-        const overlay = document.getElementById('overlay');
-        document.getElementById('cartBtn').addEventListener('click', () => {
-            renderCartDrawer();
-            drawer.classList.add('open');
-            overlay.classList.add('open');
-        });
-        overlay.addEventListener('click', () => {
-            drawer.classList.remove('open');
-            overlay.classList.remove('open');
-        });
-        document.getElementById('checkoutBtn')?.addEventListener('click', () => {
-            if (cart.length === 0) return showToast("Panier vide");
-            showToast("✅ Commande quantique validée");
-            cart = [];
-            updateCartUI();
-            drawer.classList.remove('open');
-            overlay.classList.remove('open');
-        });
+              <div className="text-white">
+                <div className="inline-block mb-4 px-4 py-2 bg-gold/20 backdrop-blur-sm rounded-full">
+                  <p className="text-gold text-sm tracking-widest">✨ NOTRE HISTOIRE ✨</p>
+                </div>
+                <h2 className="text-5xl section-title mb-6">
+                  À Propos de NEXORA
+                </h2>
 
-        // NEWSLETTER
-        document.getElementById('subNewsBtn')?.addEventListener('click', () => {
-            const email = document.getElementById('newsEmail').value;
-            if (email.includes('@')) showToast("⟡ Abonnement réussi, bienvenue dans l'avenir");
-            else showToast("❌ Email invalide");
-        });
+                <div className="space-y-6 text-white/90 leading-relaxed text-lg">
+                  <p>
+                    Fondée en 2014, NEXORA s'est imposée comme une référence incontournable dans le domaine
+                    de la technologie premium. Notre mission est simple : offrir à nos clients une sélection
+                    rigoureuse des meilleurs produits du marché.
+                  </p>
 
-        // DEMO MODALE (simple)
-        document.getElementById('demoBtn')?.addEventListener('click', () => {
-            showToast("Démo immersive : bientôt disponible");
-        });
-        document.getElementById('careBtn')?.addEventListener('click', () => {
-            showToast("Garantie quantique : 2 ans pièces et main-d'œuvre");
-        });
-        document.getElementById('searchBtn')?.addEventListener('click', () => {
-            showToast("Recherche neuronale en développement");
-        });
+                  <p>
+                    Chaque produit de notre catalogue est soigneusement choisi par notre équipe d'experts
+                    passionnés, garantissant ainsi une qualité irréprochable et des performances exceptionnelles.
+                    Nous croyons que la technologie doit être à la fois belle, fonctionnelle et durable.
+                  </p>
 
-        renderProducts();
-        renderReviews();
-        updateCartUI();
-    })();
-</script>
-</body>
-</html>
+                  <p>
+                    Notre engagement envers l'excellence se reflète dans notre service client de premier ordre,
+                    notre garantie étendue de 3 ans et notre politique de retour sans tracas. Chez NEXORA,
+                    votre satisfaction est notre priorité absolue.
+                  </p>
+                </div>
+
+                <div className="mt-10">
+                  <button className="px-10 py-4 bg-gold text-black font-light tracking-wider text-sm hover:bg-white transition-all duration-300 rounded-none group">
+                    EN SAVOIR PLUS
+                    <ArrowRight className="inline ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </ParallaxSection>
+
+      {/* Témoignages */}
+      <section className={`py-24 px-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-block mb-4 px-4 py-2 bg-gold/10 rounded-full">
+              <p className="text-gold text-sm tracking-widest">💬 TÉMOIGNAGES 💬</p>
+            </div>
+            <h2 className={`text-5xl section-title mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Ce Que Disent Nos Clients
+            </h2>
+            <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} max-w-2xl mx-auto text-lg`}>
+              Plus de 50 000 clients satisfaits à travers le monde
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {temoignages.map((temoignage, index) => (
+              <TestimonialCard
+                key={temoignage.nom}
+                temoignage={temoignage}
+                index={index}
+                darkMode={darkMode}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter avec effet glassmorphique */}
+      <section className={`py-24 px-6 relative overflow-hidden`}>
+        <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-br from-gray-900 to-black' : 'bg-gradient-to-br from-gray-900 to-black'}`} />
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&h=400&fit=crop')] bg-cover bg-center opacity-10" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="inline-block mb-6 animate-gentle-float">
+            <div className="p-4 bg-gold/20 rounded-full backdrop-blur-sm">
+              <Mail className="w-12 h-12 text-gold" />
+            </div>
+          </div>
+
+          <h2 className="text-5xl section-title text-white mb-6">
+            Rejoignez Notre Communauté
+          </h2>
+
+          <p className="text-xl text-white/80 mb-10">
+            Inscrivez-vous à notre newsletter pour recevoir en exclusivité nos dernières nouveautés,
+            offres spéciales et conseils d'experts
+          </p>
+
+          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Votre adresse email"
+              required
+              className="flex-1 px-6 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-gold transition-colors rounded-lg"
+            />
+            <button
+              type="submit"
+              className="px-10 py-4 bg-gold text-black font-light tracking-wider text-sm hover:bg-white transition-all duration-300 rounded-lg group"
+            >
+              S'INSCRIRE
+              <ArrowRight className="inline ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </form>
+
+          <p className="text-sm text-white/50 mt-6">
+            ✨ Nous respectons votre vie privée. Désabonnement possible à tout moment. ✨
+          </p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="contact" className={`py-16 px-6 border-t ${darkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-12 mb-12">
+            <div className="md:col-span-2">
+              <h3 className={`text-2xl elegant-text font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <span className="text-gold">N</span>EXORA
+              </h3>
+              <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-6 leading-relaxed`}>
+                Votre destination premium pour la technologie d'exception.
+                Nous sélectionnons avec soin les meilleurs produits pour vous offrir
+                une expérience d'achat incomparable.
+              </p>
+              <div className="flex gap-4">
+                {[
+                  { icon: Facebook, label: 'Facebook', color: 'hover:bg-[#1877f2]' },
+                  { icon: Instagram, label: 'Instagram', color: 'hover:bg-gradient-to-r hover:from-pink-500 hover:to-orange-500' },
+                  { icon: Twitter, label: 'Twitter', color: 'hover:bg-[#1da1f2]' }
+                ].map(({ icon: Icon, label, color }) => (
+                  <button
+                    key={label}
+                    className={`w-10 h-10 border ${darkMode ? 'border-gray-700' : 'border-gray-200'} rounded-full hover:${color} hover:border-transparent hover:text-white transition-all duration-300 flex items-center justify-center hover:scale-110`}
+                    aria-label={label}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className={`text-lg elegant-text font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Navigation</h4>
+              <ul className="space-y-3">
+                {['Accueil', 'Boutique', 'À propos', 'Contact', 'FAQ', 'Blog'].map((link) => (
+                  <li key={link}>
+                    <a href="#" className={`${darkMode ? 'text-gray-400 hover:text-gold' : 'text-gray-600 hover:text-gold'} transition-colors text-sm`}>
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className={`text-lg elegant-text font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Contact</h4>
+              <ul className="space-y-3 text-sm">
+                <li className={`flex items-start gap-2 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <MapPin className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                  <span>123 Avenue des Champs-Élysées<br />75008 Paris, France</span>
+                </li>
+                <li className={`flex items-center gap-2 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <Phone className="w-5 h-5 text-gold flex-shrink-0" />
+                  <span>+33 1 23 45 67 89</span>
+                </li>
+                <li className={`flex items-center gap-2 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <Mail className="w-5 h-5 text-gold flex-shrink-0" />
+                  <span>contact@nexora.fr</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className={`pt-8 border-t ${darkMode ? 'border-gray-800' : 'border-gray-100'} flex flex-col md:flex-row justify-between items-center gap-4`}>
+            <p className={`text-sm ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>
+              © 2024 NEXORA. Tous droits réservés.
+            </p>
+            <div className="flex gap-6 text-sm">
+              <a href="#" className={`${darkMode ? 'text-gray-500 hover:text-gold' : 'text-gray-500 hover:text-gold'} transition-colors`}>Mentions légales</a>
+              <a href="#" className={`${darkMode ? 'text-gray-500 hover:text-gold' : 'text-gray-500 hover:text-gold'} transition-colors`}>Politique de confidentialité</a>
+              <a href="#" className={`${darkMode ? 'text-gray-500 hover:text-gold' : 'text-gray-500 hover:text-gold'} transition-colors`}>CGV</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* Bouton Back to Top */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 p-4 bg-gold text-black rounded-full shadow-lg hover:scale-110 transition-all duration-300 animate-bounce"
+        >
+          <ChevronRight className="w-5 h-5 rotate-270" style={{ transform: 'rotate(-90deg)' }} />
+        </button>
+      )}
+    </div>
+  );
+}
